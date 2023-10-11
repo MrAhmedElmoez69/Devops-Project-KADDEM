@@ -25,4 +25,8 @@ public class Departement implements Serializable {
     @JsonIgnore
     private List<Etudiant> etudiants;
 
+    @ManyToOne
+    @JoinColumn(name = "universite_id")
+    private Universite universite;
+
 }

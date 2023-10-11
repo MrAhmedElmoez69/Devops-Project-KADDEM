@@ -15,4 +15,6 @@ public interface IUniversiteService {
     Universite retrieveUniversite (Integer idUniversite);
 
     void removeUniversite (Integer idUniversite);
+
+    void assignUniversiteToDepartement(Integer universiteId, Integer departementId);
 }

@@ -58,6 +58,6 @@ public class UniversiteRestController {
     @Operation(description = "assigner une université à un département")
     @ResponseBody
     public void assignUniversiteToDepartement(@PathVariable("universiteId") Integer universiteId,@PathVariable("departementId") Integer departementId) {
-        //universiteService.assignUniversiteToDepartement(universiteId,departementId);
+        universiteService.assignUniversiteToDepartement(universiteId,departementId);
     }
 }
