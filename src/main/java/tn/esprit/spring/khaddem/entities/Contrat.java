@@ -5,7 +5,7 @@ import java.util.Date;
 import javax.persistence.*;
 
 import lombok.*;
-
+//entity contrat
 @Entity
 public class Contrat implements Serializable {
 
@@ -106,4 +106,5 @@ public class Contrat implements Serializable {
         this.montantContrat = montantContrat;
         this.etudiant = etudiant;
     }
+    
 }
