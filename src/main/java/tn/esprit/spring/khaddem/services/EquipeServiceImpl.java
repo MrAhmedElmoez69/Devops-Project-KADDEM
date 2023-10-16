@@ -4,11 +4,11 @@ import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-//import tn.esprit.spring.khaddem.entities.Contrat;
+import tn.esprit.spring.khaddem.entities.Contrat;
 import tn.esprit.spring.khaddem.entities.Equipe;
 import tn.esprit.spring.khaddem.entities.Etudiant;
 import tn.esprit.spring.khaddem.entities.Niveau;
-//import tn.esprit.spring.khaddem.repositories.ContratRepository;
+import tn.esprit.spring.khaddem.repositories.ContratRepository;
 import tn.esprit.spring.khaddem.repositories.EquipeRepository;
 
 import javax.transaction.Transactional;
@@ -22,7 +22,7 @@ public class EquipeServiceImpl implements IEquipeService{
 
     EquipeRepository equipeRepository;
 
-//    ContratRepository contratRepository;
+    ContratRepository contratRepository;
 
     @Override
     public List<Equipe> retrieveAllEquipes() {
