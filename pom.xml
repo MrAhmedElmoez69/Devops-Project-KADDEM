@@ -15,6 +15,7 @@
     <description>khaddem</description>
     <properties>
         <java.version>8</java.version>
+
     </properties>
 
     <dependencies>
@@ -54,7 +55,7 @@
             <plugin>
                 <groupId>org.sonarsource.scanner.maven</groupId>
                 <artifactId>sonar-maven-plugin</artifactId>
-                <version>3.9.0.2155</version> <!-- Latest compatible version for SonarQube 8.9.7-community -->
+                <version>3.9.0.2155</version> 
             </plugin>
 
             <plugin>
