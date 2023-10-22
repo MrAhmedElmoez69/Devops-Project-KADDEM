@@ -4,6 +4,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import tn.esprit.spring.khaddem.entities.Departement;
 import tn.esprit.spring.khaddem.services.IDepartementService;
+import tn.esprit.spring.khaddem.dto.DepartementDTO;
+
 
 import java.util.List;
 
@@ -17,9 +19,9 @@ public class DepartementRestController {
     @GetMapping("/retrieve-all-departements")
     @ResponseBody
     public List<Departement> getDepartements() {
-        List<Departement> listDepartements = departementService.retrieveAllDepartements();
-        return listDepartements;
+        return departementService.retrieveAllDepartements();
     }
+
 
     // http://localhost:8089/Kaddem/departement/retrieve-departement/8
     @GetMapping("/retrieve-departement/{departement-id}")
@@ -31,17 +33,26 @@ public class DepartementRestController {
     // http://localhost:8089/Kaddem/departement/add-departement
     @PostMapping("/add-departement")
     @ResponseBody
-    public Departement addDepartement(@RequestBody Departement d) {
-        departementService.addDepartement(d);
-        return d;
+    public Departement addDepartement(@RequestBody DepartementDTO departementDTO) {
+        Departement departement = new Departement();
+        departement.setNomDepart(departementDTO.getNomDepart());
+        departementService.addDepartement(departement);
+        return departement;
     }
+
 
     // http://localhost:8089/Kaddem/departement/update-departement
     @PutMapping("/update-departement")
     @ResponseBody
-    public Departement updateDepartement(@RequestBody Departement departement) {
-        Departement d= departementService.updateDepartement(departement);
-        return d;
+    public Departement updateDepartement(@RequestBody DepartementDTO departementDTO) {
+        Departement existingDepartement = departementService.retrieveDepartement(departementDTO.getIdDepartement());
+
+        if (existingDepartement != null) {
+            existingDepartement.setNomDepart(departementDTO.getNomDepart());
+            return departementService.updateDepartement(existingDepartement);
+        } else {
+            return null;
+        }
     }
 
 
@@ -50,9 +61,9 @@ public class DepartementRestController {
     @GetMapping("/retrieveDepartementsByUniversite/{idUniversite}")
     @ResponseBody
     public List<Departement> retrieveDepartementsByUniversite(@PathVariable("idUniversite") Integer idUniversite) {
-        List<Departement> listDepartements = departementService.retrieveDepartementsByUniversite(idUniversite);
-        return listDepartements;
+        return departementService.retrieveDepartementsByUniversite(idUniversite);
     }
+
 
 
 }
