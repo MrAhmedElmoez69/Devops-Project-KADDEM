@@ -1,8 +1,9 @@
 package tn.esprit.spring.khaddem.controllers;
 
 import lombok.AllArgsConstructor;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.web.bind.annotation.*;
+import tn.esprit.spring.khaddem.dto.EquipeDTO;
+import tn.esprit.spring.khaddem.entities.Departement;
 import tn.esprit.spring.khaddem.entities.Equipe;
 import tn.esprit.spring.khaddem.services.IEquipeService;
 import java.util.List;
@@ -16,8 +17,8 @@ public class EquipeRestController {
     @GetMapping("/retrieve-all-equipes")
     @ResponseBody
     public List<Equipe> getEquipes() {
-        List<Equipe> listEquipes = equipeService.retrieveAllEquipes();
-        return listEquipes;
+
+        return equipeService.retrieveAllEquipes();
     }
 
 
@@ -32,24 +33,25 @@ public class EquipeRestController {
     /* cette méthode permet d'ajouter une équipe avec son détail*/
     @PostMapping("/add-equipe")
     @ResponseBody
-    public Equipe addEquipe(@RequestBody Equipe e) {
-        Equipe equipe = equipeService.addEquipe(e);
+    public Equipe addEquipe(@RequestBody EquipeDTO equipeDTO) {
+        Equipe equipe = new Equipe();
+        equipe.setNomEquipe(equipeDTO.getNomEquipe());
+        equipeService.addEquipe(equipe);
         return equipe;
     }
 
     // http://localhost:8089/Kaddem/equipe/update-equipe
     @PutMapping("/update-equipe")
     @ResponseBody
-    public Equipe updateEtudiant(@RequestBody Equipe e) {
-        Equipe equipe= equipeService.updateEquipe(e);
-        return equipe;
-    }
+    public Equipe updateEtudiant(@RequestBody EquipeDTO equipeDTO) {
+        Equipe equipe = equipeService.retrieveEquipe(equipeDTO.getIdEquipe());
 
-    // @Scheduled(cron="0 0 13 * * *")
-//    @Scheduled(cron="* * 13 * * *")
-//    @PutMapping("/faireEvoluerEquipes")
-//    public void faireEvoluerEquipes() {
-//        equipeService.evoluerEquipes() ;
-//    }
+        if (equipe != null) {
+            equipe.setNomEquipe(equipeDTO.getNomEquipe());
+            return equipeService.updateEquipe(equipe);
+        } else {
+            return null;
+        }
+    }
 
 }
