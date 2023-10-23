@@ -7,7 +7,7 @@ public class DetailEquipeDTO {
     private Integer salle;
     private String thematique;
 
-        // Constructeurs, getter et setter
+
 
         public DetailEquipeDTO() {
         }
@@ -16,7 +16,7 @@ public class DetailEquipeDTO {
             this.idDetailEquipe = idDetailEquipe;
             this.salle = salle;
             this.thematique = thematique;
-            
+
         }
 
         public Integer getIdDetailEquipe() {
