@@ -16,6 +16,7 @@ public class DetailEquipeDTO {
             this.idDetailEquipe = idDetailEquipe;
             this.salle = salle;
             this.thematique = thematique;
+            
         }
 
         public Integer getIdDetailEquipe() {
