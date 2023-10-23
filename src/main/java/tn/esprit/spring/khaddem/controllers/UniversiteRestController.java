@@ -23,9 +23,9 @@ public class UniversiteRestController {
     @Operation(description = "récupérer la liste des universités")
     @ResponseBody
     public List<Universite> getUniversites() {
-        List<Universite> listUniversites = universiteService.retrieveAllUniversites();
-        return listUniversites;
+        return universiteService.retrieveAllUniversites();
     }
+
 
     // http://localhost:8089/Kaddem/universite/retrieve-universite/8
     @GetMapping("/retrieve-universite/{universite-id}")
@@ -39,8 +39,18 @@ public class UniversiteRestController {
     @PostMapping("/add-universite")
     @Operation(description = "ajouter une université")
     @ResponseBody
-    public Universite addUniversite(@RequestBody Universite u) {
-        Universite universite = universiteService.addUniversite(u);
+    public Universite addUniversite(@RequestBody UniversiteDTO universiteDTO) {
+
+        Universite universite = new Universite();
+        universite.setNom(universiteDTO.getNom());
+        universite.setAdresse(universiteDTO.getAdresse());
+
+        Universite addedUniversite = universiteService.addUniversite(universite);
+
+        UniversiteDTO addedUniversiteDTO = new UniversiteDTO();
+        addedUniversiteDTO.setNom(addedUniversite.getNom());
+        addedUniversiteDTO.setAdresse(addedUniversite.getAdresse());
+
         return universite;
     }
 
@@ -48,10 +58,25 @@ public class UniversiteRestController {
     @PutMapping("/update-universite")
     @Operation(description = "modifier une université")
     @ResponseBody
-    public Universite updateUniversite(@RequestBody Universite u) {
-        Universite universite= universiteService.updateUniversite(u);
-        return universite;
+    public UniversiteDTO updateUniversite(@RequestBody UniversiteDTO universiteDTO) {
+        // Convert the DTO to the entity if needed
+        Universite universite = new Universite();
+        universite.setNom(universiteDTO.getNom());
+        universite.setAdresse(universiteDTO.getAdresse());
+        // Set other fields as needed
+
+        // Call the service to update the university
+        Universite updatedUniversite = universiteService.updateUniversite(universite);
+
+        // Convert the entity back to DTO and return
+        UniversiteDTO updatedUniversiteDTO = new UniversiteDTO();
+        updatedUniversiteDTO.setNom(updatedUniversite.getNom());
+        updatedUniversiteDTO.setAdresse(updatedUniversite.getAdresse());
+        // Set other fields as needed
+
+        return updatedUniversiteDTO;
     }
+
 
     // http://localhost:8089/Kaddem/universite/assignUniversiteToDepartement/1/1
     @PutMapping("/assignUniversiteToDepartement/{universiteId}/{departementId}")

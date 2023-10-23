@@ -24,7 +24,7 @@ public abstract class UniversiteServiceImpl implements  IUniversiteService{
 
     @Override
     public Universite addUniversite(Universite u) {
-        //log.debug("u :"+u.getNomUniv());
+        log.debug("u :"+u.getNomUniv());
         universiteRepository.save(u);
         return u;
     }
@@ -37,7 +37,13 @@ public abstract class UniversiteServiceImpl implements  IUniversiteService{
 
     @Override
     public Universite retrieveUniversite(Integer idUniversite) {
-        return universiteRepository.findById(idUniversite).get();
+        Optional<Universite> optionalUniversite = universiteRepository.findById(idUniversite);
+
+        if (optionalUniversite.isPresent()) {
+            return optionalUniversite.get();
+        } else {
+            throw new NoSuchElementException("Universite not found with ID: " + idUniversite);
+        }
     }
 
     @Transactional
@@ -45,6 +51,6 @@ public abstract class UniversiteServiceImpl implements  IUniversiteService{
         Universite universite =universiteRepository.findById(universiteId).get();
         Departement departement=departementRepository.findById(departementId).get();
         universite.getDepartements().add(departement);
-       // log.info("departements number "+universite.getDepartements().size());
+        log.info("departements number "+universite.getDepartements().size());
     }
 }
