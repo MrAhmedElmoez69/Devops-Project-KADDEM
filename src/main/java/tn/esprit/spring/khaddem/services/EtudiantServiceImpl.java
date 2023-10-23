@@ -14,6 +14,7 @@ import javax.persistence.EntityNotFoundException;
 import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 
 @Service
@@ -106,24 +107,33 @@ public class EtudiantServiceImpl implements IEtudiantService{
 
     @Transactional
     public Etudiant addAndAssignEtudiantToEquipeAndContract(Etudiant e, Integer idContrat, Integer idEquipe) {
-        Contrat contrat = contratRepository.findById(idContrat).get();
-        Equipe equipe=equipeRepository.findById(idEquipe).get();
-        Etudiant etudiant= etudiantRepository.save(e);
-        log.info("contrat: "+contrat.getSpecialite());
-        log.info("equipe: "+equipe.getNomEquipe());
-        log.info("etudiant: "+etudiant.getNomE()+" "+etudiant.getPrenomE()+" "+etudiant.getOp());
-        List<Equipe> equipesMisesAjour = new ArrayList<>();
-        contrat.setEtudiant(etudiant);
-        if(etudiant.getEquipes()!=null) {
-            equipesMisesAjour=etudiant.getEquipes();
+        Optional<Contrat> contratOptional = contratRepository.findById(idContrat);
+        Optional<Equipe> equipeOptional = equipeRepository.findById(idEquipe);
+
+        if (contratOptional.isPresent() && equipeOptional.isPresent()) {
+            Contrat contrat = contratOptional.get();
+            Equipe equipe = equipeOptional.get();
+            Etudiant etudiant = etudiantRepository.save(e);
+            log.info("contrat: " + contrat.getSpecialite());
+            log.info("equipe: " + equipe.getNomEquipe());
+            log.info("etudiant: " + etudiant.getNomE() + " " + etudiant.getPrenomE() + " " + etudiant.getOp());
+            List<Equipe> equipesMisesAjour = new ArrayList<>();
+            contrat.setEtudiant(etudiant);
+            if (etudiant.getEquipes() != null) {
+                equipesMisesAjour = etudiant.getEquipes();
+            }
+            equipesMisesAjour.add(equipe);
+            log.info("taille apres ajout : " + equipesMisesAjour.size());
+            etudiant.setEquipes(equipesMisesAjour);
+
+            return e;
+        } else {
+            // Handle the case where the Optional is empty (not found in the repository).
+            // You can throw an exception or return a default value, depending on your use case.
+            throw new NoSuchElementException("Contrat or Equipe not found");
         }
-        equipesMisesAjour.add(equipe);
-        log.info("taille apres ajout : "+equipesMisesAjour.size());
-        etudiant.setEquipes(equipesMisesAjour);
-
-
-        return e;
     }
+
 
     @Override
     public List<Etudiant> getEtudiantsByDepartement(Integer idDepartement) {
