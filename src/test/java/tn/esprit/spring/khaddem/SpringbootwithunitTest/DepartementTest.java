@@ -6,10 +6,10 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import tn.esprit.spring.khaddem.entities.Departement;
 
-class DepartementTest {
+ class DepartementTest {
 
     @Test
-    void testDepartementEntity() {
+     void testDepartementEntity() {
         Departement departement = new Departement();
         departement.setIdDepartement(1);
         departement.setNomDepart("Test Department");
