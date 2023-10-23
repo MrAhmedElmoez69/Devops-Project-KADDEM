@@ -9,6 +9,9 @@ import tn.esprit.spring.khaddem.repositories.DepartementRepository;
 import tn.esprit.spring.khaddem.repositories.UniversiteRepository;
 import javax.transaction.Transactional;
 import java.util.List;
+import java.util.Optional;
+import java.util.NoSuchElementException;
+
 
 @Service
 @Slf4j

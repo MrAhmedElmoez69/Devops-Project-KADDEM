@@ -4,8 +4,6 @@ public class UniversiteDTO {
     private String name;
     private String location;
 
-    // Constructors, getters, setters, etc.
-
     // Constructors
     public UniversiteDTO() {
     }
@@ -32,4 +30,3 @@ public class UniversiteDTO {
         this.location = location;
     }
 }
-
