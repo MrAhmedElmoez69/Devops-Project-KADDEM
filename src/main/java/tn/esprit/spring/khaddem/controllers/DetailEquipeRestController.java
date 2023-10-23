@@ -16,9 +16,9 @@ public class DetailEquipeRestController {
     @GetMapping("/retrieve-all-detail-equipes")
     @ResponseBody
     public List<DetailEquipe> getDetailEquipes() {
-        List<DetailEquipe> listDetailEquipes = detailEquipeService.retrieveAllDetailEquipes();
-        return listDetailEquipes;
+        return detailEquipeService.retrieveAllDetailEquipes();
     }
+
 
     @GetMapping("/retrieve-detail-equipe/{detail-equipe-id}")
     @ResponseBody
@@ -29,14 +29,13 @@ public class DetailEquipeRestController {
     @PostMapping("/add-detail-equipe")
     @ResponseBody
     public DetailEquipe addDetailEquipe(@RequestBody DetailEquipe detailEquipe) {
-        DetailEquipe addedDetailEquipe = detailEquipeService.addDetailEquipe(detailEquipe);
-        return addedDetailEquipe;
+        return detailEquipeService.addDetailEquipe(detailEquipe);
     }
 
     @PutMapping("/update-detail-equipe")
     @ResponseBody
     public DetailEquipe updateDetailEquipe(@RequestBody DetailEquipe detailEquipe) {
-        DetailEquipe updatedDetailEquipe = detailEquipeService.updateDetailEquipe(detailEquipe);
-        return updatedDetailEquipe;
+        return detailEquipeService.updateDetailEquipe(detailEquipe);
     }
+
 }
