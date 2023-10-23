@@ -30,15 +30,25 @@ public class UniversiteServiceImpl implements IUniversiteService {
 
     @Override
     public Universite addUniversite(Universite u) {
-        log.debug("u :" + u.getNomUniv());
+
         universiteRepository.save(u);
         return u;
     }
 
     @Override
-    public Universite updateUniversite(Universite u) {
-        universiteRepository.save(u);
-        return u;
+    public Universite updateUniversite(Universite updatedUniversite) {
+        String nomUniv = updatedUniversite.getNomUniv();
+        Optional<Universite> optionalUniversite = universiteRepository.findById(nomUniv);
+
+        if (optionalUniversite.isPresent()) {
+            Universite existingUniversite = optionalUniversite.get();
+            existingUniversite.setNomUniv(updatedUniversite.getNomUniv());
+            existingUniversite.setAdresse(updatedUniversite.getAdresse());
+            universiteRepository.save(existingUniversite);
+            return existingUniversite;
+        } else {
+            throw new NoSuchElementException("Universite not found with NomUniv: " + nomUniv);
+        }
     }
 
     @Override
@@ -54,10 +64,17 @@ public class UniversiteServiceImpl implements IUniversiteService {
 
     @Transactional
     public void assignUniversiteToDepartement(Integer universiteId, Integer departementId) {
-        Universite universite = universiteRepository.findById(universiteId).get();
-        Departement departement = departementRepository.findById(departementId).get();
-        universite.getDepartements().add(departement);
-        log.info("departements number " + universite.getDepartements().size());
+        Optional<Universite> optionalUniversite = universiteRepository.findById(universiteId);
+        Optional<Departement> optionalDepartement = departementRepository.findById(departementId);
+
+        if (optionalUniversite.isPresent() && optionalDepartement.isPresent()) {
+            Universite universite = optionalUniversite.get();
+            Departement departement = optionalDepartement.get();
+            universite.getDepartements().add(departement);
+            // You may want to save the changes to the entities or handle it accordingly
+        } else {
+            throw new NoSuchElementException("Universite or Departement not found with IDs: " + universiteId + ", " + departementId);
+        }
     }
 
     @Override
