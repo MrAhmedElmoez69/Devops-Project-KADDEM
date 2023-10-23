@@ -39,7 +39,7 @@ public class EquipeServiceImpl implements IEquipeService{
 
     @Override
     public Equipe retrieveEquipe(Integer idEquipe) {
-        // Log equipe by id
+
         return equipeRepository.findById(idEquipe).orElse(null); // Or throw an exception if needed
     }
 

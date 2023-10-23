@@ -3,7 +3,6 @@ package tn.esprit.spring.khaddem.controllers;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import tn.esprit.spring.khaddem.dto.EquipeDTO;
-import tn.esprit.spring.khaddem.entities.Departement;
 import tn.esprit.spring.khaddem.entities.Equipe;
 import tn.esprit.spring.khaddem.services.IEquipeService;
 import java.util.List;
