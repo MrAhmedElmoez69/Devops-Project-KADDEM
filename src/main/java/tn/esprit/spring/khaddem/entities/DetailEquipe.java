@@ -26,4 +26,28 @@ public class DetailEquipe implements Serializable {
     @JsonIgnore
     private  Equipe equipe;
     //aaaaa
+
+    public Integer getIdDetailEquipe() {
+        return idDetailEquipe;
+    }
+
+    public void setIdDetailEquipe(Integer idDetailEquipe) {
+        this.idDetailEquipe = idDetailEquipe;
+    }
+
+    public void setSalle(Integer salle) {
+        this.salle = salle;
+    }
+
+    public void setThematique(String thematique) {
+        this.thematique = thematique;
+    }
+
+    public Integer getSalle() {
+        return salle;
+    }
+
+    public String getThematique() {
+        return thematique;
+    }
 }
