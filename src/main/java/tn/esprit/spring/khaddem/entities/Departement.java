@@ -29,4 +29,7 @@ public class Departement implements Serializable {
     @JoinColumn(name = "universite_id")
     private Universite universite;
 
+
+
+
 }

@@ -7,16 +7,22 @@ import tn.esprit.spring.khaddem.entities.Departement;
 import tn.esprit.spring.khaddem.entities.Universite;
 import tn.esprit.spring.khaddem.repositories.DepartementRepository;
 import tn.esprit.spring.khaddem.repositories.UniversiteRepository;
+
 import javax.transaction.Transactional;
 import java.util.List;
+import java.util.NoSuchElementException;
+import java.util.Optional;
 
 @Service
 @Slf4j
-public abstract class UniversiteServiceImpl implements  IUniversiteService{
+public class UniversiteServiceImpl implements IUniversiteService {
+
     @Autowired
     UniversiteRepository universiteRepository;
+
     @Autowired
     DepartementRepository departementRepository;
+
     @Override
     public List<Universite> retrieveAllUniversites() {
         return universiteRepository.findAll();
@@ -24,27 +30,55 @@ public abstract class UniversiteServiceImpl implements  IUniversiteService{
 
     @Override
     public Universite addUniversite(Universite u) {
-        //log.debug("u :"+u.getNomUniv());
+
         universiteRepository.save(u);
         return u;
     }
 
     @Override
-    public Universite updateUniversite(Universite u) {
-        universiteRepository.save(u);
-        return u;
+    public Universite updateUniversite(Universite updatedUniversite) {
+        String nomUniv = updatedUniversite.getNomUniv();
+        Optional<Universite> optionalUniversite = universiteRepository.findById(nomUniv);
+
+        if (optionalUniversite.isPresent()) {
+            Universite existingUniversite = optionalUniversite.get();
+            existingUniversite.setNomUniv(updatedUniversite.getNomUniv());
+            existingUniversite.setAdresse(updatedUniversite.getAdresse());
+            universiteRepository.save(existingUniversite);
+            return existingUniversite;
+        } else {
+            throw new NoSuchElementException("Universite not found with NomUniv: " + nomUniv);
+        }
     }
 
     @Override
     public Universite retrieveUniversite(Integer idUniversite) {
-        return universiteRepository.findById(idUniversite).get();
+        Optional<Universite> optionalUniversite = universiteRepository.findById(idUniversite);
+
+        if (optionalUniversite.isPresent()) {
+            return optionalUniversite.get();
+        } else {
+            throw new NoSuchElementException("Universite not found with ID: " + idUniversite);
+        }
     }
 
     @Transactional
     public void assignUniversiteToDepartement(Integer universiteId, Integer departementId) {
-        Universite universite =universiteRepository.findById(universiteId).get();
-        Departement departement=departementRepository.findById(departementId).get();
-        universite.getDepartements().add(departement);
-       // log.info("departements number "+universite.getDepartements().size());
+        Optional<Universite> optionalUniversite = universiteRepository.findById(universiteId);
+        Optional<Departement> optionalDepartement = departementRepository.findById(departementId);
+
+        if (optionalUniversite.isPresent() && optionalDepartement.isPresent()) {
+            Universite universite = optionalUniversite.get();
+            Departement departement = optionalDepartement.get();
+            universite.getDepartements().add(departement);
+            // You may want to save the changes to the entities or handle it accordingly
+        } else {
+            throw new NoSuchElementException("Universite or Departement not found with IDs: " + universiteId + ", " + departementId);
+        }
+    }
+
+    @Override
+    public void removeUniversite(Integer idUniversite) {
+        universiteRepository.deleteById(idUniversite);
     }
 }

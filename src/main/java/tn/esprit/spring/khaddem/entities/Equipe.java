@@ -1,10 +1,8 @@
 package tn.esprit.spring.khaddem.entities;
 
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.*;
-import lombok.experimental.FieldDefaults;
 
+import lombok.*;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.List;

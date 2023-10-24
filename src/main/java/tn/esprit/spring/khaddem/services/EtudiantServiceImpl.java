@@ -10,9 +10,12 @@ import tn.esprit.spring.khaddem.repositories.EtudiantRepository;
 import tn.esprit.spring.khaddem.repositories.ContratRepository;
 
 
+import javax.persistence.EntityNotFoundException;
 import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.NoSuchElementException;
+import java.util.Optional;
 
 @Service
 @Slf4j
@@ -39,14 +42,26 @@ public class EtudiantServiceImpl implements IEtudiantService{
 
     @Override
     public Etudiant updateEtudiant(Etudiant e) {
-        etudiantRepository.save(e);
-        return e;
+        if (etudiantRepository.existsById(e.getIdEtudiant())) {
+            etudiantRepository.save(e);
+            return e;
+        } else {
+            return etudiantRepository.save(e);
+        }
     }
+
 
     @Override
     public Etudiant retrieveEtudiant(Integer idEtudiant) {
-        return etudiantRepository.findById(idEtudiant).get();
+        Optional<Etudiant> optionalEtudiant = etudiantRepository.findById(idEtudiant);
+        if (optionalEtudiant.isPresent()) {
+            return optionalEtudiant.get();
+        } else {
+            // Handle the case where the student doesn't exist, e.g., throw an exception
+            throw new EntityNotFoundException("Student with ID " + idEtudiant + " not found");
+        }
     }
+
 
     @Override
     public void removeEtudiant(Integer idEtudiant) {
@@ -55,10 +70,19 @@ public class EtudiantServiceImpl implements IEtudiantService{
 
     @Override
     public void assignEtudiantToDepartement(Integer etudiantId, Integer departementId) {
-        Etudiant e = etudiantRepository.findById(etudiantId).get();
-        Departement d= departementRepository.findById(departementId).get();
-        e.setDepartement(d);
-        etudiantRepository.save(e);
+        Optional<Etudiant> optionalEtudiant = etudiantRepository.findById(etudiantId);
+        Optional<Departement> optionalDepartement = departementRepository.findById(departementId);
+
+        if (optionalEtudiant.isPresent() && optionalDepartement.isPresent()) {
+            Etudiant e = optionalEtudiant.get();
+            Departement d = optionalDepartement.get();
+            e.setDepartement(d);
+            etudiantRepository.save(e);
+        } else {
+            // Handle the case where either the student or the department doesn't exist
+            // You can choose to throw an exception or log an error message here
+            throw new EntityNotFoundException("Student or Department not found");
+        }
     }
 
     @Override
@@ -83,30 +107,48 @@ public class EtudiantServiceImpl implements IEtudiantService{
 
     @Transactional
     public Etudiant addAndAssignEtudiantToEquipeAndContract(Etudiant e, Integer idContrat, Integer idEquipe) {
-        Contrat contrat = contratRepository.findById(idContrat).get();
-        Equipe equipe=equipeRepository.findById(idEquipe).get();
-        Etudiant etudiant= etudiantRepository.save(e);
-        log.info("contrat: "+contrat.getSpecialite());
-        log.info("equipe: "+equipe.getNomEquipe());
-        log.info("etudiant: "+etudiant.getNomE()+" "+etudiant.getPrenomE()+" "+etudiant.getOp());
-        List<Equipe> equipesMisesAjour = new ArrayList<>();
-        contrat.setEtudiant(etudiant);
-        if(etudiant.getEquipes()!=null) {
-            equipesMisesAjour=etudiant.getEquipes();
+        Optional<Contrat> contratOptional = contratRepository.findById(idContrat);
+        Optional<Equipe> equipeOptional = equipeRepository.findById(idEquipe);
+
+        if (contratOptional.isPresent() && equipeOptional.isPresent()) {
+            Contrat contrat = contratOptional.get();
+            Equipe equipe = equipeOptional.get();
+            Etudiant etudiant = etudiantRepository.save(e);
+            log.info("contrat: " + contrat.getSpecialite());
+            log.info("equipe: " + equipe.getNomEquipe());
+            log.info("etudiant: " + etudiant.getNomE() + " " + etudiant.getPrenomE() + " " + etudiant.getOp());
+            List<Equipe> equipesMisesAjour = new ArrayList<>();
+            contrat.setEtudiant(etudiant);
+            if (etudiant.getEquipes() != null) {
+                equipesMisesAjour = etudiant.getEquipes();
+            }
+            equipesMisesAjour.add(equipe);
+            log.info("taille apres ajout : " + equipesMisesAjour.size());
+            etudiant.setEquipes(equipesMisesAjour);
+
+            return e;
+        } else {
+            // Handle the case where the Optional is empty (not found in the repository).
+            // You can throw an exception or return a default value, depending on your use case.
+            throw new NoSuchElementException("Contrat or Equipe not found");
         }
-        equipesMisesAjour.add(equipe);
-        log.info("taille apres ajout : "+equipesMisesAjour.size());
-        etudiant.setEquipes(equipesMisesAjour);
-
-
-        return e;
     }
+
 
     @Override
     public List<Etudiant> getEtudiantsByDepartement(Integer idDepartement) {
-        Departement departement=departementRepository.findById(idDepartement).get();
-        return departement.getEtudiants();
+        Optional<Departement> optionalDepartement = departementRepository.findById(idDepartement);
+
+        if (optionalDepartement.isPresent()) {
+            Departement departement = optionalDepartement.get();
+            return departement.getEtudiants();
+        } else {
+            // Handle the case where the department doesn't exist
+            // You can choose to throw an exception or return an empty list, or handle it as needed
+            throw new EntityNotFoundException("Department not found");
+        }
     }
+
 
 
 }

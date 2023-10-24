@@ -28,19 +28,26 @@ public class DepartementServiceImpl implements IDepartementService{
 
     @Override
     public Departement updateDepartement(Departement d) {
-        departementRepository.save(d);
-        return d;
+        Departement existingDepartement = departementRepository.findById(d.getIdDepartement()).orElse(null);
+
+        if (existingDepartement != null) {
+            existingDepartement.setNomDepart(d.getNomDepart());
+            departementRepository.save(existingDepartement);
+        }
+
+        return existingDepartement;
     }
+
 
     @Override
     public Departement retrieveDepartement(Integer idDepart) {
-
-        return departementRepository.findById(idDepart).get();
+        return departementRepository.findById(idDepart).orElse(null);
     }
+
 
     @Override
     public List<Departement> retrieveDepartementsByUniversite(Integer idUniversite) {
-        Universite universite = universiteRepository.findById(idUniversite).get();
+        Universite universite = universiteRepository.findById(idUniversite).orElse(new Universite());
         return universite.getDepartements();
     }
 }
