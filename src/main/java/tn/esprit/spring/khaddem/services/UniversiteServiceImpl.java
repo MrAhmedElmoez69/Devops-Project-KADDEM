@@ -38,7 +38,7 @@ public class UniversiteServiceImpl implements IUniversiteService {
     @Override
     public Universite updateUniversite(Universite updatedUniversite) {
         String nomUniv = updatedUniversite.getNomUniv();
-        Optional<Universite> optionalUniversite = universiteRepository.findById(nomUniv);
+        Optional<Universite> optionalUniversite = universiteRepository.findByNomUniv(nomUniv);
 
         if (optionalUniversite.isPresent()) {
             Universite existingUniversite = optionalUniversite.get();
@@ -50,6 +50,7 @@ public class UniversiteServiceImpl implements IUniversiteService {
             throw new NoSuchElementException("Universite not found with NomUniv: " + nomUniv);
         }
     }
+
 
     @Override
     public Universite retrieveUniversite(Integer idUniversite) {

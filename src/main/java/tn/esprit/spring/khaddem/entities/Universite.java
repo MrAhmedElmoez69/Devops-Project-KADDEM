@@ -20,8 +20,8 @@ public class Universite implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer idUniversite;
-    private String nomUniv; // Change variable name from name to nomUniv
-    private String adresse;  // Add a field for adresse
+    private String nomUniv;
+    private String adresse;
     @OneToMany(mappedBy = "universite", cascade = CascadeType.ALL)
     private List<Departement> departements;
 

@@ -11,7 +11,7 @@ class UniversiteTest {
     @Test
     void testUniversiteEntity() {
         Universite universite = new Universite();
-        universite.setNomUniv("Test University");  // Fixed this line
+        universite.setNomUniv("Test University");
         universite.setAdresse("Test Location");
 
         assertEquals("Test University", universite.getNomUniv());
