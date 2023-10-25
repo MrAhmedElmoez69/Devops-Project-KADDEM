@@ -7,7 +7,7 @@ import tn.esprit.spring.khaddem.entities.Contrat;
 import tn.esprit.spring.khaddem.entities.Specialite;
 
 import java.util.Calendar;
-import java.util.Date;
+
 
 class ContratTest {
 
@@ -15,8 +15,15 @@ class ContratTest {
     void testContratEntity() {
         Contrat contrat = new Contrat();
         contrat.setIdContrat(1);
-        contrat.setDateDebutContrat(new Date(2024, Calendar.JANUARY, 1));
-        contrat.setDateFinContrat(new Date(2024, Calendar.FEBRUARY, 30));
+
+        Calendar calendarDebut = Calendar.getInstance();
+        calendarDebut.set(2024, Calendar.JANUARY, 1);
+        contrat.setDateDebutContrat(calendarDebut.getTime());
+
+        Calendar calendarFin = Calendar.getInstance();
+        calendarFin.set(2024, Calendar.FEBRUARY, 29); // Note: 2024 is a leap year, so February has 29 days.
+        contrat.setDateFinContrat(calendarFin.getTime());
+
         contrat.setSpecialite(Specialite.IA);
         contrat.setArchived(true);
         contrat.setMontantContrat(123);
