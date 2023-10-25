@@ -20,29 +20,21 @@ public class Universite implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer idUniversite;
+    // Add getters and setters for nomUniv and adresse
+    @Getter
     private String nomUniv;
+    @Getter
     private String adresse;
+    @Getter
     @OneToMany(mappedBy = "universite", cascade = CascadeType.ALL)
     private List<Departement> departements;
 
-    // Add getters and setters for nomUniv and adresse
-    public String getNomUniv() {
-        return nomUniv;
-    }
-
     public void setNomUniv(String nomUniv) {
         this.nomUniv = nomUniv;
-    }
-
-    public String getAdresse() {
-        return adresse;
     }
 
     public void setAdresse(String adresse) {
         this.adresse = adresse;
     }
 
-    public List<Departement> getDepartements() {
-        return departements;
-    }
 }

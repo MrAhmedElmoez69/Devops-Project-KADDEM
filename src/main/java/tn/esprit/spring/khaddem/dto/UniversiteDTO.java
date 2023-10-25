@@ -1,6 +1,10 @@
 package tn.esprit.spring.khaddem.dto;
 
+import lombok.Getter;
+
+@Getter
 public class UniversiteDTO {
+    // Getters and setters
     private String name;
     private String location;
 
@@ -13,17 +17,8 @@ public class UniversiteDTO {
         this.location = location;
     }
 
-    // Getters and setters
-    public String getName() {
-        return name;
-    }
-
     public void setName(String name) {
         this.name = name;
-    }
-
-    public String getLocation() {
-        return location;
     }
 
     public void setLocation(String location) {
