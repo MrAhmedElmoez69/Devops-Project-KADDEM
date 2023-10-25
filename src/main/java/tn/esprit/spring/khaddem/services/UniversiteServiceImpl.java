@@ -62,7 +62,10 @@ public class UniversiteServiceImpl implements IUniversiteService {
             throw new NoSuchElementException("Universite not found with ID: " + idUniversite);
         }
     }
-
+    @Override
+    public void removeUniversite(Integer idUniversite) {
+        universiteRepository.deleteById(idUniversite);
+    }
     @Transactional
     public void assignUniversiteToDepartement(Integer universiteId, Integer departementId) {
         Optional<Universite> optionalUniversite = universiteRepository.findById(universiteId);
@@ -78,8 +81,4 @@ public class UniversiteServiceImpl implements IUniversiteService {
         }
     }
 
-    @Override
-    public void removeUniversite(Integer idUniversite) {
-        universiteRepository.deleteById(idUniversite);
-    }
 }
