@@ -15,6 +15,7 @@ import java.util.List;
 public class DepartementRestController {
     @Autowired
     IDepartementService departementService;
+
     // http://localhost:8089/Kaddem/departement/retrieve-all-departements
     @GetMapping("/retrieve-all-departements")
     @ResponseBody

@@ -30,7 +30,6 @@ public class UniversiteServiceImpl implements IUniversiteService {
 
     @Override
     public Universite addUniversite(Universite u) {
-
         universiteRepository.save(u);
         return u;
     }
@@ -54,13 +53,8 @@ public class UniversiteServiceImpl implements IUniversiteService {
 
     @Override
     public Universite retrieveUniversite(Integer idUniversite) {
-        Optional<Universite> optionalUniversite = universiteRepository.findById(idUniversite);
+        return universiteRepository.findById(idUniversite).orElse(null);
 
-        if (optionalUniversite.isPresent()) {
-            return optionalUniversite.get();
-        } else {
-            throw new NoSuchElementException("Universite not found with ID: " + idUniversite);
-        }
     }
     @Override
     public void removeUniversite(Integer idUniversite) {

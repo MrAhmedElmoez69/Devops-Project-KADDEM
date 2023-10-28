@@ -50,12 +50,12 @@ class UniversiteServiceTest {
     @Test
     void testAddUniversite_ShouldAddUniversite() {
         UniversiteDTO universiteDTO = new UniversiteDTO();
-        universiteDTO.setName("Test University");
-        universiteDTO.setLocation("Test Location");
+        universiteDTO.setNomUniv("Test University");
+        universiteDTO.setAdresse("Test Location");
 
         Universite addedUniversite = new Universite();
-        addedUniversite.setNomUniv(universiteDTO.getName());
-        addedUniversite.setAdresse(universiteDTO.getLocation());
+        addedUniversite.setNomUniv(universiteDTO.getNomUniv());
+        addedUniversite.setAdresse(universiteDTO.getAdresse());
 
         when(universiteRepository.save(addedUniversite)).thenReturn(addedUniversite);
 
