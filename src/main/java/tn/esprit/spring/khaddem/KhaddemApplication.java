@@ -6,6 +6,7 @@ import org.springframework.context.annotation.ComponentScan;
 
 @SpringBootApplication
 @ComponentScan(basePackages = "tn.esprit.spring.khaddem.services")
+@ComponentScan(basePackages = "tn.esprit.spring.khaddem")
 public class KhaddemApplication {
 
     public static void main(String[] args) {
