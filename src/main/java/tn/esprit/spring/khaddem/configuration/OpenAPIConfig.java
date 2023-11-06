@@ -1,4 +1,4 @@
-package tn.esprit.spring.khaddem.configuration;
+/* package tn.esprit.spring.khaddem.configuration;
 
 import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.info.Contact;
@@ -22,3 +22,4 @@ public class OpenAPIConfig {
     }
 }
 
+*/
