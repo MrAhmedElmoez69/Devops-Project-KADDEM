@@ -23,6 +23,11 @@ public class UniversiteServiceImpl implements IUniversiteService {
     @Autowired
     DepartementRepository departementRepository;
 
+
+    public void setUniversiteRepository(UniversiteRepository universiteRepository) {
+        this.universiteRepository = universiteRepository;
+    }
+
     @Override
     public List<Universite> retrieveAllUniversites() {
         return universiteRepository.findAll();
