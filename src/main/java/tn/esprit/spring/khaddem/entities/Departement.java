@@ -9,6 +9,7 @@ import lombok.Setter;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.List;
+import java.util.Objects;
 
 @Entity
 @Getter
@@ -29,6 +30,19 @@ public class Departement implements Serializable {
     @JoinColumn(name = "universite_id")
     private Universite universite;
 
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Departement other = (Departement) o;
+        return idDepartement == other.idDepartement && Objects.equals(nomDepart, other.nomDepart);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(idDepartement, nomDepart);
+    }
 
 
 
