@@ -2,6 +2,7 @@ package tn.esprit.spring.khaddem.entities;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.Objects;
 import javax.persistence.*;
 
 
@@ -105,5 +106,8 @@ public class Contrat implements Serializable {
         this.montantContrat = montantContrat;
         this.etudiant = etudiant;
     }
-    
+
+
+
+
 }
