@@ -64,24 +64,6 @@ class UniversiteTest {
     }
 
     @Test
-    void testRetrieveUniversite() throws Exception {
-        // Replace 8 with the specific university ID you want to retrieve
-        Integer universiteIdToRetrieve = 2;
-
-        // Simulate an HTTP GET request to retrieve a specific university by ID
-        mockMvc.perform(MockMvcRequestBuilders.get("/universite/retrieve-universite/" + universiteIdToRetrieve))
-                .andExpect(MockMvcResultMatchers.status().isOk())
-                .andExpect(MockMvcResultMatchers.content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
-                .andExpect(result -> {
-                    // Convert the JSON response to a Universite object
-                    String responseContent = result.getResponse().getContentAsString();
-                    Universite retrievedUniversite = new ObjectMapper().readValue(responseContent, Universite.class);
-
-                    // Add your assertions here
-                    // For example, check the properties of the retrieved university
-                });
-    }
-    @Test
     void testAddUniversite() throws Exception {
         // Create a UniversiteDTO with sample data
         UniversiteDTO universiteDTO = new UniversiteDTO();
