@@ -16,10 +16,13 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import tn.esprit.spring.khaddem.dto.UniversiteDTO;
+import tn.esprit.spring.khaddem.entities.Departement;
 import tn.esprit.spring.khaddem.entities.Universite;
 import tn.esprit.spring.khaddem.repositories.UniversiteRepository;
 import tn.esprit.spring.khaddem.services.UniversiteServiceImpl;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @SpringBootTest
@@ -46,6 +49,31 @@ class UniversiteTest {
         assertEquals("Test University", universite.getNomUniv());
         assertEquals("Test Location", universite.getAdresse());
     }
+
+    @Test
+    void testUniversiteDTO() {
+        // Create a UniversiteDTO with sample data
+        UniversiteDTO universiteDTO = new UniversiteDTO();
+        universiteDTO.setIdUniversite(1);
+        universiteDTO.setNomUniv("Test University");
+        universiteDTO.setAdresse("123 Test Street");
+
+        // Create a list of DepartementDTOs and set it in the UniversiteDTO
+        List<Departement> departements = new ArrayList<>();
+        Departement departement1 = new Departement();
+        departement1.setIdDepartement(1);
+        departement1.setNomDepart("Department A");
+        departements.add(departement1);
+        universiteDTO.setDepartements(departements);
+
+        // Check if the getter methods return the expected values
+        assertEquals(1, universiteDTO.getIdUniversite());
+        assertEquals("Test University", universiteDTO.getNomUniv());
+        assertEquals("123 Test Street", universiteDTO.getAdresse());
+
+        // You can add more checks for other fields as needed
+    }
+
 
     @Test
     void testGetUniversites() throws Exception {
