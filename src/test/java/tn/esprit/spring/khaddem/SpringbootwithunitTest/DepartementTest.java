@@ -35,6 +35,20 @@ class DepartementTest {
     }
 
     @Test
+    void testDepartementDTO() {
+        // Create a DepartementDTO with sample data
+        DepartementDTO departementDTO = new DepartementDTO();
+        departementDTO.setIdDepartement(1);
+        departementDTO.setNomDepart("Test Department");
+
+        // Check if the getter methods return the expected values
+        assertEquals(1, departementDTO.getIdDepartement());
+        assertEquals("Test Department", departementDTO.getNomDepart());
+
+        // You can add more checks for other fields as needed
+    }
+
+    @Test
     void testDepartementEquality() {
         Departement departement1 = new Departement();
         departement1.setIdDepartement(1);
