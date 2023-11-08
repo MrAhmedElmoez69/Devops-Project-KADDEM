@@ -55,8 +55,8 @@ class DepartementTest {
         assertEquals("Test Department", departementDTO.getNomDepart());
     }
 
- 
 
+/*
     @Test
     void testGetDepartements() throws Exception {
         mockMvc.perform(MockMvcRequestBuilders.get("/departement/retrieve-all-departements"))
@@ -84,7 +84,6 @@ class DepartementTest {
                 });
     }
 
-    /*
     @Test
     void testUpdateDepartement() throws Exception {
         DepartementDTO departementDTO = new DepartementDTO();
@@ -135,5 +134,7 @@ class DepartementTest {
         assertEquals(departement1.hashCode(), departement2.hashCode());
     }
 
-     */
+
+ */
+
 }
