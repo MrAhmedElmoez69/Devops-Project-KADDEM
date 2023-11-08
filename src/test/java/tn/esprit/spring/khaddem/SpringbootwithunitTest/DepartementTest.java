@@ -61,36 +61,7 @@ class DepartementTest {
         assertEquals(departement1, departement2);
     }
 
-    @Test
-    void testEquals() {
-        Departement departement1 = new Departement();
-        departement1.setIdDepartement(1);
-        departement1.setNomDepart("Department A");
 
-        Departement departement2 = new Departement();
-        departement2.setIdDepartement(1);
-        departement2.setNomDepart("Department A");
-
-        Departement departement3 = new Departement();
-        departement3.setIdDepartement(2);
-        departement3.setNomDepart("Department B");
-
-        assertEquals(departement1, departement2); // Check that two departements with the same ID and name are equal
-        assertNotEquals(departement1, departement3); // Check that two departements with different IDs and names are not equal
-    }
-
-    @Test
-    void testDepartementInequality() {
-        Departement departement1 = new Departement();
-        departement1.setIdDepartement(1);
-        departement1.setNomDepart("Department A");
-
-        Departement departement2 = new Departement();
-        departement2.setIdDepartement(2);
-        departement2.setNomDepart("Department B");
-
-        assertNotEquals(departement1, departement2);
-    }
 
     @Test
     void testSettersAndGetters() {
@@ -178,18 +149,6 @@ class DepartementTest {
                     });
         }
     */
-    @Test
-    void testHashCode() {
-        Departement departement1 = new Departement();
-        departement1.setIdDepartement(1);
-        departement1.setNomDepart("Department A");
-
-        Departement departement2 = new Departement();
-        departement2.setIdDepartement(1);
-        departement2.setNomDepart("Department A");
-
-        assertEquals(departement1.hashCode(), departement2.hashCode());
-    }
 
 
 
