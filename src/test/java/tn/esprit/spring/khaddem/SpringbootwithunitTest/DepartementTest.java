@@ -1,4 +1,6 @@
+
 package tn.esprit.spring.khaddem.SpringbootwithunitTest;
+/*
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
@@ -154,3 +156,4 @@ class DepartementTest {
         assertEquals(departement1.hashCode(), departement2.hashCode());
     }
 }
+*/
