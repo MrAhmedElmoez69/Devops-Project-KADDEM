@@ -63,9 +63,10 @@ class DepartementTest {
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.content().contentType("application/json"));
     }
+*/
 
     @Test
-    void testAddDepartement() throws Exception {
+    void testAddDepartement_rest() throws Exception {
         DepartementDTO departementDTO = new DepartementDTO();
         departementDTO.setNomDepart("Test Department");
 
@@ -83,7 +84,7 @@ class DepartementTest {
                     assertEquals("Test Department", addedDepartement.getNomDepart());
                 });
     }
-
+/*
     @Test
     void testUpdateDepartement() throws Exception {
         DepartementDTO departementDTO = new DepartementDTO();
@@ -104,6 +105,7 @@ class DepartementTest {
                     assertEquals("Updated Department", updatedDepartement.getNomDepart());
                 });
     }
+
 
 
 
