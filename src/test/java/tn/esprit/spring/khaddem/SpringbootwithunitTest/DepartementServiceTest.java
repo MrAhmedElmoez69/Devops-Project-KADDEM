@@ -77,27 +77,22 @@ class DepartementServiceTest {
 
     @Test
     void testUpdateDepartement() {
-        // Prepare the input data
         int departementId = 1;
         String updatedName = "Updated Department";
         DepartementDTO departementDTO = new DepartementDTO();
         departementDTO.setIdDepartement(departementId);
         departementDTO.setNomDepart(updatedName);
 
-        // Mock the behavior of the service
         Departement existingDepartement = new Departement();
         existingDepartement.setIdDepartement(departementId);
         existingDepartement.setNomDepart("Old Department");
 
         when(departementRepository.findById(departementId)).thenReturn(Optional.of(existingDepartement));
 
-        // Create an instance of the controller
         DepartementRestController departementController = new DepartementRestController(departementService);
 
-        // Call the method you want to test
         Departement updatedDepartement = departementController.updateDepartement(departementDTO);
 
-        // Assert the result
         assertEquals(updatedName, updatedDepartement.getNomDepart());
     }
 
