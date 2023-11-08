@@ -1,6 +1,6 @@
 
 package tn.esprit.spring.khaddem.SpringbootwithunitTest;
-
+/*
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
@@ -56,14 +56,14 @@ class DepartementTest {
     }
 
 
-/*
+
     @Test
     void testGetDepartements() throws Exception {
         mockMvc.perform(MockMvcRequestBuilders.get("/departement/retrieve-all-departements"))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.content().contentType("application/json"));
     }
-*/
+
 
     @Test
     void testAddDepartement_rest() throws Exception {
@@ -84,7 +84,7 @@ class DepartementTest {
                     assertEquals("Test Department", addedDepartement.getNomDepart());
                 });
     }
-/*
+
     @Test
     void testUpdateDepartement() throws Exception {
         DepartementDTO departementDTO = new DepartementDTO();
@@ -137,6 +137,8 @@ class DepartementTest {
     }
 
 
- */
 
 }
+
+
+ */
