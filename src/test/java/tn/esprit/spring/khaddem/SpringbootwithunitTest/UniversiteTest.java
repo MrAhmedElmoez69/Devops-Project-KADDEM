@@ -4,9 +4,9 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import org.junit.runner.RunWith;
-import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnitRunner;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -21,9 +21,10 @@ import tn.esprit.spring.khaddem.entities.Universite;
 import tn.esprit.spring.khaddem.repositories.UniversiteRepository;
 import tn.esprit.spring.khaddem.services.UniversiteServiceImpl;
 
+import static org.mockito.Mockito.when;
+
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @SpringBootTest
 @AutoConfigureMockMvc
@@ -121,8 +122,109 @@ class UniversiteTest {
     }
 
 
+    /*
+    @Test
+    void testUpdateUniversite() throws Exception {
+        // Create a UniversiteDTO with updated data
+        UniversiteDTO updatedUniversiteDTO = new UniversiteDTO();
+        updatedUniversiteDTO.setNomUniv("Updated University");
+        updatedUniversiteDTO.setAdresse("Updated Location");
+
+        // Convert the updated UniversiteDTO to JSON
+        ObjectMapper objectMapper = new ObjectMapper();
+        String updatedUniversiteJson = objectMapper.writeValueAsString(updatedUniversiteDTO);
+
+        // Simulate an HTTP PUT request to update an existing university
+        mockMvc.perform(MockMvcRequestBuilders.put("/universite/update-universite")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(updatedUniversiteJson))
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
+                .andExpect(result -> {
+                    // Convert the JSON response to a UniversiteDTO object
+                    String responseContent = result.getResponse().getContentAsString();
+                    UniversiteDTO updatedUniversiteResponse = objectMapper.readValue(responseContent, UniversiteDTO.class);
+
+                    // Add your assertions here
+                    // For example, check if the updated university matches the input DTO
+                    assertEquals("Updated University", updatedUniversiteResponse.getNomUniv());
+                    assertEquals("Updated Location", updatedUniversiteResponse.getAdresse());
+                });
+    }
+
+
+     */
+
+/*    @Test
+    void testAssignUniversiteToDepartement() throws Exception {
+        // Simulate an HTTP PUT request to assign a university to a department
+        mockMvc.perform(MockMvcRequestBuilders.put("/universite/assignUniversiteToDepartement/1/1"))
+                .andExpect(MockMvcResultMatchers.status().isOk());
+
+        // Add your assertions here
+        // For example, check if the university is successfully assigned to the department
+    }
 
 
 
+ */
+    @Test
+    void testUniversiteConstructor() {
+    Universite universite = new Universite();
+    assertNotNull(universite);
+}
 
+    @Test
+     void testUniversiteGettersAndSetters() {
+        Universite universite = new Universite();
+        universite.setIdUniversite(1);
+        universite.setNomUniv("Esprit");
+        universite.setAdresse("71489632Esprit");
+
+        assertEquals(1, universite.getIdUniversite());
+        assertEquals("Esprit", universite.getNomUniv());
+        assertEquals("71489632Esprit", universite.getAdresse());
+    }
+
+
+    @Test
+     void testUniversiteToString() {
+        Universite universite = new Universite();
+        universite.setIdUniversite(1);
+        universite.setNomUniv("Esprit");
+        universite.setAdresse("71489632Esprit");
+
+        String expectedString = "Universite{idUniversite=1, nomUniv='Esprit', adresse='71489632Esprit', departements=null}";
+        assertEquals(expectedString, universite.toString());
+    }
+
+
+
+    @Test
+     void testAddUniversite_service() {
+        Universite universite = new Universite();
+        when(universiteRepository.save(universite)).thenReturn(universite);
+
+        Universite result = universiteService.addUniversite(universite);
+
+        assertEquals(universite, result);
+    }
+
+
+    /*
+    @Test
+     void testRetrieveAllUniversites_service() {
+        // Arrange
+        List<Universite> universites = new ArrayList<>();
+        when(universiteRepository.findAll()).thenReturn(universites);
+
+        // Act
+        List<Universite> result = universiteService.retrieveAllUniversites();
+
+        // Assert
+        assertEquals(universites, result);
+    }
+
+
+     */
 }
