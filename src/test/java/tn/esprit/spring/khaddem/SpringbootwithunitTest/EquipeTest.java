@@ -141,6 +141,21 @@ public class EquipeTest {
         // You can add more checks for other fields as needed
     }
 
+    @Test
+    void testGetterAndSetter_DTO() {
+        EquipeDTO equipeDTO = new EquipeDTO();
+
+        // Set values using setters
+        equipeDTO.setIdEquipe(1);
+        equipeDTO.setNomEquipe("Test Equipe");
+        equipeDTO.setNiveau(Niveau.JUNIOR);
+
+        // Check if getters return the expected values
+        assertEquals(1, equipeDTO.getIdEquipe());
+        assertEquals("Test Equipe", equipeDTO.getNomEquipe());
+        assertEquals(Niveau.JUNIOR, equipeDTO.getNiveau());
+    }
+
 
     @Test
      void testRetrieveEquipe_Rest() throws Exception {
