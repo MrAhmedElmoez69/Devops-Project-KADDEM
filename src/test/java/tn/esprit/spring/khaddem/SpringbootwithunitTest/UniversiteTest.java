@@ -2,11 +2,13 @@ package tn.esprit.spring.khaddem.SpringbootwithunitTest;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
+import static org.mockito.Mockito.*;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import org.junit.runner.RunWith;
+import org.mockito.InjectMocks;
 import org.mockito.junit.MockitoJUnitRunner;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -15,6 +17,7 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
+import tn.esprit.spring.khaddem.controllers.UniversiteRestController;
 import tn.esprit.spring.khaddem.dto.UniversiteDTO;
 import tn.esprit.spring.khaddem.entities.Departement;
 import tn.esprit.spring.khaddem.entities.Universite;
@@ -31,16 +34,33 @@ import java.util.List;
 @RunWith(MockitoJUnitRunner.class)
 class UniversiteTest {
 
-
     @Autowired
     private MockMvc mockMvc;
+
     @Autowired
     private UniversiteRepository universiteRepository;
 
     @Autowired
     private UniversiteServiceImpl universiteService;
 
+    @InjectMocks
+    private UniversiteRestController universiteController;
 
+
+
+
+    @Test
+     void testAllArgsConstructor() {
+        // Create an instance using the @AllArgsConstructor constructor
+        Universite universite = new Universite(1, "Univ", "Tunis", null);
+
+        // Perform assertions to validate the object's state
+        assertNotNull(universite);
+        assertEquals(1, universite.getIdUniversite());
+        assertEquals("Univ", universite.getNomUniv());
+        assertEquals("Tunis", universite.getAdresse());
+        // You can add more assertions for the 'departements' list if needed.
+    }
     @Test
     void testUniversiteEntity() {
         Universite universite = new Universite();
@@ -121,53 +141,6 @@ class UniversiteTest {
                 });
     }
 
-
-    /*
-    @Test
-    void testUpdateUniversite() throws Exception {
-        // Create a UniversiteDTO with updated data
-        UniversiteDTO updatedUniversiteDTO = new UniversiteDTO();
-        updatedUniversiteDTO.setNomUniv("Updated University");
-        updatedUniversiteDTO.setAdresse("Updated Location");
-
-        // Convert the updated UniversiteDTO to JSON
-        ObjectMapper objectMapper = new ObjectMapper();
-        String updatedUniversiteJson = objectMapper.writeValueAsString(updatedUniversiteDTO);
-
-        // Simulate an HTTP PUT request to update an existing university
-        mockMvc.perform(MockMvcRequestBuilders.put("/universite/update-universite")
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(updatedUniversiteJson))
-                .andExpect(MockMvcResultMatchers.status().isOk())
-                .andExpect(MockMvcResultMatchers.content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
-                .andExpect(result -> {
-                    // Convert the JSON response to a UniversiteDTO object
-                    String responseContent = result.getResponse().getContentAsString();
-                    UniversiteDTO updatedUniversiteResponse = objectMapper.readValue(responseContent, UniversiteDTO.class);
-
-                    // Add your assertions here
-                    // For example, check if the updated university matches the input DTO
-                    assertEquals("Updated University", updatedUniversiteResponse.getNomUniv());
-                    assertEquals("Updated Location", updatedUniversiteResponse.getAdresse());
-                });
-    }
-
-
-     */
-
-/*    @Test
-    void testAssignUniversiteToDepartement() throws Exception {
-        // Simulate an HTTP PUT request to assign a university to a department
-        mockMvc.perform(MockMvcRequestBuilders.put("/universite/assignUniversiteToDepartement/1/1"))
-                .andExpect(MockMvcResultMatchers.status().isOk());
-
-        // Add your assertions here
-        // For example, check if the university is successfully assigned to the department
-    }
-
-
-
- */
     @Test
     void testUniversiteConstructor() {
     Universite universite = new Universite();
@@ -187,6 +160,7 @@ class UniversiteTest {
     }
 
 
+
     @Test
      void testUniversiteToString() {
         Universite universite = new Universite();
@@ -199,34 +173,6 @@ class UniversiteTest {
     }
 
 
-/*
-    @Test
-     void testAddUniversite_service() {
-        Universite universite = new Universite();
-        when(universiteRepository.save(universite)).thenReturn(universite);
-
-        Universite result = universiteService.addUniversite(universite);
-
-        assertEquals(universite, result);
-    }
 
 
-
- */
-    /*
-    @Test
-     void testRetrieveAllUniversites_service() {
-        // Arrange
-        List<Universite> universites = new ArrayList<>();
-        when(universiteRepository.findAll()).thenReturn(universites);
-
-        // Act
-        List<Universite> result = universiteService.retrieveAllUniversites();
-
-        // Assert
-        assertEquals(universites, result);
-    }
-
-
-     */
 }
