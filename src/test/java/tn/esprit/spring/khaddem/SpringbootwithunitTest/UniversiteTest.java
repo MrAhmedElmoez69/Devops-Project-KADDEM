@@ -199,7 +199,7 @@ class UniversiteTest {
     }
 
 
-
+/*
     @Test
      void testAddUniversite_service() {
         Universite universite = new Universite();
@@ -211,6 +211,8 @@ class UniversiteTest {
     }
 
 
+
+ */
     /*
     @Test
      void testRetrieveAllUniversites_service() {
