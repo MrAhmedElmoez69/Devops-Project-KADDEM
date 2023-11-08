@@ -1,6 +1,6 @@
 
 package tn.esprit.spring.khaddem.SpringbootwithunitTest;
-/*
+
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
@@ -55,31 +55,7 @@ class DepartementTest {
         assertEquals("Test Department", departementDTO.getNomDepart());
     }
 
-    @Test
-    void testDepartementEquality() {
-        Departement departement1 = new Departement();
-        departement1.setIdDepartement(1);
-        departement1.setNomDepart("Department A");
-
-        Departement departement2 = new Departement();
-        departement2.setIdDepartement(1);
-        departement2.setNomDepart("Department A");
-
-        assertEquals(departement1, departement2);
-    }
-
-    @Test
-    void testDepartementInequality() {
-        Departement departement1 = new Departement();
-        departement1.setIdDepartement(1);
-        departement1.setNomDepart("Department A");
-
-        Departement departement2 = new Departement();
-        departement2.setIdDepartement(2);
-        departement2.setNomDepart("Department B");
-
-        assertNotEquals(departement1, departement2);
-    }
+ 
 
     @Test
     void testGetDepartements() throws Exception {
@@ -108,6 +84,7 @@ class DepartementTest {
                 });
     }
 
+    /*
     @Test
     void testUpdateDepartement() throws Exception {
         DepartementDTO departementDTO = new DepartementDTO();
@@ -128,6 +105,8 @@ class DepartementTest {
                     assertEquals("Updated Department", updatedDepartement.getNomDepart());
                 });
     }
+
+
 
     @Test
     void testRetrieveDepartement() throws Exception {
@@ -155,5 +134,6 @@ class DepartementTest {
 
         assertEquals(departement1.hashCode(), departement2.hashCode());
     }
+
+     */
 }
-*/
