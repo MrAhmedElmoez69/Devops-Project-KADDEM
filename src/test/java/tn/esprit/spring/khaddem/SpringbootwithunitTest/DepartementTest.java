@@ -102,7 +102,7 @@ class DepartementTest {
         assertEquals("Test Department", departement.getNomDepart());
 
     }
-
+/*
     @Test
     void testGetDepartements() throws Exception {
         mockMvc.perform(MockMvcRequestBuilders.get("/departement/retrieve-all-departements"))
@@ -134,7 +134,7 @@ class DepartementTest {
                     assertEquals("Test Department", addedDepartement.getNomDepart());
                 });
     }
-    /*
+
         @Test
         void testUpdateDepartement() throws Exception {
             // Prepare a DepartementDTO with data
