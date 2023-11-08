@@ -1,5 +1,5 @@
 package tn.esprit.spring.khaddem.SpringbootwithunitTest;
-/*
+
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -134,50 +134,50 @@ class DepartementTest {
                     assertEquals("Test Department", addedDepartement.getNomDepart());
                 });
     }
+    /*
+        @Test
+        void testUpdateDepartement() throws Exception {
+            // Prepare a DepartementDTO with data
+            DepartementDTO departementDTO = new DepartementDTO();
+            departementDTO.setIdDepartement(1); // Existing departement ID
+            departementDTO.setNomDepart("Updated Department");
 
-    @Test
-    void testUpdateDepartement() throws Exception {
-        // Prepare a DepartementDTO with data
-        DepartementDTO departementDTO = new DepartementDTO();
-        departementDTO.setIdDepartement(1); // Existing departement ID
-        departementDTO.setNomDepart("Updated Department");
+            // Convert DepartementDTO to JSON
+            ObjectMapper objectMapper = new ObjectMapper();
+            String departementJson = objectMapper.writeValueAsString(departementDTO);
 
-        // Convert DepartementDTO to JSON
-        ObjectMapper objectMapper = new ObjectMapper();
-        String departementJson = objectMapper.writeValueAsString(departementDTO);
+            mockMvc.perform(MockMvcRequestBuilders.put("/departement/update-departement")
+                            .contentType(MediaType.APPLICATION_JSON)
+                            .content(departementJson))
+                    .andExpect(MockMvcResultMatchers.status().isOk())
+                    .andExpect(MockMvcResultMatchers.content().contentType("application/json"))
+                    .andExpect(result -> {
+                        String responseContent = result.getResponse().getContentAsString();
+                        Departement updatedDepartement = objectMapper.readValue(responseContent, Departement.class);
 
-        mockMvc.perform(MockMvcRequestBuilders.put("/departement/update-departement")
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(departementJson))
-                .andExpect(MockMvcResultMatchers.status().isOk())
-                .andExpect(MockMvcResultMatchers.content().contentType("application/json"))
-                .andExpect(result -> {
-                    String responseContent = result.getResponse().getContentAsString();
-                    Departement updatedDepartement = objectMapper.readValue(responseContent, Departement.class);
+                        // Validate the response data if needed
+                        assertEquals("Updated Department", updatedDepartement.getNomDepart());
+                    });
+        }
 
-                    // Validate the response data if needed
-                    assertEquals("Updated Department", updatedDepartement.getNomDepart());
-                });
-    }
+        @Test
+        void testRetrieveDepartement() throws Exception {
+            // Perform a GET request to retrieve a specific departement by ID (e.g., ID 8)
+            mockMvc.perform(MockMvcRequestBuilders.get("/departement/retrieve-departement/1"))
+                    .andExpect(MockMvcResultMatchers.status().isOk())
+                    .andExpect(MockMvcResultMatchers.content().contentType("application/json"))
+                    .andExpect(result -> {
+                        // Convert the response JSON to a Departement object
+                        String responseContent = result.getResponse().getContentAsString();
+                        ObjectMapper objectMapper = new ObjectMapper();
+                        Departement retrievedDepartement = objectMapper.readValue(responseContent, Departement.class);
 
-    @Test
-    void testRetrieveDepartement() throws Exception {
-        // Perform a GET request to retrieve a specific departement by ID (e.g., ID 8)
-        mockMvc.perform(MockMvcRequestBuilders.get("/departement/retrieve-departement/1"))
-                .andExpect(MockMvcResultMatchers.status().isOk())
-                .andExpect(MockMvcResultMatchers.content().contentType("application/json"))
-                .andExpect(result -> {
-                    // Convert the response JSON to a Departement object
-                    String responseContent = result.getResponse().getContentAsString();
-                    ObjectMapper objectMapper = new ObjectMapper();
-                    Departement retrievedDepartement = objectMapper.readValue(responseContent, Departement.class);
-
-                    // Validate the retrieved departement
-                    assertEquals(1, retrievedDepartement.getIdDepartement());
-                    // Add more validation as needed
-                });
-    }
-
+                        // Validate the retrieved departement
+                        assertEquals(1, retrievedDepartement.getIdDepartement());
+                        // Add more validation as needed
+                    });
+        }
+    */
     @Test
     void testHashCode() {
         Departement departement1 = new Departement();
@@ -195,4 +195,3 @@ class DepartementTest {
 
 }
 
- */
