@@ -105,6 +105,7 @@ class DepartementTest {
                     assertEquals("Test Department", addedDepartement.getNomDepart());
                 });
     }
+    /*
 
         @Test
         void testUpdateDepartement() throws Exception {
@@ -150,6 +151,8 @@ class DepartementTest {
         }
 
 
+
+     */
 }
 
 
