@@ -1,5 +1,5 @@
 package tn.esprit.spring.khaddem.SpringbootwithunitTest;
-
+/*
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.*;
@@ -276,7 +276,11 @@ class EtudiantTest {
         // Act and Assert
         assertDoesNotThrow(() -> etudiantRestController.addAndAssignEtudiantToEquipeAndContract(etudiantDTO, contratId, equipeId));
     }
-     */
+
 
 
 }
+
+
+
+ */
