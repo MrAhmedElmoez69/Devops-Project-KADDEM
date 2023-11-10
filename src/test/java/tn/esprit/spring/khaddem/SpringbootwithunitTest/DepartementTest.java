@@ -1,5 +1,5 @@
 package tn.esprit.spring.khaddem.SpringbootwithunitTest;
-/*
+
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -73,7 +73,7 @@ class DepartementTest {
         assertEquals("Test Department", departement.getNomDepart());
 
     }
-/*
+
     @Test
     void testGetDepartements() throws Exception {
         mockMvc.perform(MockMvcRequestBuilders.get("/departement/retrieve-all-departements"))
@@ -151,5 +151,5 @@ class DepartementTest {
 
 
 }
-*/
+
 
