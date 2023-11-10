@@ -13,15 +13,13 @@ import tn.esprit.spring.khaddem.repositories.DepartementRepository;
 import tn.esprit.spring.khaddem.repositories.UniversiteRepository;
 import tn.esprit.spring.khaddem.services.UniversiteServiceImpl;
 
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.*;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-
-import static org.mockito.Mockito.when;
-import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @ExtendWith(MockitoExtension.class)
 class UniversiteServiceTest {
@@ -105,6 +103,29 @@ class UniversiteServiceTest {
     }
 
 
+
+
+    @Test
+    void testRemoveUniversite_ShouldRemoveUniversiteById() {
+        // Create an existing university
+        Universite existingUniversite = new Universite();
+        existingUniversite.setIdUniversite(1);
+        existingUniversite.setNomUniv("Test University");
+        existingUniversite.setAdresse("Test Location");
+
+        // Mock the repository call
+        // Remove the unnecessary stubbing for findById(1)
+        // when(universiteRepository.findById(1)).thenReturn(Optional.of(existingUniversite));
+
+        // Call the service method
+        universiteService.removeUniversite(1);
+
+        // Verify that the deleteById method was called with the correct ID
+        verify(universiteRepository, times(1)).deleteById(1);
+    }
+
+
+
     @Test
     void testAssignUniversiteToDepartement_ShouldAssignDepartementToUniversite() {
         // Create an existing university
@@ -113,16 +134,10 @@ class UniversiteServiceTest {
         existingUniversite.setNomUniv("Test University");
         existingUniversite.setAdresse("Test Location");
 
-        // Initialize the departements list
-        existingUniversite.setDepartements(new ArrayList<>());
-
         // Create an existing department
         Departement existingDepartement = new Departement();
         existingDepartement.setIdDepartement(1);
         existingDepartement.setNomDepart("Test Department");
-
-        // Add the department to the university's departements list
-        existingUniversite.getDepartements().add(existingDepartement);
 
         // Mock the repository calls
         when(universiteRepository.findById(1)).thenReturn(Optional.of(existingUniversite));
@@ -132,6 +147,7 @@ class UniversiteServiceTest {
         universiteService.assignUniversiteToDepartement(1, 1);
 
         // Add assertions to check if the department is assigned to the university
+        assertNotNull(existingUniversite.getDepartements());
         assertTrue(existingUniversite.getDepartements().contains(existingDepartement));
     }
 
