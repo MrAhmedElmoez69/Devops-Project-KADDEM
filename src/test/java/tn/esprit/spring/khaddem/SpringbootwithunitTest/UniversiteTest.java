@@ -74,6 +74,7 @@ class UniversiteTest {
         // You can add more checks for other fields as needed
     }
 
+/////tests jdod bech n7assen coverage
 
     @Test
     void testGetUniversites() throws Exception {
@@ -88,6 +89,7 @@ class UniversiteTest {
 
                     // Add your assertions here
                     // For example, check the number of universities, or specific university details
+                    assertEquals(0, universites.length); // Assuming you expect an empty list in this case
                 });
     }
 
@@ -109,7 +111,7 @@ class UniversiteTest {
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
                 .andExpect(result -> {
-                    // Convert the JSON response to a Universite object
+                    // Convert the JSON response to an Universite object
                     String responseContent = result.getResponse().getContentAsString();
                     Universite addedUniversite = objectMapper.readValue(responseContent, Universite.class);
 
@@ -119,8 +121,6 @@ class UniversiteTest {
                     assertEquals("Test Location", addedUniversite.getAdresse());
                 });
     }
-
-
 
 
 
