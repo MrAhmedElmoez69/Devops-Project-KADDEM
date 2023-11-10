@@ -151,6 +151,17 @@ class UniversiteServiceTest {
         assertTrue(existingUniversite.getDepartements().contains(existingDepartement));
     }
 
+    @Test
+    void testUniversiteAllArgsConstructor() {
+        // Create an object using the all-args constructor
+        Universite universite = new Universite(1, "Test University", "Test Location", new ArrayList<>());
+
+        // Verify the state of the object
+        assertEquals(1, universite.getIdUniversite());
+        assertEquals("Test University", universite.getNomUniv());
+        assertEquals("Test Location", universite.getAdresse());
+        assertTrue(universite.getDepartements().isEmpty()); // Assuming your departements list is initially empty
+    }
 
 }
 
