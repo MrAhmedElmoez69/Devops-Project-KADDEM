@@ -1,76 +1,57 @@
 package tn.esprit.spring.khaddem.SpringbootwithunitTest;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import org.junit.jupiter.api.Test;
-
+import org.junit.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.http.MediaType;
-import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
-import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
-import tn.esprit.spring.khaddem.dto.EtudiantDTO;
-import tn.esprit.spring.khaddem.entities.*;
+import tn.esprit.spring.khaddem.entities.Etudiant;
+import tn.esprit.spring.khaddem.repositories.EtudiantRepository;
+import tn.esprit.spring.khaddem.services.EtudiantServiceImpl;
 
+import java.util.ArrayList;
+import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.Mockito.when;
 
-
-@SpringBootTest
-@AutoConfigureMockMvc
 @ExtendWith(MockitoExtension.class)
-class EtudiantServiceTest {
-    @Autowired
-    private MockMvc mockMvc;
+public class EtudiantServiceTest {
+    @InjectMocks
+    private EtudiantServiceImpl etudiantService;
+
+    @Mock
+    private EtudiantRepository etudiantRepository;
 
     @Test
-    void testRetrieveAllEtudiants() throws Exception {
-        // Simulate an HTTP GET request to retrieve all students
-        mockMvc.perform(MockMvcRequestBuilders.get("/etudiant/retrieve-all-etudiants"))
-                .andExpect(MockMvcResultMatchers.status().isOk())
-                .andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON))
-                .andExpect(result -> {
-                    // Convert the JSON response to a list of Etudiant objects
-                    String responseContent = result.getResponse().getContentAsString();
-                    Etudiant[] etudiants = new ObjectMapper().readValue(responseContent, Etudiant[].class);
+    public void testRetrieveAllEtudiants() {
+        List<Etudiant> expectedEtudiants = new ArrayList<>();
+        when(etudiantRepository.findAll()).thenReturn(expectedEtudiants);
 
-                    // Add your assertions here
-                    // For example, check the number of students, or specific student details
-                    assertEquals(0, etudiants.length); // Assuming you expect an empty list in this case
-                });
+        List<Etudiant> actualEtudiants = etudiantService.retrieveAllEtudiants();
+
+        assertEquals(expectedEtudiants, actualEtudiants);
     }
 
     @Test
-    void testAddEtudiant() throws Exception {
-        // Create an EtudiantDTO with sample data
-        EtudiantDTO etudiantDTO = new EtudiantDTO();
-        etudiantDTO.setNomE("Test Etudiant");
-        etudiantDTO.setOp(Option.GAMIX);
+    public void testRetrieveEtudiant() {
+        int etudiantId = 1;
+        Etudiant expectedEtudiant = new Etudiant();
+        when(etudiantRepository.findById(etudiantId)).thenReturn(java.util.Optional.of(expectedEtudiant));
 
-        // Convert EtudiantDTO to JSON
-        ObjectMapper objectMapper = new ObjectMapper();
-        String etudiantJson = objectMapper.writeValueAsString(etudiantDTO);
+        Etudiant actualEtudiant = etudiantService.retrieveEtudiant(etudiantId);
 
-        // Simulate an HTTP POST request to add a new student
-        mockMvc.perform(MockMvcRequestBuilders.post("/etudiant/add-etudiant")
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(etudiantJson))
-                .andExpect(MockMvcResultMatchers.status().isOk())
-                .andExpect(MockMvcResultMatchers.content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
-                .andExpect(result -> {
-                    // Convert the JSON response to an Etudiant object
-                    String responseContent = result.getResponse().getContentAsString();
-                    Etudiant addedEtudiant = objectMapper.readValue(responseContent, Etudiant.class);
-
-                    // Add your assertions here
-                    // For example, check if the added student matches the input DTO
-                    assertEquals("Test Etudiant", addedEtudiant.getNomE());
-                    assertEquals(Option.GAMIX, addedEtudiant.getOp());
-                });
+        assertEquals(expectedEtudiant, actualEtudiant);
     }
 
+    @Test
+    public void testAddEtudiant() {
+        Etudiant etudiant = new Etudiant();
+        etudiant.setNomE("New Etudiant");
+        when(etudiantRepository.save(etudiant)).thenReturn(etudiant);
 
+        Etudiant addedEtudiant = etudiantService.addEtudiant(etudiant);
+
+        assertEquals(etudiant, addedEtudiant);
+    }
 }
