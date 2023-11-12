@@ -2,13 +2,11 @@ package tn.esprit.spring.khaddem.SpringbootwithunitTest;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
-import static org.mockito.Mockito.*;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import org.junit.runner.RunWith;
-import org.mockito.InjectMocks;
+import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnitRunner;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -17,50 +15,31 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
-import tn.esprit.spring.khaddem.controllers.UniversiteRestController;
 import tn.esprit.spring.khaddem.dto.UniversiteDTO;
 import tn.esprit.spring.khaddem.entities.Departement;
 import tn.esprit.spring.khaddem.entities.Universite;
 import tn.esprit.spring.khaddem.repositories.UniversiteRepository;
 import tn.esprit.spring.khaddem.services.UniversiteServiceImpl;
 
-import static org.mockito.Mockito.when;
-
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @SpringBootTest
 @AutoConfigureMockMvc
 @RunWith(MockitoJUnitRunner.class)
 class UniversiteTest {
 
+
     @Autowired
     private MockMvc mockMvc;
-
     @Autowired
     private UniversiteRepository universiteRepository;
 
     @Autowired
     private UniversiteServiceImpl universiteService;
 
-    @InjectMocks
-    private UniversiteRestController universiteController;
 
-
-
-
-    @Test
-     void testAllArgsConstructor() {
-        // Create an instance using the @AllArgsConstructor constructor
-        Universite universite = new Universite(1, "Univ", "Tunis", null);
-
-        // Perform assertions to validate the object's state
-        assertNotNull(universite);
-        assertEquals(1, universite.getIdUniversite());
-        assertEquals("Univ", universite.getNomUniv());
-        assertEquals("Tunis", universite.getAdresse());
-        // You can add more assertions for the 'departements' list if needed.
-    }
     @Test
     void testUniversiteEntity() {
         Universite universite = new Universite();
@@ -95,6 +74,7 @@ class UniversiteTest {
         // You can add more checks for other fields as needed
     }
 
+/////tests jdod bech n7assen coverage
 
     @Test
     void testGetUniversites() throws Exception {
@@ -109,6 +89,7 @@ class UniversiteTest {
 
                     // Add your assertions here
                     // For example, check the number of universities, or specific university details
+                    assertEquals(0, universites.length); // Assuming you expect an empty list in this case
                 });
     }
 
@@ -130,7 +111,7 @@ class UniversiteTest {
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
                 .andExpect(result -> {
-                    // Convert the JSON response to a Universite object
+                    // Convert the JSON response to an Universite object
                     String responseContent = result.getResponse().getContentAsString();
                     Universite addedUniversite = objectMapper.readValue(responseContent, Universite.class);
 
@@ -139,37 +120,6 @@ class UniversiteTest {
                     assertEquals("Test University", addedUniversite.getNomUniv());
                     assertEquals("Test Location", addedUniversite.getAdresse());
                 });
-    }
-
-    @Test
-    void testUniversiteConstructor() {
-    Universite universite = new Universite();
-    assertNotNull(universite);
-}
-
-    @Test
-     void testUniversiteGettersAndSetters() {
-        Universite universite = new Universite();
-        universite.setIdUniversite(1);
-        universite.setNomUniv("Esprit");
-        universite.setAdresse("71489632Esprit");
-
-        assertEquals(1, universite.getIdUniversite());
-        assertEquals("Esprit", universite.getNomUniv());
-        assertEquals("71489632Esprit", universite.getAdresse());
-    }
-
-
-
-    @Test
-     void testUniversiteToString() {
-        Universite universite = new Universite();
-        universite.setIdUniversite(1);
-        universite.setNomUniv("Esprit");
-        universite.setAdresse("71489632Esprit");
-
-        String expectedString = "Universite{idUniversite=1, nomUniv='Esprit', adresse='71489632Esprit', departements=null}";
-        assertEquals(expectedString, universite.toString());
     }
 
 

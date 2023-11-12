@@ -1,8 +1,9 @@
 package tn.esprit.spring.khaddem.SpringbootwithunitTest;
+
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
@@ -17,10 +18,7 @@ import tn.esprit.spring.khaddem.controllers.ContratRestController;
 import tn.esprit.spring.khaddem.dto.ContratDTO;
 import tn.esprit.spring.khaddem.entities.Contrat;
 import tn.esprit.spring.khaddem.entities.Etudiant;
-import tn.esprit.spring.khaddem.entities.Option;
 import tn.esprit.spring.khaddem.entities.Specialite;
-import tn.esprit.spring.khaddem.repositories.ContratRepository;
-import tn.esprit.spring.khaddem.repositories.EtudiantRepository;
 import tn.esprit.spring.khaddem.services.IContratService;
 
 import java.util.ArrayList;
@@ -28,9 +26,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
-import static org.assertj.core.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.*;
-
 
 @SpringBootTest
 @AutoConfigureMockMvc
@@ -48,12 +44,6 @@ class ContratTest {
 
     @Autowired
     private MockMvc mockMvc;
-    @Autowired
-    private ContratRepository contratRepository;
-
-    @Mock
-    private EtudiantRepository etudiantRepository;
-
 
     @BeforeEach
     public void setUp() {
@@ -216,40 +206,6 @@ class ContratTest {
         assertEquals(1000, contratDTO.getMontantContrat());
 
     }
-/*
-    @Test
-    public void testRemoveContrat() {
-        // Arrange
-        Integer idContrat = 1;
-
-        // Act
-        contratService.removeContrat(idContrat);
-
-        // Assert
-        // Verify that the deleteById method was called with the specified ID
-        Mockito.verify(contratRepository, Mockito.times(1)).deleteById(idContrat);
-    }
-
-    @Test
-    public void testRemoveContratWhenErrorOccurs() {
-        // Arrange
-        Integer idContrat = 1;
-
-        // Mock the repository to throw an exception when deleteById is called
-        Mockito.doThrow(new RuntimeException("An error occurred")).when(contratRepository).deleteById(idContrat);
-
-        // Act and Assert
-        try {
-            contratService.removeContrat(idContrat);
-        } catch (RuntimeException e) {
-            // Handle the exception or rethrow it as needed
-            // Ensure it's the expected exception
-            assert e.getMessage().equals("An error occurred");
-        }
-    }
-
- */
-
 
 }
 
