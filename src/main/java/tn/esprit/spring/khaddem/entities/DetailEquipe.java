@@ -34,9 +34,15 @@ public class DetailEquipe implements Serializable {
         if (this == obj) {
             return true;
         }
-        if (obj == null) {
+
+        if (obj == null || getClass() != obj.getClass()) {
             return false;
         }
+
+        if (!(obj instanceof DetailEquipe)) {
+            return false;
+        }
+
         DetailEquipe other = (DetailEquipe) obj;
 
         return idDetailEquipe == other.idDetailEquipe
