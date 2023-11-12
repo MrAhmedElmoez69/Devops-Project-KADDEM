@@ -23,15 +23,6 @@ public class EtudiantRestController {
         return etudiantService.retrieveAllEtudiants();
     }
 
-    // http://localhost:8089/Kaddem/etudiant/retrieve-etudiant/8
-    @GetMapping("/retrieve-equipe/{etudiant-id}")
-    @ResponseBody
-    public Etudiant retrieveEtudiant(@PathVariable("etudiant-id") Integer etudiantId) {
-        return etudiantService.retrieveEtudiant(etudiantId);
-    }
-
-
-
     // http://localhost:8089/Kaddem/etudiant/add-etudiant
     @PostMapping("/add-etudiant")
     @ResponseBody
@@ -66,12 +57,6 @@ public class EtudiantRestController {
         etudiantService.removeEtudiant(idEtudiant);
     }
 
-    // http://localhost:8089/Kaddem/etudiant/assignEtudiantToDepartement/1/1
-    @PutMapping("/assignEtudiantToDepartement/{etudiantId}/{departementId}")
-    @ResponseBody
-    public void assignEtudiantToDepartement(@PathVariable("etudiantId") Integer etudiantId
-            ,@PathVariable("departementId") Integer departementId) {
-        etudiantService.assignEtudiantToDepartement(etudiantId,departementId);
-    }
+
 
 }
