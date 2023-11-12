@@ -103,30 +103,55 @@ public class EquipeTest {
         assertEquals("EXPERT", Niveau.EXPERT.toString());
     }
 
+
     @Test
-    public void testSetters() {
+    public void testConstructorAndGetter() {
+        // Create an instance of the Equipe class using the constructor and Builder
+        Integer idEquipe = 1;
+        String nomEquipe = "Team A";
+        Niveau niveau = Niveau.JUNIOR;
+        List<Etudiant> etudiants = new ArrayList<>(); // You may initialize this with some sample data
+        DetailEquipe detailEquipe = new DetailEquipe(); // You may initialize this with some sample data
+
+        Equipe equipe = Equipe.builder()
+                .idEquipe(idEquipe)
+                .nomEquipe(nomEquipe)
+                .niveau(niveau)
+                .etudiants(etudiants)
+                .detailEquipe(detailEquipe)
+                .build();
+
+        // Test getter methods
+        assertEquals(idEquipe, equipe.getIdEquipe());
+        assertEquals(nomEquipe, equipe.getNomEquipe());
+        assertEquals(niveau, equipe.getNiveau());
+        assertEquals(etudiants, equipe.getEtudiants());
+        assertEquals(detailEquipe, equipe.getDetailEquipe());
+    }
+
+    @Test
+    public void testSetter() {
         // Create an instance of the Equipe class
         Equipe equipe = new Equipe();
 
-        // Set values using setter methods
+        // Set some sample values to the instance
         Integer idEquipe = 1;
-        equipe.setIdEquipe(idEquipe);
-        assertEquals(idEquipe, equipe.getIdEquipe());
-
         String nomEquipe = "Team A";
-        equipe.setNomEquipe(nomEquipe);
-        assertEquals(nomEquipe, equipe.getNomEquipe());
-
-        Niveau niveau = Niveau.JUNIOR; // You may choose an appropriate value
-        equipe.setNiveau(niveau);
-        assertEquals(niveau, equipe.getNiveau());
-
+        Niveau niveau = Niveau.JUNIOR;
         List<Etudiant> etudiants = new ArrayList<>(); // You may initialize this with some sample data
-        equipe.setEtudiants(etudiants);
-        assertEquals(etudiants, equipe.getEtudiants());
-
         DetailEquipe detailEquipe = new DetailEquipe(); // You may initialize this with some sample data
+
+        equipe.setIdEquipe(idEquipe);
+        equipe.setNomEquipe(nomEquipe);
+        equipe.setNiveau(niveau);
+        equipe.setEtudiants(etudiants);
         equipe.setDetailEquipe(detailEquipe);
+
+        // Test getter methods
+        assertEquals(idEquipe, equipe.getIdEquipe());
+        assertEquals(nomEquipe, equipe.getNomEquipe());
+        assertEquals(niveau, equipe.getNiveau());
+        assertEquals(etudiants, equipe.getEtudiants());
         assertEquals(detailEquipe, equipe.getDetailEquipe());
     }
 
