@@ -44,6 +44,33 @@ class DetailEquipeTest {
     }
 
     @Test
+    void testCreateDetailEquipe() {
+        // Sample data
+        Integer idDetailEquipe = 1;
+        Integer salle = 101;
+        String thematique = "Test Thematique";
+        Equipe equipe = new Equipe();
+
+        // Create a DetailEquipe using the constructor
+        DetailEquipe detailEquipe = new DetailEquipe(idDetailEquipe, salle, thematique, equipe);
+
+        // Test that fields are set correctly
+        assertEquals(idDetailEquipe, detailEquipe.getIdDetailEquipe());
+        assertEquals(salle, detailEquipe.getSalle());
+        assertEquals(thematique, detailEquipe.getThematique());
+        assertEquals(equipe, detailEquipe.getEquipe());
+    }
+
+    @Test
+    void testDefaultConstructor() {
+        // Create a DetailEquipe using the default constructor
+        DetailEquipe detailEquipe = new DetailEquipe();
+
+        // Test that the object is not null
+        assertNotNull(detailEquipe);
+    }
+
+    @Test
     void testEqualsAndHashCode() {
         // Create two DetailEquipe objects with the same values
         DetailEquipe detailEquipe1 = new DetailEquipe(1, 101, "Thematique 1", new Equipe());
