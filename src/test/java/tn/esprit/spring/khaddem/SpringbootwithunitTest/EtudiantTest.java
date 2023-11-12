@@ -2,7 +2,11 @@ package tn.esprit.spring.khaddem.SpringbootwithunitTest;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
+import org.junit.runner.RunWith;
+import org.mockito.junit.MockitoJUnitRunner;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
@@ -15,6 +19,9 @@ import tn.esprit.spring.khaddem.services.EtudiantServiceImpl;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+@SpringBootTest
+@AutoConfigureMockMvc
+@RunWith(MockitoJUnitRunner.class)
 class EtudiantTest {
     @Autowired
     private MockMvc mockMvc;
