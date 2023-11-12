@@ -28,7 +28,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 class EtudiantTest {
     @Autowired
     private MockMvc mockMvc;
-    
+
     @Test
     void testEtudiantEntity() {
         Etudiant etudiant = new Etudiant();

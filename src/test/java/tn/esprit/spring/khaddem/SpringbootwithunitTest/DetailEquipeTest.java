@@ -39,6 +39,43 @@ import static org.junit.jupiter.api.Assertions.*;
     }
 
 
+
+    @Test
+    void testNotEquals() {
+        // Create two instances and set their values
+        DetailEquipe detailEquipe1 = new DetailEquipe();
+        detailEquipe1.setIdDetailEquipe(1);
+        detailEquipe1.setSalle(101);
+        detailEquipe1.setThematique("Theme1");
+
+        DetailEquipe detailEquipe2 = new DetailEquipe();
+        detailEquipe2.setIdDetailEquipe(2);
+        detailEquipe2.setSalle(102);
+        detailEquipe2.setThematique("Theme2");
+
+        // Verify that they are not equal
+        assertNotEquals(detailEquipe1, detailEquipe2);
+    }
+
+
+    @Test
+    void testNotHashCode() {
+        // Create two instances and set their values
+        DetailEquipe detailEquipe1 = new DetailEquipe();
+        detailEquipe1.setIdDetailEquipe(1);
+        detailEquipe1.setSalle(101);
+        detailEquipe1.setThematique("Theme1");
+
+        DetailEquipe detailEquipe2 = new DetailEquipe();
+        detailEquipe2.setIdDetailEquipe(2);
+        detailEquipe2.setSalle(102);
+        detailEquipe2.setThematique("Theme2");
+
+        // Verify that their hash codes are not equal
+        assertNotEquals(detailEquipe1.hashCode(), detailEquipe2.hashCode());
+    }
+
+
     @Test
     void testDetailEquipeEntity() {
         DetailEquipe detailEquipe = new DetailEquipe();
