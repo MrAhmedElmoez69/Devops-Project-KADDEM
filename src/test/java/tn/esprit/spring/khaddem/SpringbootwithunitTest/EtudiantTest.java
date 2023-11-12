@@ -12,10 +12,12 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import tn.esprit.spring.khaddem.dto.EtudiantDTO;
-import tn.esprit.spring.khaddem.entities.Etudiant;
-import tn.esprit.spring.khaddem.entities.Option;
+import tn.esprit.spring.khaddem.entities.*;
 import tn.esprit.spring.khaddem.repositories.EtudiantRepository;
 import tn.esprit.spring.khaddem.services.EtudiantServiceImpl;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -39,6 +41,43 @@ class EtudiantTest {
 
         // Add assertions for your entity properties
         assertEquals("Test Etudiant", etudiant.getNomE());
+    }
+
+    @Test
+    void testEtudiantConstructorAndGetterSetter() {
+        // Sample data
+        Integer idEtudiant = 1;
+        String prenomE = "John";
+        String nomE = "Doe";
+        Option op = Option.GAMIX;
+        Departement departement = new Departement();
+        List<Equipe> equipes = new ArrayList<>();
+        List<Contrat> contrats = new ArrayList<>();
+
+        // Create an Etudiant using the constructor
+        Etudiant etudiant = new Etudiant(idEtudiant, prenomE, nomE, op, departement, equipes, contrats);
+
+        // Test the constructor
+        assertEquals(idEtudiant, etudiant.getIdEtudiant());
+        assertEquals(prenomE, etudiant.getPrenomE());
+        assertEquals(nomE, etudiant.getNomE());
+        assertEquals(op, etudiant.getOp());
+        assertEquals(departement, etudiant.getDepartement());
+        assertEquals(equipes, etudiant.getEquipes());
+        assertEquals(contrats, etudiant.getContrats());
+
+        // Test the getter and setter methods
+        Departement newDepartement = new Departement();
+        etudiant.setDepartement(newDepartement);
+        assertEquals(newDepartement, etudiant.getDepartement());
+
+        List<Equipe> newEquipes = new ArrayList<>();
+        etudiant.setEquipes(newEquipes);
+        assertEquals(newEquipes, etudiant.getEquipes());
+
+        List<Contrat> newContrats = new ArrayList<>();
+        etudiant.setContrats(newContrats);
+        assertEquals(newContrats, etudiant.getContrats());
     }
 
     @Test
@@ -99,6 +138,5 @@ class EtudiantTest {
                     assertEquals(Option.GAMIX, addedEtudiant.getOp());
                 });
     }
-
-    // Add more test methods as needed for other service methods
+    
 }
