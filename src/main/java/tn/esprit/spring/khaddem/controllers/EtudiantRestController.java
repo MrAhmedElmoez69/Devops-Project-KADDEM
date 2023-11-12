@@ -3,6 +3,7 @@ package tn.esprit.spring.khaddem.controllers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import tn.esprit.spring.khaddem.dto.EtudiantDTO;
+import tn.esprit.spring.khaddem.entities.Equipe;
 import tn.esprit.spring.khaddem.entities.Etudiant;
 import tn.esprit.spring.khaddem.services.IEtudiantService;
 
@@ -48,7 +49,7 @@ public class EtudiantRestController {
     @ResponseBody
     public Etudiant updateEtudiant(@RequestBody EtudiantDTO etudiantDTO) {
         Etudiant etudiant = new Etudiant();
-        etudiant.setIdEtudiant(etudiantDTO.getIdEtudiant());
+        etudiant.setIdEtudiant(etudiantDTO.getIdEtudiant()); // Assuming you have an ID field in the DTO
         etudiant.setPrenomE(etudiantDTO.getPrenomE());
         etudiant.setNomE(etudiantDTO.getNomE());
         etudiant.setOp(etudiantDTO.getOp());
