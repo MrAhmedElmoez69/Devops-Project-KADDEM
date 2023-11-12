@@ -135,23 +135,18 @@ class DetailEquipeTest {
     }
     @Test
     void testEquals() {
-        DetailEquipe detailEquipe1 = new DetailEquipe();
-        detailEquipe1.setIdDetailEquipe(1);
-        detailEquipe1.setSalle(123);
-        detailEquipe1.setThematique("Thematique A");
+        // Create two instances of DetailEquipe with the same attributes
+        DetailEquipe detailEquipe1 = new DetailEquipe(1, 101, "Thematique 1", new Equipe());
+        DetailEquipe detailEquipe2 = new DetailEquipe(1, 101, "Thematique 1", new Equipe());
 
-        DetailEquipe detailEquipe2 = new DetailEquipe();
-        detailEquipe2.setIdDetailEquipe(1);
-        detailEquipe2.setSalle(123);
-        detailEquipe2.setThematique("Thematique A");
+        // Check if equals method works as expected
+        assertEquals(detailEquipe1, detailEquipe2);
 
-        DetailEquipe detailEquipe3 = new DetailEquipe();
-        detailEquipe3.setIdDetailEquipe(2);
-        detailEquipe3.setSalle(456);
-        detailEquipe3.setThematique("Thematique B");
+        // Create an instance of another class
+        Object someOtherObject = new Object();
 
-        assertEquals(detailEquipe1, detailEquipe2); // Check that two detailEquipes with the same ID, salle, and thematique are equal
-        assertNotEquals(detailEquipe1, detailEquipe3); // Check that two detailEquipes with different IDs, salle, and thematique are not equal
+        // Check if equals method returns false for different classes
+        assertNotEquals(detailEquipe1, someOtherObject);
     }
     @Test
     void testDetailEquipeInequality() {
