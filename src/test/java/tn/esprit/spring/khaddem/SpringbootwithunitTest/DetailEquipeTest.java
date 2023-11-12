@@ -28,7 +28,7 @@ import static org.junit.jupiter.api.Assertions.*;
 @SpringBootTest
 @AutoConfigureMockMvc
 @RunWith(MockitoJUnitRunner.class)
-class DetailEquipeTest {
+ class DetailEquipeTest {
 
     @Autowired
     private MockMvc mockMvc;
@@ -157,7 +157,7 @@ class DetailEquipeTest {
 
 
     @Test
-    void testFindAll() {
+     void testFindAll() {
         // Create and save some DetailEquipe entities
         DetailEquipe detailEquipe1 = new DetailEquipe();
         detailEquipe1.setSalle(123);

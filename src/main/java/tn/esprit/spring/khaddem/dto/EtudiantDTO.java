@@ -13,5 +13,6 @@ public class EtudiantDTO {
     private Integer idEtudiant;
     private String prenomE;
     private String nomE;
+    @Enumerated(EnumType.STRING)
     private Option op;
 }

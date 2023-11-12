@@ -53,6 +53,7 @@ public class EtudiantServiceImpl implements IEtudiantService{
         if (optionalEtudiant.isPresent()) {
             return optionalEtudiant.get();
         } else {
+            // Handle the case where the student doesn't exist, e.g., throw an exception
             throw new EntityNotFoundException("Student with ID " + idEtudiant + " not found");
         }
     }
@@ -73,6 +74,8 @@ public class EtudiantServiceImpl implements IEtudiantService{
             e.setDepartement(d);
             etudiantRepository.save(e);
         } else {
+            // Handle the case where either the student or the department doesn't exist
+            // You can choose to throw an exception or log an error message here
             throw new EntityNotFoundException("Student or Department not found");
         }
     }
