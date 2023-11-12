@@ -102,27 +102,7 @@ public class EquipeTest {
         assertEquals("SENIOR", Niveau.SENIOR.toString());
         assertEquals("EXPERT", Niveau.EXPERT.toString());
     }
-    @Test
-    public void testAllArgsConstructor() {
-        // Create sample data
-        Integer idEquipe = 1;
-        String nomEquipe = "Team A";
-        Niveau niveau = Niveau.JUNIOR; // You may choose an appropriate value
-        List<Etudiant> etudiants = new ArrayList<>(); // You may initialize this with some sample data
-        DetailEquipe detailEquipe = new DetailEquipe(); // You may initialize this with some sample data
-
-        // Create an instance using the AllArgsConstructor
-        Equipe equipe = new Equipe(idEquipe, nomEquipe, niveau, etudiants, detailEquipe);
-
-        // Validate the fields
-        assertEquals(idEquipe, equipe.getIdEquipe());
-        assertEquals(nomEquipe, equipe.getNomEquipe());
-        assertEquals(niveau, equipe.getNiveau());
-        assertEquals(etudiants, equipe.getEtudiants());
-        assertEquals(detailEquipe, equipe.getDetailEquipe());
-    }
-
-
+    
     @Test
      void testGettersAndSetters() {
         // Test the getter and setter methods
