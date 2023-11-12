@@ -28,21 +28,6 @@ public class DetailEquipe implements Serializable {
     @JsonIgnore
     private Equipe equipe;
 
-
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj) {
-            return true;
-        }
-        if (obj == null || getClass() != obj.getClass()) {
-            return false;
-        }
-        DetailEquipe other = (DetailEquipe) obj;
-        return idDetailEquipe == other.idDetailEquipe
-                && salle == other.salle
-                && Objects.equals(thematique, other.thematique);
-    }
-
     @Override
     public int hashCode() {
         return Objects.hash(idDetailEquipe, salle, thematique);

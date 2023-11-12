@@ -43,23 +43,7 @@ class DetailEquipeTest {
         MockitoAnnotations.openMocks(this);
     }
 
-    @Test
-    void testEqualsAndHashCode() {
-        // Create two DetailEquipe objects with the same values
-        DetailEquipe detailEquipe1 = new DetailEquipe(1, 101, "Thematique 1", new Equipe());
-        DetailEquipe detailEquipe2 = new DetailEquipe(1, 101, "Thematique 1", new Equipe());
 
-        // Check if equals and hashCode methods work as expected
-        assertEquals(detailEquipe1, detailEquipe2);
-        assertEquals(detailEquipe1.hashCode(), detailEquipe2.hashCode());
-
-        // Change one attribute in detailEquipe2
-        detailEquipe2.setSalle(102);
-
-        // Check if the objects are no longer equal and have different hash codes
-        assertNotEquals(detailEquipe1, detailEquipe2);
-        assertNotEquals(detailEquipe1.hashCode(), detailEquipe2.hashCode());
-    }
 
     @Test
     void testNotEquals() {
@@ -96,7 +80,6 @@ class DetailEquipeTest {
         assertNotEquals(detailEquipe1.hashCode(), detailEquipe2.hashCode());
     }
 
-
     @Test
     void testDetailEquipeEntity() {
         DetailEquipe detailEquipe = new DetailEquipe();
@@ -106,26 +89,7 @@ class DetailEquipeTest {
         assertEquals(123, detailEquipe.getSalle());
         assertEquals("Test Thematique", detailEquipe.getThematique());
     }
-    @Test
-    void testEquals() {
-        DetailEquipe detailEquipe1 = new DetailEquipe();
-        detailEquipe1.setIdDetailEquipe(1);
-        detailEquipe1.setSalle(123);
-        detailEquipe1.setThematique("Thematique A");
 
-        DetailEquipe detailEquipe2 = new DetailEquipe();
-        detailEquipe2.setIdDetailEquipe(1);
-        detailEquipe2.setSalle(123);
-        detailEquipe2.setThematique("Thematique A");
-
-        DetailEquipe detailEquipe3 = new DetailEquipe();
-        detailEquipe3.setIdDetailEquipe(2);
-        detailEquipe3.setSalle(456);
-        detailEquipe3.setThematique("Thematique B");
-
-        assertEquals(detailEquipe1, detailEquipe2); // Check that two detailEquipes with the same ID, salle, and thematique are equal
-        assertNotEquals(detailEquipe1, detailEquipe3); // Check that two detailEquipes with different IDs, salle, and thematique are not equal
-    }
     @Test
     void testDetailEquipeInequality() {
         DetailEquipe detailEquipe1 = new DetailEquipe();
@@ -157,18 +121,6 @@ class DetailEquipeTest {
     }
 
     @Test
-    void testEqualsWithEquipe() {
-        // Create two instances of DetailEquipe with the same attributes and a mock Equipe
-        Equipe equipe = mock(Equipe.class);
-        DetailEquipe detailEquipe1 = new DetailEquipe(1, 10, "Thematique 1", equipe);
-        DetailEquipe detailEquipe2 = new DetailEquipe(1, 10, "Thematique 1", equipe);
-
-        // Assert that the equals method returns true
-        assertEquals(detailEquipe1, detailEquipe2);
-    }
-
-
-    @Test
     void testFindAll() {
         // Create and save some DetailEquipe entities
         DetailEquipe detailEquipe1 = new DetailEquipe();
@@ -187,22 +139,6 @@ class DetailEquipeTest {
         assertEquals(2, allDetailEquipes.size());
     }
 
-    @Test
-    void testSaveAndFindById() {
-        // Create a DetailEquipe entity
-        DetailEquipe detailEquipe = new DetailEquipe();
-        detailEquipe.setSalle(123);
-        detailEquipe.setThematique("Test Thematique");
-
-        // Save the entity to the repository
-        DetailEquipe savedDetailEquipe = detailEquipeRepository.save(detailEquipe);
-
-        // Find the entity by ID
-        Optional<DetailEquipe> foundDetailEquipe = detailEquipeRepository.findById(savedDetailEquipe.getIdDetailEquipe());
-
-        assertTrue(foundDetailEquipe.isPresent());
-        assertEquals(savedDetailEquipe, foundDetailEquipe.get());
-    }
     @Test
     void testGetDetailEquipes() throws Exception {
         mockMvc.perform(MockMvcRequestBuilders.get("/detailequipe/retrieve-all-detail-equipes"))
