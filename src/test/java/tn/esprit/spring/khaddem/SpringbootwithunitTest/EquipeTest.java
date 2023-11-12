@@ -16,10 +16,7 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import tn.esprit.spring.khaddem.controllers.EquipeRestController;
 import tn.esprit.spring.khaddem.dto.EquipeDTO;
-import tn.esprit.spring.khaddem.entities.DetailEquipe;
-import tn.esprit.spring.khaddem.entities.Equipe;
-import tn.esprit.spring.khaddem.entities.Etudiant;
-import tn.esprit.spring.khaddem.entities.Niveau;
+import tn.esprit.spring.khaddem.entities.*;
 import tn.esprit.spring.khaddem.services.IEquipeService;
 
 import java.util.ArrayList;
@@ -101,6 +98,49 @@ public class EquipeTest {
         assertEquals("JUNIOR", Niveau.JUNIOR.toString());
         assertEquals("SENIOR", Niveau.SENIOR.toString());
         assertEquals("EXPERT", Niveau.EXPERT.toString());
+    }
+
+    @Test
+    void testEquipeConstructorAndGetterSetter() {
+        // Sample data
+        Integer idEquipe = 1;
+        String nomEquipe = "Team A";
+        Niveau niveau = Niveau.JUNIOR;
+        List<Etudiant> etudiants = new ArrayList<>(); // You may initialize this with some sample data
+        DetailEquipe detailEquipe = new DetailEquipe();
+
+        // Create an Etudiant using the constructor
+        Equipe equipe = new Equipe(idEquipe, nomEquipe, niveau, etudiants, detailEquipe);
+
+        // Test the constructor
+        assertEquals(idEquipe, equipe.getIdEquipe());
+        assertEquals(nomEquipe, equipe.getNomEquipe());
+        assertEquals(niveau, equipe.getNiveau());
+        assertEquals(etudiants, equipe.getEtudiants());
+        assertEquals(detailEquipe, equipe.getDetailEquipe());
+
+        // Test the getter and setter methods
+        // Setter sample values
+        Integer newIdEquipe = 2;
+        String newNomEquipe = "Team B";
+        Niveau newNiveau = Niveau.SENIOR;
+        List<Etudiant> newEtudiants = new ArrayList<>(); // You may initialize this with some sample data
+        DetailEquipe newDetailEquipe = new DetailEquipe();
+
+        // Use setter methods
+        equipe.setIdEquipe(newIdEquipe);
+        equipe.setNomEquipe(newNomEquipe);
+        equipe.setNiveau(newNiveau);
+        equipe.setEtudiants(newEtudiants);
+        equipe.setDetailEquipe(newDetailEquipe);
+
+        // Test getter methods after using setter
+        assertEquals(newIdEquipe, equipe.getIdEquipe());
+        assertEquals(newNomEquipe, equipe.getNomEquipe());
+        assertEquals(newNiveau, equipe.getNiveau());
+        assertEquals(newEtudiants, equipe.getEtudiants());
+        assertEquals(newDetailEquipe, equipe.getDetailEquipe());
+
     }
 
 
