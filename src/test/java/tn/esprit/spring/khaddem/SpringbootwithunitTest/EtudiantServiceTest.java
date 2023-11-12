@@ -14,15 +14,11 @@ import tn.esprit.spring.khaddem.repositories.EtudiantRepository;
 import tn.esprit.spring.khaddem.services.EtudiantServiceImpl;
 
 import javax.persistence.EntityNotFoundException;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.*;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 public class EtudiantServiceTest {
@@ -33,6 +29,12 @@ public class EtudiantServiceTest {
     private EtudiantRepository etudiantRepository;
     @Mock
     private DepartementRepository departementRepository;
+
+    @Mock
+    private ContratRepository contratRepository;
+
+    @Mock
+    private EquipeRepository equipeRepository;
 
     @Test
     void testRetrieveAllEtudiants() {
@@ -193,6 +195,71 @@ public class EtudiantServiceTest {
         verify(departementRepository).findById(eq(1));
         assertEquals(Collections.emptyList(), result); // Assuming empty list when department is found
     }
+
+    @Test
+    void testAddAndAssignEtudiantToEquipeAndContract_ContractNotFound() {
+        // Mock behavior
+        when(contratRepository.findById(anyInt())).thenReturn(Optional.empty());
+        when(equipeRepository.findById(anyInt())).thenReturn(Optional.of(new Equipe()));
+
+        // Call the service method
+        assertThrows(NoSuchElementException.class, () ->
+                etudiantService.addAndAssignEtudiantToEquipeAndContract(new Etudiant(), 1, 1)
+        );
+
+        // Verify the behavior
+        verify(contratRepository).findById(eq(1));
+        verify(equipeRepository, never()).findById(anyInt());
+        verify(etudiantRepository, never()).save(any(Etudiant.class));
+    }
+
+    @Test
+    void testAddAndAssignEtudiantToEquipeAndContract_EquipeNotFound() {
+        // Mock behavior
+        when(contratRepository.findById(anyInt())).thenReturn(Optional.of(new Contrat()));
+        when(equipeRepository.findById(anyInt())).thenReturn(Optional.empty());
+
+        // Call the service method
+        assertThrows(NoSuchElementException.class, () ->
+                etudiantService.addAndAssignEtudiantToEquipeAndContract(new Etudiant(), 1, 1)
+        );
+
+        // Verify the behavior
+        verify(contratRepository).findById(eq(1));
+        verify(equipeRepository).findById(eq(1));
+        verify(etudiantRepository, never()).save(any(Etudiant.class));
+    }
+
+    @Test
+    void testUpdateEtudiant_NotFound() {
+        // Mock behavior
+        when(etudiantRepository.existsById(anyInt())).thenReturn(false);
+
+        // Call the service method
+        assertThrows(EntityNotFoundException.class, () ->
+                etudiantService.updateEtudiant(new Etudiant())
+        );
+
+        // Verify the behavior
+        verify(etudiantRepository).existsById(eq(1));
+        verify(etudiantRepository, never()).save(any(Etudiant.class));
+    }
+
+    @Test
+    void testGetEtudiantsByDepartement_NoStudents() {
+        // Mock behavior
+        when(departementRepository.findById(anyInt())).thenReturn(Optional.of(new Departement()));
+
+        // Call the service method
+        List<Etudiant> result = etudiantService.getEtudiantsByDepartement(1);
+
+        // Verify the behavior
+        verify(departementRepository).findById(eq(1));
+        assertEquals(Collections.emptyList(), result);
+    }
+
+
+
 
 
 
