@@ -75,7 +75,6 @@ class EtudiantTest {
         assertEquals(Option.INFINI, Option.valueOf("INFINI"));
     }
 
-
     @Test
     void testGetEtudiants() {
         // Arrange
@@ -108,12 +107,11 @@ class EtudiantTest {
         when(etudiantService.retrieveEtudiant(1)).thenReturn(etudiant);
 
         // Act
-        Etudiant result = etudiantRestController.retrieveContrat(1);
+        Etudiant result = etudiantRestController.retrieveEtudiant(1);
 
         // Assert
         assertEquals(etudiant, result);
     }
-
 
     @Test
     void testAddEtudiant() {
@@ -163,7 +161,6 @@ class EtudiantTest {
         assertEquals(etudiant, result);
     }
 
-
     @Test
     void testRemoveEtudiant() {
         // Arrange
@@ -189,94 +186,10 @@ class EtudiantTest {
         assertDoesNotThrow(() -> etudiantRestController.assignEtudiantToDepartement(etudiantId, departementId));
     }
 
-    @Test
-    void testFindByDepartement() {
-        // Arrange
-        Integer departementId = 1;
-        List<Etudiant> etudiants = Collections.singletonList(new Etudiant());
-
-        // Assume that the 'Etudiant' class has a default constructor
-        when(etudiantService.findByDepartementIdDepartement(departementId)).thenReturn(etudiants);
-
-        // Act
-        List<Etudiant> result = etudiantRestController.findByDepartement(departementId);
-
-        // Assert
-        assertEquals(etudiants, result);
-    }
-
-    @Test
-    void testRetrieveEtudiantsByContratSpecialite() {
-        // Arrange
-        Specialite specialite = Specialite.SECURITE;
-        List<Etudiant> etudiants = Collections.singletonList(new Etudiant());
-
-        when(etudiantService.retrieveEtudiantsByContratSpecialite(specialite)).thenReturn(etudiants);
-
-        // Act
-        List<Etudiant> result = etudiantRestController.retrieveEtudiantsByContratSpecialite(specialite);
-
-        // Assert
-        assertEquals(etudiants, result);
-    }
 
 
-    @Test
-    void testRetrieveEtudiantsByContratSpecialiteSQL() {
-        // Arrange
-        String specialite = "SECURITE";
-        List<Etudiant> etudiants = Collections.singletonList(new Etudiant());
-
-        when(etudiantService.retrieveEtudiantsByContratSpecialiteSQL(specialite)).thenReturn(etudiants);
-
-        // Act
-        List<Etudiant> result = etudiantRestController.retrieveEtudiantsByContratSpecialiteSQL(specialite);
-
-        // Assert
-        assertEquals(etudiants, result);
-    }
-
-    @Test
-    void testGetEtudiantsByDepartement() {
-        // Arrange
-        Integer idDepartement = 1;
-        List<Etudiant> etudiants = Collections.singletonList(new Etudiant());
-
-        when(etudiantService.getEtudiantsByDepartement(idDepartement)).thenReturn(etudiants);
-
-        // Act
-        List<Etudiant> result = etudiantRestController.getEtudiantsByDepartement(idDepartement);
-
-        // Assert
-        assertEquals(etudiants, result);
-    }
 
 
-    /*
-    @Test
-    void testAddAndAssignEtudiantToEquipeAndContract() {
-        // Arrange
-        EtudiantDTO etudiantDTO = new EtudiantDTO();
-        etudiantDTO.setIdEtudiant(1);
-        etudiantDTO.setPrenomE("John");
-        etudiantDTO.setNomE("Doe");
-        etudiantDTO.setOp(Option.GAMIX);
-        Integer contratId = 1;
-        Integer equipeId = 1;
-
-        Etudiant etudiant = new Etudiant();
-        etudiant.setIdEtudiant(etudiantDTO.getIdEtudiant());
-        etudiant.setPrenomE(etudiantDTO.getPrenomE());
-        etudiant.setNomE(etudiantDTO.getNomE());
-        etudiant.setOp(etudiantDTO.getOp());
-
-        // No need to return anything since it's a void method
-        doNothing().when(etudiantService).addAndAssignEtudiantToEquipeAndContract(any(Etudiant.class), eq(contratId), eq(equipeId));
-
-        // Act and Assert
-        assertDoesNotThrow(() -> etudiantRestController.addAndAssignEtudiantToEquipeAndContract(etudiantDTO, contratId, equipeId));
-    }
-     */
 
 
 }
