@@ -2,22 +2,22 @@ package tn.esprit.spring.khaddem.SpringbootwithunitTest;
 
 import org.junit.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import tn.esprit.spring.khaddem.dto.EtudiantDTO;
 import tn.esprit.spring.khaddem.entities.*;
 import tn.esprit.spring.khaddem.repositories.ContratRepository;
 import tn.esprit.spring.khaddem.repositories.EquipeRepository;
 import tn.esprit.spring.khaddem.repositories.EtudiantRepository;
 import tn.esprit.spring.khaddem.services.EtudiantServiceImpl;
 
+import javax.persistence.EntityNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.when;
 import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.verify;
@@ -133,6 +133,91 @@ public class EtudiantServiceTest {
 
         assertEquals(expectedEtudiants, actualEtudiants);
     }
+
+    @Test
+    void testFindByDepartementIdDepartement_ShouldReturnEtudiants() {
+        int departementId = 1;
+        List<Etudiant> expectedEtudiants = new ArrayList<>();
+        when(etudiantRepository.findByDepartementIdDepartement(departementId)).thenReturn(expectedEtudiants);
+
+        List<Etudiant> actualEtudiants = etudiantService.findByDepartementIdDepartement(departementId);
+
+        assertEquals(expectedEtudiants, actualEtudiants);
+    }
+
+    @Test
+    void testFindByEquipesNiveau_ShouldReturnEtudiants() {
+        Niveau niveau = Niveau.JUNIOR;
+        List<Etudiant> expectedEtudiants = new ArrayList<>();
+        when(etudiantRepository.findByEquipesNiveau(niveau)).thenReturn(expectedEtudiants);
+
+        List<Etudiant> actualEtudiants = etudiantService.findByEquipesNiveau(niveau);
+
+        assertEquals(expectedEtudiants, actualEtudiants);
+    }
+
+    @Test
+    void testRetrieveEtudiantsByContratSpecialite_ShouldReturnEtudiants() {
+        Specialite specialite = Specialite.SECURITE;
+        List<Etudiant> expectedEtudiants = new ArrayList<>();
+        when(etudiantRepository.retrieveEtudiantsByContratSpecialite(specialite)).thenReturn(expectedEtudiants);
+
+        List<Etudiant> actualEtudiants = etudiantService.retrieveEtudiantsByContratSpecialite(specialite);
+
+        assertEquals(expectedEtudiants, actualEtudiants);
+    }
+
+    @Test
+    void testRetrieveEtudiantsByContratSpecialiteSQL_ShouldReturnEtudiants() {
+        String specialite = "SECURITE";
+        List<Etudiant> expectedEtudiants = new ArrayList<>();
+        when(etudiantRepository.retrieveEtudiantsByContratSpecialiteSQL(specialite)).thenReturn(expectedEtudiants);
+
+        List<Etudiant> actualEtudiants = etudiantService.retrieveEtudiantsByContratSpecialiteSQL(specialite);
+
+        assertEquals(expectedEtudiants, actualEtudiants);
+    }
+
+    @Test
+    void testRetrieveEtudiant_ThrowExceptionForInvalidId() {
+        int etudiantId = 1;
+        when(etudiantRepository.findById(etudiantId)).thenReturn(Optional.empty());
+
+        assertThrows(EntityNotFoundException.class, () -> etudiantService.retrieveEtudiant(etudiantId));
+    }
+
+    @Test
+    void testUpdateEtudiant_ThrowExceptionForInvalidId() {
+        int etudiantId = 1;
+        Etudiant etudiant = new Etudiant();
+        etudiant.setIdEtudiant(etudiantId);
+        etudiant.setNomE("Updated Etudiant");
+        when(etudiantRepository.existsById(etudiant.getIdEtudiant())).thenReturn(false);
+
+        assertThrows(EntityNotFoundException.class, () -> etudiantService.updateEtudiant(etudiant));
+    }
+
+    @Test
+    void testAddAndAssignEtudiantToEquipeAndContract_ThrowExceptionForInvalidIds() {
+        int contratId = 1;
+        int equipeId = 2;
+        Etudiant etudiant = new Etudiant();
+        when(contratRepository.findById(contratId)).thenReturn(Optional.empty());
+        when(equipeRepository.findById(equipeId)).thenReturn(Optional.of(new Equipe()));
+
+        assertThrows(NoSuchElementException.class, () -> etudiantService.addAndAssignEtudiantToEquipeAndContract(etudiant, contratId, equipeId));
+    }
+
+    @Test
+    void testGetEtudiantsByDepartement_ThrowExceptionForInvalidId() {
+        int departementId = 1;
+        when(etudiantRepository.findByDepartementIdDepartement(departementId)).thenReturn(null);
+
+        assertThrows(NoSuchElementException.class, () -> etudiantService.getEtudiantsByDepartement(departementId));
+    }
+
+
+
 
 
 
