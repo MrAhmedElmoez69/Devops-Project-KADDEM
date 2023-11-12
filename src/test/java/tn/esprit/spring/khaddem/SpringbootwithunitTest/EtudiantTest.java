@@ -1,16 +1,12 @@
 package tn.esprit.spring.khaddem.SpringbootwithunitTest;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.mockito.junit.MockitoJUnitRunner;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
-import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import tn.esprit.spring.khaddem.dto.EtudiantDTO;
 import tn.esprit.spring.khaddem.entities.*;
 import tn.esprit.spring.khaddem.repositories.EtudiantRepository;
@@ -25,14 +21,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 @AutoConfigureMockMvc
 @RunWith(MockitoJUnitRunner.class)
 class EtudiantTest {
-    @Autowired
-    private MockMvc mockMvc;
-
-    @Autowired
-    private EtudiantRepository etudiantRepository;
-
-    @Autowired
-    private EtudiantServiceImpl etudiantService;
 
     @Test
     void testEtudiantEntity() {
@@ -92,6 +80,8 @@ class EtudiantTest {
         assertEquals("Test Etudiant", etudiantDTO.getNomE());
         assertEquals(Option.GAMIX, etudiantDTO.getOp());
     }
+
+
 
 
 }

@@ -11,8 +11,6 @@ import tn.esprit.spring.khaddem.repositories.ContratRepository;
 
 
 import javax.persistence.EntityNotFoundException;
-import javax.transaction.Transactional;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
@@ -58,8 +56,6 @@ public class EtudiantServiceImpl implements IEtudiantService{
         }
     }
 
-
-
     @Override
     public Etudiant retrieveEtudiant(Integer idEtudiant) {
         Optional<Etudiant> optionalEtudiant = etudiantRepository.findById(idEtudiant);
@@ -70,7 +66,6 @@ public class EtudiantServiceImpl implements IEtudiantService{
             throw new EntityNotFoundException("Student with ID " + idEtudiant + " not found");
         }
     }
-
 
     @Override
     public void removeEtudiant(Integer idEtudiant) {
