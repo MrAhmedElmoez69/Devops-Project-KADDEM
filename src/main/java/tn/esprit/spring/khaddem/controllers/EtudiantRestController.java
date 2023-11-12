@@ -23,6 +23,13 @@ public class EtudiantRestController {
         return etudiantService.retrieveAllEtudiants();
     }
 
+    // http://localhost:8089/Kaddem/etudiant/retrieve-etudiant/8
+    @GetMapping("/retrieve-etudiant/{etudiantId}")
+    @ResponseBody
+    public Etudiant retrieveEtudiant(@PathVariable("etudiantId") Integer etudiantId) {
+        return etudiantService.retrieveEtudiant(etudiantId);
+    }
+
     // http://localhost:8089/Kaddem/etudiant/add-etudiant
     @PostMapping("/add-etudiant")
     @ResponseBody
