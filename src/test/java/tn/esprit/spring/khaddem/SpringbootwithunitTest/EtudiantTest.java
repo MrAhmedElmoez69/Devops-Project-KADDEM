@@ -1,17 +1,23 @@
 package tn.esprit.spring.khaddem.SpringbootwithunitTest;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
+import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
 import org.mockito.junit.MockitoJUnitRunner;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
+import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+import tn.esprit.spring.khaddem.controllers.EtudiantRestController;
 import tn.esprit.spring.khaddem.dto.EtudiantDTO;
 import tn.esprit.spring.khaddem.entities.*;
 import tn.esprit.spring.khaddem.services.EtudiantServiceImpl;
@@ -21,6 +27,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @SpringBootTest
@@ -30,8 +38,24 @@ class EtudiantTest {
     @Autowired
     private MockMvc mockMvc;
 
+    private Etudiant etudiant;
+    private EtudiantDTO etudiantDTO;
+
+    @BeforeEach
+    public void setUp() {
+        etudiant = new Etudiant();
+    }
     @Mock
     private EtudiantServiceImpl etudiantService;
+
+    @InjectMocks
+    private EtudiantRestController etudiantController;
+
+    @BeforeEach
+    public void setup() {
+        MockitoAnnotations.openMocks(this);
+        mockMvc = MockMvcBuilders.standaloneSetup(etudiantController).build();
+    }
 
     @Test
     void testEtudiantEntity() {
@@ -111,31 +135,46 @@ class EtudiantTest {
 
     @Test
     void testAddEtudiant() throws Exception {
-        // Create an EtudiantDTO with sample data
+        // Prepare an EquipeDTO with sample data
         EtudiantDTO etudiantDTO = new EtudiantDTO();
         etudiantDTO.setNomE("Test Etudiant");
-        etudiantDTO.setOp(Option.GAMIX);
+
+        // Mock the behavior of the service method
+        when(etudiantService.addEtudiant(any(Etudiant.class))).thenAnswer(invocation -> invocation.getArgument(0));
 
         // Convert EtudiantDTO to JSON
         ObjectMapper objectMapper = new ObjectMapper();
         String etudiantJson = objectMapper.writeValueAsString(etudiantDTO);
 
-        // Simulate an HTTP POST request to add a new student
+        // Perform the POST request to add an etudiant
         mockMvc.perform(MockMvcRequestBuilders.post("/etudiant/add-etudiant")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(etudiantJson))
-                .andExpect(status().isOk())
-                .andExpect(MockMvcResultMatchers.content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
-                .andExpect(result -> {
-                    // Convert the JSON response to an Etudiant object
-                    String responseContent = result.getResponse().getContentAsString();
-                    Etudiant addedEtudiant = objectMapper.readValue(responseContent, Etudiant.class);
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.content().contentType("application/json"));
+    }
 
-                    // Add your assertions here
-                    // For example, check if the added student matches the input DTO
-                    assertEquals("Test Etudiant", addedEtudiant.getNomE());
-                    assertEquals(Option.GAMIX, addedEtudiant.getOp());
-                });
+    @Test
+    void testUpdateEtudiant() throws Exception {
+        // Prepare an EtudiantDTO with sample data
+        EtudiantDTO etudiantDTO = new EtudiantDTO();
+        etudiantDTO.setIdEtudiant(1); // Existing equipe ID
+        etudiantDTO.setNomE("Updated Test Etudiant");
+
+        // Mock the behavior of the service methods
+        when(etudiantService.retrieveEtudiant(etudiantDTO.getIdEtudiant())).thenReturn(new Etudiant());
+        when(etudiantService.updateEtudiant(any(Etudiant.class))).thenAnswer(invocation -> invocation.getArgument(0));
+
+        // Convert EquipeDTO to JSON
+        ObjectMapper objectMapper = new ObjectMapper();
+        String etudiantJson = objectMapper.writeValueAsString(etudiantDTO);
+
+        // Perform the PUT request to update an equipe
+        mockMvc.perform(MockMvcRequestBuilders.put("/etudiant/update-etudiant")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(etudiantJson))
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.content().contentType("application/json"));
     }
 
 

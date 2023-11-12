@@ -24,11 +24,13 @@ public class EtudiantRestController {
     }
 
     // http://localhost:8089/Kaddem/etudiant/retrieve-etudiant/8
-    @GetMapping("/retrieve-etudiant/{etudiantId}")
+    @GetMapping("/retrieve-equipe/{etudiant-id}")
     @ResponseBody
-    public Etudiant retrieveEtudiant(@PathVariable("etudiantId") Integer etudiantId) {
+    public Etudiant retrieveEtudiant(@PathVariable("etudiant-id") Integer etudiantId) {
         return etudiantService.retrieveEtudiant(etudiantId);
     }
+
+
 
     // http://localhost:8089/Kaddem/etudiant/add-etudiant
     @PostMapping("/add-etudiant")
@@ -47,13 +49,14 @@ public class EtudiantRestController {
     @PutMapping("/update-etudiant")
     @ResponseBody
     public Etudiant updateEtudiant(@RequestBody EtudiantDTO etudiantDTO) {
-        Etudiant etudiant = new Etudiant();
-        etudiant.setIdEtudiant(etudiantDTO.getIdEtudiant()); // Assuming you have an ID field in the DTO
-        etudiant.setPrenomE(etudiantDTO.getPrenomE());
-        etudiant.setNomE(etudiantDTO.getNomE());
-        etudiant.setOp(etudiantDTO.getOp());
+        Etudiant equipe = etudiantService.retrieveEtudiant(etudiantDTO.getIdEtudiant());
 
-        return etudiantService.updateEtudiant(etudiant);
+        if (equipe != null) {
+            equipe.setNomE(etudiantDTO.getNomE());
+            return etudiantService.updateEtudiant(equipe);
+        } else {
+            return null;
+        }
     }
 
     // http://localhost:8089/Kaddem/etudiant/removeEtudiant
