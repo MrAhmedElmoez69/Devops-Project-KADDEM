@@ -12,7 +12,12 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import tn.esprit.spring.khaddem.dto.DepartementDTO;
 import tn.esprit.spring.khaddem.entities.Departement;
+import tn.esprit.spring.khaddem.entities.Etudiant;
+import tn.esprit.spring.khaddem.entities.Universite;
 import tn.esprit.spring.khaddem.services.IDepartementService;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -31,6 +36,23 @@ class DepartementTest {
     @BeforeEach
     void setUp() {
         // You can initialize or reset any test-related data here
+    }
+    @Test
+    public void testAllArgsConstructor() {
+        // Create sample data
+        Integer idDepartement = 1;
+        String nomDepart = "Computer Science";
+        List<Etudiant> etudiants = new ArrayList<>(); // You may initialize this with some sample data
+        Universite universite = new Universite(); // You may initialize this with some sample data
+
+        // Create an instance using the AllArgsConstructor
+        Departement departement = new Departement(idDepartement, nomDepart, etudiants, universite);
+
+        // Validate the fields
+        assertEquals(idDepartement, departement.getIdDepartement());
+        assertEquals(nomDepart, departement.getNomDepart());
+        assertEquals(etudiants, departement.getEtudiants());
+        assertEquals(universite, departement.getUniversite());
     }
 
     @Test
