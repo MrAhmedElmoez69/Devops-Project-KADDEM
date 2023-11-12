@@ -28,8 +28,10 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.when;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.mockito.Mockito.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.*;
 
 @SpringBootTest
 @AutoConfigureMockMvc
@@ -116,12 +118,15 @@ class EtudiantTest {
         assertEquals(Option.GAMIX, etudiantDTO.getOp());
     }
 
+
+
+
     @Test
     void testRetrieveAllEtudiants() throws Exception {
         // Simulate an HTTP GET request to retrieve all students
         mockMvc.perform(MockMvcRequestBuilders.get("/etudiant/retrieve-all-etudiants"))
                 .andExpect(status().isOk())
-                .andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(result -> {
                     // Convert the JSON response to a list of Etudiant objects
                     String responseContent = result.getResponse().getContentAsString();
@@ -151,7 +156,7 @@ class EtudiantTest {
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(etudiantJson))
                 .andExpect(MockMvcResultMatchers.status().isOk())
-                .andExpect(MockMvcResultMatchers.content().contentType("application/json"));
+                .andExpect(content().contentType("application/json"));
     }
 
     @Test
@@ -174,7 +179,24 @@ class EtudiantTest {
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(etudiantJson))
                 .andExpect(MockMvcResultMatchers.status().isOk())
-                .andExpect(MockMvcResultMatchers.content().contentType("application/json"));
+                .andExpect(content().contentType("application/json"));
+    }
+
+    @Test
+    void testRemoveEtudiant() throws Exception {
+        // Sample data
+        Integer etudiantId = 1;
+
+        // Mock the behavior of the service method
+        doNothing().when(etudiantService).removeEtudiant(etudiantId);
+
+        // Perform the DELETE request to remove an etudiant
+        mockMvc.perform(MockMvcRequestBuilders.delete("/etudiant/removeEtudiant/{idEtudiant}", etudiantId))
+                .andExpect(MockMvcResultMatchers.status().isOk());
+
+        // Optionally, you can add further assertions or verifications based on your business logic
+        // For example, you can verify that the service method was called with the correct etudiantId
+        verify(etudiantService, times(1)).removeEtudiant(etudiantId);
     }
 
 
