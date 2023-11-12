@@ -1,6 +1,5 @@
 package tn.esprit.spring.khaddem.SpringbootwithunitTest;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -17,7 +16,6 @@ import tn.esprit.spring.khaddem.controllers.ContratRestController;
 import tn.esprit.spring.khaddem.dto.ContratDTO;
 import tn.esprit.spring.khaddem.entities.Contrat;
 import tn.esprit.spring.khaddem.entities.Etudiant;
-import tn.esprit.spring.khaddem.entities.Option;
 import tn.esprit.spring.khaddem.entities.Specialite;
 import tn.esprit.spring.khaddem.repositories.ContratRepository;
 import tn.esprit.spring.khaddem.repositories.EtudiantRepository;
@@ -28,7 +26,6 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
-import static org.assertj.core.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.*;
 
 

@@ -41,26 +41,7 @@ public class UniversiteRestController {
     }
 
 
-    // http://localhost:8089/Kaddem/universite/update-universite
-    @PutMapping("/update-universite")
-    @Operation(description = "modifier une université")
-    @ResponseBody
-    public UniversiteDTO updateUniversite(@RequestBody UniversiteDTO universiteDTO) {
-        Universite universite = new Universite();
-        universite.setNomUniv(universiteDTO.getNomUniv());
-        universite.setAdresse(universiteDTO.getAdresse());
-        Universite updatedUniversite = universiteService.updateUniversite(universite);
-        UniversiteDTO updatedUniversiteDTO = new UniversiteDTO();
-        updatedUniversiteDTO.setNomUniv(updatedUniversite.getNomUniv());
-        updatedUniversiteDTO.setAdresse(updatedUniversite.getAdresse());
-        return updatedUniversiteDTO;
-    }
 
-    // http://localhost:8089/Kaddem/universite/assignUniversiteToDepartement/1/1
-    @PutMapping("/assignUniversiteToDepartement/{universiteId}/{departementId}")
-    @Operation(description = "assigner une université à un département")
-    @ResponseBody
-    public void assignUniversiteToDepartement(@PathVariable("universiteId") Integer universiteId, @PathVariable("departementId") Integer departementId) {
-        universiteService.assignUniversiteToDepartement(universiteId, departementId);
-    }
+
+
 }
