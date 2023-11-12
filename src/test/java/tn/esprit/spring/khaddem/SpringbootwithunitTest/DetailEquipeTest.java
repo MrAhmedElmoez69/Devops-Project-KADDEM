@@ -24,6 +24,7 @@ import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.mock;
 
 @SpringBootTest
 @AutoConfigureMockMvc
@@ -153,6 +154,17 @@ class DetailEquipeTest {
         detailEquipe2.setThematique("Thematique A");
 
         assertEquals(detailEquipe1.hashCode(), detailEquipe2.hashCode());
+    }
+
+    @Test
+    void testEqualsWithEquipe() {
+        // Create two instances of DetailEquipe with the same attributes and a mock Equipe
+        Equipe equipe = mock(Equipe.class);
+        DetailEquipe detailEquipe1 = new DetailEquipe(1, 10, "Thematique 1", equipe);
+        DetailEquipe detailEquipe2 = new DetailEquipe(1, 10, "Thematique 1", equipe);
+
+        // Assert that the equals method returns true
+        assertEquals(detailEquipe1, detailEquipe2);
     }
 
 

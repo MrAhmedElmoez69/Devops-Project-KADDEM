@@ -62,10 +62,30 @@ class EtudiantTest {
     @Test
     void testEtudiantEntity() {
         Etudiant etudiant = new Etudiant();
+        etudiant.setIdEtudiant(1);
         etudiant.setNomE("Test Etudiant");
 
-        // Add assertions for your entity properties
+        assertEquals(1, etudiant.getIdEtudiant());
         assertEquals("Test Etudiant", etudiant.getNomE());
+    }
+
+    @Test
+    void testEnumValues() {
+        // Test if the enum contains the expected values
+        assertEquals(4, Option.values().length);
+        assertEquals(Option.GAMIX, Option.valueOf("GAMIX"));
+        assertEquals(Option.SE, Option.valueOf("SE"));
+        assertEquals(Option.SAE, Option.valueOf("SAE"));
+        assertEquals(Option.INFINI, Option.valueOf("INFINI"));
+    }
+
+    @Test
+    void testEnumToString() {
+        // Test the toString() method for each enum value
+        assertEquals("GAMIX", Option.GAMIX.toString());
+        assertEquals("SE", Option.SE.toString());
+        assertEquals("SAE", Option.SAE.toString());
+        assertEquals("INFINI", Option.INFINI.toString());
     }
 
     @Test
@@ -117,9 +137,6 @@ class EtudiantTest {
         assertEquals("Test Etudiant", etudiantDTO.getNomE());
         assertEquals(Option.GAMIX, etudiantDTO.getOp());
     }
-
-
-
 
     @Test
     void testRetrieveAllEtudiants() throws Exception {
