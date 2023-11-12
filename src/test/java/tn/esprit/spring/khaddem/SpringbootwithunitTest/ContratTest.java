@@ -97,6 +97,24 @@ class ContratTest {
         assertEquals(2000, contrat1.getMontantContrat());
     }
 
+    @Test
+    void testContratConstructor() {
+        // Create an Etudiant for the Contrat
+        Etudiant etudiant = new Etudiant();
+        etudiant.setIdEtudiant(1);
+        etudiant.setPrenomE("John");
+        etudiant.setNomE("Doe");
+
+        // Create a Contrat using the constructor
+        Contrat contrat = new Contrat(1, new Date(), new Date(), Specialite.IA, true, 1000, etudiant);
+
+        // Validate the values
+        assertEquals(1, contrat.getIdContrat());
+        assertEquals(Specialite.IA, contrat.getSpecialite());
+        assertTrue(contrat.isArchived());
+        assertEquals(1000, contrat.getMontantContrat());
+        assertEquals(etudiant, contrat.getEtudiant());
+    }
 
     @Test
     void testContratEntity() {

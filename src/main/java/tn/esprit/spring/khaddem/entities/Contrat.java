@@ -25,6 +25,10 @@ public class Contrat implements Serializable {
     // @JsonIgnore
     private  Etudiant etudiant;
 
+    public Boolean isArchived() {
+        return archived;
+    }
+
     public Integer getIdContrat() {
         return idContrat;
     }
