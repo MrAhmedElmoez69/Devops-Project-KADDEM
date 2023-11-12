@@ -3,7 +3,6 @@ package tn.esprit.spring.khaddem.controllers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import tn.esprit.spring.khaddem.dto.EtudiantDTO;
-import tn.esprit.spring.khaddem.entities.Equipe;
 import tn.esprit.spring.khaddem.entities.Etudiant;
 import tn.esprit.spring.khaddem.services.IEtudiantService;
 
@@ -22,13 +21,6 @@ public class EtudiantRestController {
     @ResponseBody
     public List<Etudiant> getEtudiants() {
         return etudiantService.retrieveAllEtudiants();
-    }
-
-    // http://localhost:8089/Kaddem/etudiant/retrieve-etudiant/8
-    @GetMapping("/retrieve-etudiant/{etudiantId}")
-    @ResponseBody
-    public Etudiant retrieveEtudiant(@PathVariable("etudiantId") Integer etudiantId) {
-        return etudiantService.retrieveEtudiant(etudiantId);
     }
 
     // http://localhost:8089/Kaddem/etudiant/add-etudiant
