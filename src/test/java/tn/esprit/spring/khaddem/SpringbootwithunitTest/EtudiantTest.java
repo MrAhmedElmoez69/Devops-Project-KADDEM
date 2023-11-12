@@ -3,6 +3,7 @@ package tn.esprit.spring.khaddem.SpringbootwithunitTest;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
+import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -13,7 +14,6 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import tn.esprit.spring.khaddem.dto.EtudiantDTO;
 import tn.esprit.spring.khaddem.entities.*;
-import tn.esprit.spring.khaddem.repositories.EtudiantRepository;
 import tn.esprit.spring.khaddem.services.EtudiantServiceImpl;
 
 
@@ -21,6 +21,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @SpringBootTest
 @AutoConfigureMockMvc
@@ -28,6 +29,9 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 class EtudiantTest {
     @Autowired
     private MockMvc mockMvc;
+
+    @Mock
+    private EtudiantServiceImpl etudiantService;
 
     @Test
     void testEtudiantEntity() {
@@ -92,7 +96,7 @@ class EtudiantTest {
     void testRetrieveAllEtudiants() throws Exception {
         // Simulate an HTTP GET request to retrieve all students
         mockMvc.perform(MockMvcRequestBuilders.get("/etudiant/retrieve-all-etudiants"))
-                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(status().isOk())
                 .andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(result -> {
                     // Convert the JSON response to a list of Etudiant objects
@@ -120,7 +124,7 @@ class EtudiantTest {
         mockMvc.perform(MockMvcRequestBuilders.post("/etudiant/add-etudiant")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(etudiantJson))
-                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(status().isOk())
                 .andExpect(MockMvcResultMatchers.content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
                 .andExpect(result -> {
                     // Convert the JSON response to an Etudiant object
@@ -133,6 +137,10 @@ class EtudiantTest {
                     assertEquals(Option.GAMIX, addedEtudiant.getOp());
                 });
     }
+
+
+
+
 
 
 

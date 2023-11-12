@@ -5,7 +5,9 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import tn.esprit.spring.khaddem.entities.Departement;
 import tn.esprit.spring.khaddem.entities.Etudiant;
+import tn.esprit.spring.khaddem.repositories.DepartementRepository;
 import tn.esprit.spring.khaddem.repositories.EtudiantRepository;
 import tn.esprit.spring.khaddem.services.EtudiantServiceImpl;
 
@@ -22,6 +24,9 @@ public class EtudiantServiceTest {
 
     @Mock
     private EtudiantRepository etudiantRepository;
+
+    @Mock
+    private DepartementRepository departementRepository;
 
     @Test
     public void testRetrieveAllEtudiants() {
@@ -53,6 +58,46 @@ public class EtudiantServiceTest {
         Etudiant addedEtudiant = etudiantService.addEtudiant(etudiant);
 
         assertEquals(etudiant, addedEtudiant);
+    }
+
+    @Test
+    public void testUpdateEtudiant() {
+        Etudiant etudiant = new Etudiant();
+        etudiant.setIdEtudiant(1); // Replace with an existing Etudiant ID
+        etudiant.setNomE("Updated Etudiant");
+
+        when(etudiantRepository.existsById(etudiant.getIdEtudiant())).thenReturn(true);
+        when(etudiantRepository.save(etudiant)).thenReturn(etudiant);
+
+        Etudiant updatedEtudiant = etudiantService.updateEtudiant(etudiant);
+
+        assertEquals(etudiant, updatedEtudiant);
+    }
+
+    @Test
+    public void testRemoveEtudiant() {
+        int etudiantId = 1; // Replace with an existing Etudiant ID
+        doNothing().when(etudiantRepository).deleteById(etudiantId);
+
+        etudiantService.removeEtudiant(etudiantId);
+
+        verify(etudiantRepository, times(1)).deleteById(etudiantId);
+    }
+
+    @Test
+    public void testAssignEtudiantToDepartement() {
+        int etudiantId = 1; // Replace with an existing Etudiant ID
+        int departementId = 1; // Replace with an existing Departement ID
+
+        Etudiant etudiant = new Etudiant();
+        etudiant.setIdEtudiant(etudiantId);
+
+        when(etudiantRepository.findById(etudiantId)).thenReturn(java.util.Optional.of(etudiant));
+        when(departementRepository.findById(departementId)).thenReturn(java.util.Optional.of(new Departement()));
+
+        etudiantService.assignEtudiantToDepartement(etudiantId, departementId);
+
+        // Add assertions or verifications based on your business logic
     }
 
 
