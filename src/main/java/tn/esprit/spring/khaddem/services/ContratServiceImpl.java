@@ -18,8 +18,6 @@ import java.util.List;
 @AllArgsConstructor
 public class ContratServiceImpl implements  IContratService{
 
-
-
     ContratRepository contratRepository;
     EtudiantRepository etudiantRepository;
 
@@ -30,23 +28,9 @@ public class ContratServiceImpl implements  IContratService{
     }
 
     @Override
-    public Contrat updateContrat(Contrat ce) {
-        log.info("debut methode updateContrat");
-        contratRepository.save(ce);
-        return ce;
-    }
-
-    @Override
     public Contrat retrieveContrat(Integer idContrat) {
         log.info("debut methode retrieveContrat");
         return contratRepository.findById(idContrat).orElse(null);
-    }
-
-
-    @Override
-    public void removeContrat(Integer idContrat) {
-        log.info("debut methode removeContrat");
-        contratRepository.deleteById(idContrat);
     }
 
     @Override
@@ -58,111 +42,6 @@ public class ContratServiceImpl implements  IContratService{
         return c;
     }
 
-    @Transactional
-    public Contrat addAndAffectContratToEtudiant(Contrat ce, String nomE, String prenomE) {
-        Long startDate = new Date().getTime();
-        log.info("startDate: "+startDate);
-        log.info("debut methode addAndAffectContratToEtudiant");
-        Etudiant etudiant=etudiantRepository.findByNomEAndPrenomE(nomE,prenomE);
-        log.info("etudiant: "+etudiant.getNomE()+" "+etudiant.getPrenomE());
-        // nb contrats actifs
-        Integer nbContratsActifs= etudiant.getContrats().size();
-        if(nbContratsActifs>5) {
-            log.info("nombre de contrats autorisés est atteint");
-            Long endDate = new Date().getTime();
-            Long executionTime = endDate-startDate;
-            log.info("endDate: "+startDate);
-            log.info("executionTime: "+executionTime+ " ms");
-            return ce;
-        }
-        log.info("nb Contrats en cours: "+nbContratsActifs);
-        contratRepository.save(ce);
-        ce.setEtudiant(etudiant);
-        log.info("fin methode addAndAffectContratToEtudiant");
-        Long endDate = new Date().getTime();
-        Long executionTime = endDate-startDate;
 
-        log.info("endDate: "+startDate);
-        log.info("executionTime: "+executionTime+ " ms");
-
-        return ce;
-    }
-
-    public 	Integer nbContratsValides(Date startDate, Date endDate){
-        return contratRepository.getnbContratsValides(startDate, endDate);
-    }
-
-    public void retrieveAndUpdateStatusContrat(){
-        log.info("debut methode retrieveAndUpdateStatusContrat");
-        List<Contrat>contrats=contratRepository.findAll();
-        log.info("total contrats :"+contrats.size());
-
-        for (Contrat contrat : contrats) {
-            log.info("id: "+contrat.getIdContrat());
-            log.info("date fin"+contrat.getDateFinContrat());
-            log.info("archived "+contrat.getArchived());
-
-            Date dateSysteme = new Date();
-
-            if (contrat.getArchived() == null || !contrat.getArchived()) {
-                long timeDifference = contrat.getDateFinContrat().getTime()-dateSysteme.getTime();
-                long daysDifference= (timeDifference / (1000 * 60 * 60 * 24)) % 365;
-                log.info("difference in days : "+daysDifference);
-                if (daysDifference==15){  // pour 15 jours exactement
-                    log.info(" Contrat Commencant le : " + contrat.getDateDebutContrat()+"pour l'etudiant "+contrat.getEtudiant().getNomE()+
-                            " "+contrat.getEtudiant().getPrenomE()+"  va bientot s achever le "
-                            +contrat.getDateFinContrat());
-                }
-                if (daysDifference==0) {
-                    log.info("jour j: " + contrat.getIdContrat());
-                    contrat.setArchived(true);
-                    contratRepository.save(contrat);
-                }
-            }
-
-            log.info("debut methode retrieveAndUpdateStatusContrat");
-        }
-    }
-    public float getChiffreAffaireEntreDeuxDates(Date startDate, Date endDate){
-        long timeDifference = endDate.getTime() - startDate.getTime();
-        float daysDifference= (timeDifference / (1000 * 60 * 60 * 24)) % 365;
-        float monthsDifference=daysDifference/30;
-        List<Contrat> contrats=contratRepository.findAll();
-        float chiffreAffaireEntreDeuxDates=0;
-        float chiffreAffaireEntreDeuxDatesIA=0;
-        float chiffreAffaireEntreDeuxDatesCloud=0;
-        float chiffreAffaireEntreDeuxDatesReseau=0;
-        float chiffreAffaireEntreDeuxDatesSecurite=0;
-
-        for (Contrat contrat : contrats) {
-            if (contrat.getSpecialite()== Specialite.IA){
-                chiffreAffaireEntreDeuxDates+=(monthsDifference*contrat.getMontantContrat());
-                chiffreAffaireEntreDeuxDatesIA+=(monthsDifference*contrat.getMontantContrat());
-
-            } else if (contrat.getSpecialite()== Specialite.CLOUD) {
-                chiffreAffaireEntreDeuxDates+=(monthsDifference*contrat.getMontantContrat());
-                chiffreAffaireEntreDeuxDatesCloud+=(monthsDifference*contrat.getMontantContrat());
-            }
-            else if (contrat.getSpecialite()== Specialite.RESEAU) {
-                chiffreAffaireEntreDeuxDates+=(monthsDifference*contrat.getMontantContrat());
-                chiffreAffaireEntreDeuxDatesReseau+=(monthsDifference*contrat.getMontantContrat());
-
-            }
-            else if (contrat.getSpecialite()== Specialite.SECURITE)
-            {
-                chiffreAffaireEntreDeuxDates+=(monthsDifference*contrat.getMontantContrat());
-                chiffreAffaireEntreDeuxDatesSecurite+=(monthsDifference*contrat.getMontantContrat());
-
-            }
-        }
-        log.info("chiffreAffaireEntreDeuxDates: "+chiffreAffaireEntreDeuxDates);
-        log.info("chiffreAffaireEntreDeuxDatesIA:" +chiffreAffaireEntreDeuxDatesIA);
-        log.info("chiffreAffaireEntreDeuxDatesCloud "+chiffreAffaireEntreDeuxDatesCloud);
-        log.info("chiffreAffaireEntreDeuxDatesReseau "+chiffreAffaireEntreDeuxDatesReseau);
-        log.info("chiffreAffaireEntreDeuxDatesSecurite "+chiffreAffaireEntreDeuxDatesSecurite);
-        return chiffreAffaireEntreDeuxDates;
-
-
-    }
 
 }
