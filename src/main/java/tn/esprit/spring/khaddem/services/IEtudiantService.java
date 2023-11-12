@@ -11,7 +11,6 @@ public interface IEtudiantService {
     Etudiant updateEtudiant(Etudiant e);
     Etudiant retrieveEtudiant(Integer idEtudiant);
     void removeEtudiant(Integer idEtudiant);
-
     public void assignEtudiantToDepartement(Integer etudiantId, Integer departementId) ;
 
 

@@ -18,22 +18,15 @@ public class Etudiant  implements Serializable {
     private String nomE;
     @Enumerated(EnumType.STRING)
     private  Option op;
-
-
-
-
-    @Override
-    public String toString() {
-        return "Etudiant{" +
-                "idEtudiant=" + idEtudiant +
-                ", prenomE='" + prenomE + '\'' +
-                ", nomE='" + nomE + '\'' +
-                ", op=" + op +
-                ", departement=" + departement +
-                ", equipes=" + equipes +
-                ", contrats=" + contrats +
-                '}';
-    }
+    @ManyToOne
+    @JsonIgnore
+    private Departement departement;
+    @ManyToMany
+    @JsonIgnore
+    private List<Equipe> equipes;
+    @OneToMany(mappedBy = "etudiant")
+    @JsonIgnore
+    private List<Contrat> contrats;
 
     public Etudiant() {
     }
@@ -104,15 +97,19 @@ public class Etudiant  implements Serializable {
         this.contrats = contrats;
     }
 
-    @ManyToOne
-    @JsonIgnore
-    private Departement departement;
-    @ManyToMany
-    @JsonIgnore
-    private List<Equipe> equipes;
-    @OneToMany(mappedBy = "etudiant")
-    @JsonIgnore
-    private List<Contrat> contrats;
+    @Override
+    public String toString() {
+        return "Etudiant{" +
+                "idEtudiant=" + idEtudiant +
+                ", prenomE='" + prenomE + '\'' +
+                ", nomE='" + nomE + '\'' +
+                ", op=" + op +
+                ", departement=" + departement +
+                ", equipes=" + equipes +
+                ", contrats=" + contrats +
+                '}';
+    }
+
 
 
 
