@@ -13,10 +13,13 @@ import tn.esprit.spring.khaddem.repositories.EquipeRepository;
 import tn.esprit.spring.khaddem.repositories.EtudiantRepository;
 import tn.esprit.spring.khaddem.services.EtudiantServiceImpl;
 
+import javax.persistence.EntityNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static org.mockito.ArgumentMatchers.any;
 
@@ -55,26 +58,59 @@ public class EtudiantServiceTest {
     }
 
     @Test
-    void testUpdateEtudiant() {
-        // Mock the behavior of the repository
+    void testUpdateEtudiantExists() {
+        Integer idEtudiant = 1;
         Etudiant etudiant = new Etudiant();
-        when(etudiantRepository.existsById(any())).thenReturn(true);
-        when(etudiantRepository.save(any(Etudiant.class))).thenReturn(etudiant);
+        etudiant.setIdEtudiant(idEtudiant);
 
-        // Call the service method
+        when(etudiantRepository.existsById(idEtudiant)).thenReturn(true);
+        when(etudiantRepository.save(etudiant)).thenReturn(etudiant);
+
         Etudiant result = etudiantService.updateEtudiant(etudiant);
 
-        // Verify the result
         assertEquals(etudiant, result);
+        verify(etudiantRepository).existsById(idEtudiant);
+        verify(etudiantRepository).save(etudiant);
     }
 
     @Test
-    void testRemoveEtudiant() {
-        // Call the service method
-        etudiantService.removeEtudiant(1);
+    void testUpdateEtudiantNotExists() {
+        Integer idEtudiant = 1;
+        Etudiant etudiant = new Etudiant();
+        etudiant.setIdEtudiant(idEtudiant);
 
-        // Verify that the repository method was called with the correct argument
-        Mockito.verify(etudiantRepository).deleteById(1);
+        when(etudiantRepository.existsById(idEtudiant)).thenReturn(false);
+        when(etudiantRepository.save(etudiant)).thenReturn(etudiant);
+
+        Etudiant result = etudiantService.updateEtudiant(etudiant);
+
+        assertEquals(etudiant, result);
+        verify(etudiantRepository).existsById(idEtudiant);
+        verify(etudiantRepository).save(etudiant);
+    }
+
+    @Test
+    void testRetrieveEtudiantExists() {
+        Integer idEtudiant = 1;
+        Etudiant etudiant = new Etudiant();
+        etudiant.setIdEtudiant(idEtudiant);
+
+        when(etudiantRepository.findById(idEtudiant)).thenReturn(Optional.of(etudiant));
+
+        Etudiant result = etudiantService.retrieveEtudiant(idEtudiant);
+
+        assertEquals(etudiant, result);
+        verify(etudiantRepository).findById(idEtudiant);
+    }
+
+    @Test
+    void testRetrieveEtudiantNotExists() {
+        Integer idEtudiant = 1;
+
+        when(etudiantRepository.findById(idEtudiant)).thenReturn(Optional.empty());
+
+        assertThrows(EntityNotFoundException.class, () -> etudiantService.retrieveEtudiant(idEtudiant));
+        verify(etudiantRepository).findById(idEtudiant);
     }
 
 }
