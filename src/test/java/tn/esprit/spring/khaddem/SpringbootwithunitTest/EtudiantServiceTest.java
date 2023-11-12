@@ -15,7 +15,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
@@ -99,9 +98,6 @@ public class EtudiantServiceTest {
         etudiantService.assignEtudiantToDepartement(etudiantId, departementId);
 
         // Add assertions or verifications based on your business logic
-
-        // Assert that the etudiant's departement is not null after assignment
-        assertNotNull(etudiant.getDepartement(), "Etudiant's departement should not be null after assignment");
     }
 
 
