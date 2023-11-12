@@ -102,7 +102,7 @@ public class EquipeTest {
         assertEquals("SENIOR", Niveau.SENIOR.toString());
         assertEquals("EXPERT", Niveau.EXPERT.toString());
     }
-    
+
     @Test
      void testGettersAndSetters() {
         // Test the getter and setter methods
