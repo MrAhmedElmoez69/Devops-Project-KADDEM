@@ -40,16 +40,13 @@ public class DetailEquipe implements Serializable {
         DetailEquipe other = (DetailEquipe) obj;
         return idDetailEquipe == other.idDetailEquipe
                 && salle == other.salle
-                && Objects.equals(thematique, other.thematique)
-                && Objects.equals(equipe, other.equipe);
+                && Objects.equals(thematique, other.thematique);
     }
-
 
     @Override
     public int hashCode() {
-        return Objects.hash(idDetailEquipe, salle, thematique, equipe);
+        return Objects.hash(idDetailEquipe, salle, thematique);
     }
-
 
 
 
