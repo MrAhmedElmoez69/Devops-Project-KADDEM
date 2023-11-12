@@ -2,12 +2,9 @@ package tn.esprit.spring.khaddem.controllers;
 
 
 import lombok.AllArgsConstructor;
-import org.springframework.format.annotation.DateTimeFormat;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.web.bind.annotation.*;
 import tn.esprit.spring.khaddem.entities.Contrat;
 import tn.esprit.spring.khaddem.services.IContratService;
-import java.util.Date;
 import java.util.List;
 import tn.esprit.spring.khaddem.dto.ContratDTO;
 

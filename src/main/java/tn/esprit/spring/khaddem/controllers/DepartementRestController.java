@@ -64,12 +64,7 @@ public class DepartementRestController {
 
 
 
-    // http://localhost:8089/Kaddem/departement/retrieveDepartementsByUniversite/1
-    @GetMapping("/retrieveDepartementsByUniversite/{idUniversite}")
-    @ResponseBody
-    public List<Departement> retrieveDepartementsByUniversite(@PathVariable("idUniversite") Integer idUniversite) {
-        return departementService.retrieveDepartementsByUniversite(idUniversite);
-    }
+
 
 
 

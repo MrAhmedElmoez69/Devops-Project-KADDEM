@@ -62,16 +62,7 @@ class DepartementServiceTest {
         assertEquals(departement, addedDepartement);
     }
 
-    @Test
-    void testRetrieveDepartementsByUniversite() {
-        int idUniversite = 1;
-        List<Departement> expectedDepartements = new ArrayList<>();
-        IDepartementService departementService = Mockito.mock(IDepartementService.class);
-        when(departementService.retrieveDepartementsByUniversite(idUniversite)).thenReturn(expectedDepartements);
-        DepartementRestController departementController = new DepartementRestController(departementService);
-        List<Departement> actualDepartements = departementController.retrieveDepartementsByUniversite(idUniversite);
-        assertEquals(expectedDepartements, actualDepartements);
-    }
+
 
 
 
