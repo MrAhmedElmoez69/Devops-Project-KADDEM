@@ -41,14 +41,23 @@ public class EtudiantServiceImpl implements IEtudiantService{
     }
 
     @Override
-    public Etudiant updateEtudiant(Etudiant e) {
-        if (etudiantRepository.existsById(e.getIdEtudiant())) {
-            etudiantRepository.save(e);
-            return e;
+    public Etudiant updateEtudiant(Etudiant updatedEtudiant) {
+        Integer idEtudiant = updatedEtudiant.getIdEtudiant();
+        Optional<Etudiant> optionalEtudiant = etudiantRepository.findById(idEtudiant);
+
+        if (optionalEtudiant.isPresent()) {
+            Etudiant existingEtudiant = optionalEtudiant.get();
+            existingEtudiant.setPrenomE(updatedEtudiant.getPrenomE());
+            existingEtudiant.setNomE(updatedEtudiant.getNomE());
+            existingEtudiant.setOp(updatedEtudiant.getOp());
+            etudiantRepository.save(existingEtudiant);
+
+            return existingEtudiant;
         } else {
-            return etudiantRepository.save(e);
+            throw new NoSuchElementException("Etudiant not found with ID: " + idEtudiant);
         }
     }
+
 
 
     @Override
@@ -85,69 +94,7 @@ public class EtudiantServiceImpl implements IEtudiantService{
         }
     }
 
-    @Override
-    public List<Etudiant> findByDepartementIdDepartement(Integer idDepartement) {
-        return etudiantRepository.findByDepartementIdDepartement(idDepartement);
-    }
 
-    @Override
-    public List<Etudiant> findByEquipesNiveau(Niveau niveau) {
-        return etudiantRepository.findByEquipesNiveau(niveau);
-    }
-
-    @Override
-    public List<Etudiant> retrieveEtudiantsByContratSpecialite(Specialite specialite) {
-        return etudiantRepository.retrieveEtudiantsByContratSpecialite(specialite);
-    }
-
-    @Override
-    public List<Etudiant> retrieveEtudiantsByContratSpecialiteSQL(String specialite) {
-        return etudiantRepository.retrieveEtudiantsByContratSpecialiteSQL(specialite);
-    }
-
-    @Transactional
-    public Etudiant addAndAssignEtudiantToEquipeAndContract(Etudiant e, Integer idContrat, Integer idEquipe) {
-        Optional<Contrat> contratOptional = contratRepository.findById(idContrat);
-        Optional<Equipe> equipeOptional = equipeRepository.findById(idEquipe);
-
-        if (contratOptional.isPresent() && equipeOptional.isPresent()) {
-            Contrat contrat = contratOptional.get();
-            Equipe equipe = equipeOptional.get();
-            Etudiant etudiant = etudiantRepository.save(e);
-            log.info("contrat: " + contrat.getSpecialite());
-            log.info("equipe: " + equipe.getNomEquipe());
-            log.info("etudiant: " + etudiant.getNomE() + " " + etudiant.getPrenomE() + " " + etudiant.getOp());
-            List<Equipe> equipesMisesAjour = new ArrayList<>();
-            contrat.setEtudiant(etudiant);
-            if (etudiant.getEquipes() != null) {
-                equipesMisesAjour = etudiant.getEquipes();
-            }
-            equipesMisesAjour.add(equipe);
-            log.info("taille apres ajout : " + equipesMisesAjour.size());
-            etudiant.setEquipes(equipesMisesAjour);
-
-            return e;
-        } else {
-            // Handle the case where the Optional is empty (not found in the repository).
-            // You can throw an exception or return a default value, depending on your use case.
-            throw new NoSuchElementException("Contrat or Equipe not found");
-        }
-    }
-
-
-    @Override
-    public List<Etudiant> getEtudiantsByDepartement(Integer idDepartement) {
-        Optional<Departement> optionalDepartement = departementRepository.findById(idDepartement);
-
-        if (optionalDepartement.isPresent()) {
-            Departement departement = optionalDepartement.get();
-            return departement.getEtudiants();
-        } else {
-            // Handle the case where the department doesn't exist
-            // You can choose to throw an exception or return an empty list, or handle it as needed
-            throw new EntityNotFoundException("Department not found");
-        }
-    }
 
 
 
