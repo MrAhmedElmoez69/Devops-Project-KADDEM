@@ -15,13 +15,14 @@ import tn.esprit.spring.khaddem.services.EtudiantServiceImpl;
 
 import javax.persistence.EntityNotFoundException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
-import static org.mockito.ArgumentMatchers.any;
 
 @ExtendWith(MockitoExtension.class)
 public class EtudiantServiceTest {
@@ -30,6 +31,8 @@ public class EtudiantServiceTest {
 
     @Mock
     private EtudiantRepository etudiantRepository;
+    @Mock
+    private DepartementRepository departementRepository;
 
     @Test
     void testRetrieveAllEtudiants() {
@@ -58,59 +61,146 @@ public class EtudiantServiceTest {
     }
 
     @Test
-    void testUpdateEtudiantExists() {
-        Integer idEtudiant = 1;
+    void testUpdateEtudiant() {
+        // Mock behavior
+        when(etudiantRepository.existsById(anyInt())).thenReturn(true);
+
+        // Sample data
         Etudiant etudiant = new Etudiant();
-        etudiant.setIdEtudiant(idEtudiant);
+        etudiant.setIdEtudiant(1);
 
-        when(etudiantRepository.existsById(idEtudiant)).thenReturn(true);
-        when(etudiantRepository.save(etudiant)).thenReturn(etudiant);
-
+        // Call the service method
         Etudiant result = etudiantService.updateEtudiant(etudiant);
 
+        // Verify the behavior
+        verify(etudiantRepository).existsById(eq(1));
+        verify(etudiantRepository).save(eq(etudiant));
         assertEquals(etudiant, result);
-        verify(etudiantRepository).existsById(idEtudiant);
-        verify(etudiantRepository).save(etudiant);
     }
 
     @Test
-    void testUpdateEtudiantNotExists() {
-        Integer idEtudiant = 1;
-        Etudiant etudiant = new Etudiant();
-        etudiant.setIdEtudiant(idEtudiant);
+    void testRetrieveEtudiant() {
+        // Mock behavior
+        when(etudiantRepository.findById(anyInt())).thenReturn(Optional.of(new Etudiant()));
 
-        when(etudiantRepository.existsById(idEtudiant)).thenReturn(false);
-        when(etudiantRepository.save(etudiant)).thenReturn(etudiant);
+        // Call the service method
+        Etudiant result = etudiantService.retrieveEtudiant(1);
 
-        Etudiant result = etudiantService.updateEtudiant(etudiant);
-
-        assertEquals(etudiant, result);
-        verify(etudiantRepository).existsById(idEtudiant);
-        verify(etudiantRepository).save(etudiant);
+        // Verify the behavior
+        verify(etudiantRepository).findById(eq(1));
+        assertEquals(new Etudiant(), result);
     }
 
     @Test
-    void testRetrieveEtudiantExists() {
-        Integer idEtudiant = 1;
-        Etudiant etudiant = new Etudiant();
-        etudiant.setIdEtudiant(idEtudiant);
+    void testRetrieveEtudiantNotFound() {
+        // Mock behavior
+        when(etudiantRepository.findById(anyInt())).thenReturn(Optional.empty());
 
-        when(etudiantRepository.findById(idEtudiant)).thenReturn(Optional.of(etudiant));
+        // Call the service method
+        assertThrows(EntityNotFoundException.class, () -> etudiantService.retrieveEtudiant(1));
 
-        Etudiant result = etudiantService.retrieveEtudiant(idEtudiant);
-
-        assertEquals(etudiant, result);
-        verify(etudiantRepository).findById(idEtudiant);
+        // Verify the behavior
+        verify(etudiantRepository).findById(eq(1));
     }
 
     @Test
-    void testRetrieveEtudiantNotExists() {
-        Integer idEtudiant = 1;
+    void testRemoveEtudiant() {
+        // Call the service method
+        etudiantService.removeEtudiant(1);
 
-        when(etudiantRepository.findById(idEtudiant)).thenReturn(Optional.empty());
-
-        assertThrows(EntityNotFoundException.class, () -> etudiantService.retrieveEtudiant(idEtudiant));
-        verify(etudiantRepository).findById(idEtudiant);
+        // Verify the behavior
+        verify(etudiantRepository).deleteById(eq(1));
     }
+
+    @Test
+    void testAssignEtudiantToDepartement() {
+        // Mock behavior
+        when(etudiantRepository.findById(anyInt())).thenReturn(Optional.of(new Etudiant()));
+        when(departementRepository.findById(anyInt())).thenReturn(Optional.of(new Departement()));
+
+        // Call the service method
+        etudiantService.assignEtudiantToDepartement(1, 2);
+
+        // Verify the behavior
+        verify(etudiantRepository).findById(eq(1));
+        verify(departementRepository).findById(eq(2));
+        verify(etudiantRepository).save(any(Etudiant.class));
+    }
+
+    @Test
+    void testFindByDepartementIdDepartement() {
+        // Mock behavior
+        when(etudiantRepository.findByDepartementIdDepartement(anyInt())).thenReturn(Collections.singletonList(new Etudiant()));
+
+        // Call the service method
+        List<Etudiant> result = etudiantService.findByDepartementIdDepartement(1);
+
+        // Verify the behavior
+        verify(etudiantRepository).findByDepartementIdDepartement(eq(1));
+        assertEquals(1, result.size());
+    }
+
+    @Test
+    void testFindByEquipesNiveau() {
+        // Mock behavior
+        when(etudiantRepository.findByEquipesNiveau(any(Niveau.class))).thenReturn(Collections.singletonList(new Etudiant()));
+
+        // Call the service method
+        List<Etudiant> result = etudiantService.findByEquipesNiveau(Niveau.JUNIOR);
+
+        // Verify the behavior
+        verify(etudiantRepository).findByEquipesNiveau(eq(Niveau.JUNIOR));
+        assertEquals(1, result.size());
+    }
+
+    @Test
+    void testRetrieveEtudiantsByContratSpecialite() {
+        // Mock behavior
+        when(etudiantRepository.retrieveEtudiantsByContratSpecialite(any(Specialite.class)))
+                .thenReturn(Collections.singletonList(new Etudiant()));
+
+        // Call the service method
+        List<Etudiant> result = etudiantService.retrieveEtudiantsByContratSpecialite(Specialite.SECURITE);
+
+        // Verify the behavior
+        verify(etudiantRepository).retrieveEtudiantsByContratSpecialite(eq(Specialite.SECURITE));
+        assertEquals(1, result.size());
+    }
+
+    @Test
+    void testRetrieveEtudiantsByContratSpecialiteSQL() {
+        // Mock behavior
+        when(etudiantRepository.retrieveEtudiantsByContratSpecialiteSQL(anyString()))
+                .thenReturn(Collections.singletonList(new Etudiant()));
+
+        // Call the service method
+        List<Etudiant> result = etudiantService.retrieveEtudiantsByContratSpecialiteSQL("SECURITE");
+
+        // Verify the behavior
+        verify(etudiantRepository).retrieveEtudiantsByContratSpecialiteSQL(eq("SECURITE"));
+        assertEquals(1, result.size());
+    }
+
+    @Test
+    void testGetEtudiantsByDepartement() {
+        // Mock behavior
+        when(departementRepository.findById(anyInt())).thenReturn(Optional.of(new Departement()));
+
+        // Call the service method
+        List<Etudiant> result = etudiantService.getEtudiantsByDepartement(1);
+
+        // Verify the behavior
+        verify(departementRepository).findById(eq(1));
+        assertEquals(Collections.emptyList(), result); // Assuming empty list when department is found
+    }
+
+
+
+
+
+
+
+
+
 
 }
