@@ -42,10 +42,10 @@ class UniversiteList extends Component {
     e.preventDefault();
     const { nomUniv, adresse } = this.state.formData;
 
-    // Check if at least one of the fields has data
-    if (!nomUniv && !adresse) {
-      toast.error("Please enter University Name or University Address");
-      return; // Prevent submitting the form if both fields are empty
+    // Check if both fields have data
+    if (!nomUniv || !adresse) {
+      toast.error("Please enter both University Name and University Address");
+      return; // Prevent submitting the form if both fields are not filled
     }
 
     const newUniversity = { nomUniv, adresse };
@@ -71,7 +71,7 @@ class UniversiteList extends Component {
 
   render() {
     const { universities, formData } = this.state;
-    console.log('Received universities:', universities);
+    console.log("Received universities:", universities);
     return (
       <div className="content">
         <ToastContainer />
