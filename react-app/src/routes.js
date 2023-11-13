@@ -19,7 +19,9 @@
 
 import UniversiteList from "views/UniversiteList.js";
 
-import AddUniversity from "views/AddUniversity.js";
+// import AddUniversity from "views/AddUniversity.js";
+import DepList from "views/DepList.js";
+
 var routes = [
   //Users
 
@@ -31,11 +33,20 @@ var routes = [
     component: <UniversiteList />,
     layout: "/admin",
   },
+  // {
+  //   path: "/adduniversite",
+  //   name: "Universites List",
+  //   icon: "nc-icon nc-shop",
+  //   component: <AddUniversity />,
+  //   layout: "/admin",
+  // },
+
+  //dep
   {
-    path: "/adduniversite",
-    name: "Universites List",
+    path: "/deplist",
+    name: "Departement List",
     icon: "nc-icon nc-shop",
-    component: <AddUniversity />,
+    component: <DepList />,
     layout: "/admin",
   },
 ];
