@@ -19,6 +19,7 @@ import static org.mockito.Mockito.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 
 @ExtendWith(MockitoExtension.class)
@@ -102,7 +103,22 @@ class UniversiteServiceTest {
         assertEquals(updatedAddress, updatedUniversiteDTO.getAdresse());
     }
 
+    @Test
+    void testUpdateUniversite_NomUnivNotFound() {
+        // Mock the behavior of the repository
+        when(universiteRepository.findByNomUniv(anyString())).thenReturn(Optional.empty());
 
+        // Create an updated UniversiteDTO
+        UniversiteDTO updatedUniversiteDTO = new UniversiteDTO();
+        updatedUniversiteDTO.setNomUniv("NonExistentUniversity");
+        updatedUniversiteDTO.setAdresse("New Address");
+
+        // Call the method you want to test
+        assertThrows(NoSuchElementException.class, () -> universiteService.updateUniversite(updatedUniversiteDTO));
+
+        // Optionally, add assertions to check if the repository method was called with the correct argument
+        verify(universiteRepository, times(1)).findByNomUniv("NonExistentUniversity");
+    }
 
 
     @Test
@@ -150,6 +166,20 @@ class UniversiteServiceTest {
         assertNotNull(existingUniversite.getDepartements());
         assertTrue(existingUniversite.getDepartements().contains(existingDepartement));
     }
+    @Test
+    void testAssignUniversiteToDepartement_UniversiteOrDepartementNotFound() {
+        // Mock the behavior of the repositories
+        when(universiteRepository.findById(anyInt())).thenReturn(Optional.empty());
+        when(departementRepository.findById(anyInt())).thenReturn(Optional.empty());
+
+        // Call the method you want to test
+        assertThrows(NoSuchElementException.class, () -> universiteService.assignUniversiteToDepartement(1, 1));
+
+        // Optionally, add assertions to check if the repository methods were called with the correct arguments
+        verify(universiteRepository, times(1)).findById(1);
+        verify(departementRepository, times(1)).findById(1);
+    }
+
 
     @Test
     void testUniversiteAllArgsConstructor() {
