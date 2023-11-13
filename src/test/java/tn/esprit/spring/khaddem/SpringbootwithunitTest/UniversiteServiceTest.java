@@ -180,6 +180,23 @@ class UniversiteServiceTest {
         verify(departementRepository, times(1)).findById(1);
     }
 
+    @Test
+    void testAssignUniversiteToDepartement_BothEntitiesFound() {
+        // Mock the behavior of the repositories
+        Universite universite = new Universite();
+        when(universiteRepository.findById(1)).thenReturn(Optional.of(universite));
+
+        Departement departement = new Departement();
+        when(departementRepository.findById(1)).thenReturn(Optional.of(departement));
+
+        // Call the method you want to test
+        universiteService.assignUniversiteToDepartement(1, 1);
+
+        // Optionally, add assertions to check if the entities are correctly added or saved
+        assertTrue(universite.getDepartements().contains(departement));
+        // Add more assertions as needed based on your actual implementation
+    }
+
 
     @Test
     void testUniversiteAllArgsConstructor() {
@@ -192,6 +209,7 @@ class UniversiteServiceTest {
         assertEquals("Test Location", universite.getAdresse());
         assertTrue(universite.getDepartements().isEmpty()); // Assuming your departements list is initially empty
     }
+
 
 }
 
