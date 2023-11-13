@@ -21,6 +21,7 @@ import UniversiteList from "views/UniversiteList.js";
 
 // import AddUniversity from "views/AddUniversity.js";
 import DepList from "views/DepList.js";
+import DepAdd from "views/DepAdd.js"
 
 var routes = [
   //Users
@@ -49,5 +50,15 @@ var routes = [
     component: <DepList />,
     layout: "/admin",
   },
+  {
+    path: "/DepAdd",
+    name: "Departement Add",
+    icon: "nc-icon nc-shop",
+    component: <DepAdd />,
+    layout: "/admin",
+  },
+
+
+
 ];
 export default routes;

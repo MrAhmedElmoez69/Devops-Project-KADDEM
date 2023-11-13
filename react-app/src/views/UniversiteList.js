@@ -41,6 +41,13 @@ class UniversiteList extends Component {
   handleFormSubmit = (e) => {
     e.preventDefault();
     const { nomUniv, adresse } = this.state.formData;
+
+    // Check if at least one of the fields has data
+    if (!nomUniv && !adresse) {
+      toast.error("Please enter University Name or University Address");
+      return; // Prevent submitting the form if both fields are empty
+    }
+
     const newUniversity = { nomUniv, adresse };
 
     axios
