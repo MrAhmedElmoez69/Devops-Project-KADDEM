@@ -1,6 +1,6 @@
 package tn.esprit.spring.khaddem.controllers;
 
-import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.web.bind.annotation.*;
 import tn.esprit.spring.khaddem.dto.EtudiantDTO;
 import tn.esprit.spring.khaddem.entities.Etudiant;
@@ -42,12 +42,10 @@ public class EtudiantRestController {
     public Etudiant updateEtudiant(@RequestBody EtudiantDTO etudiantDTO) {
         Etudiant equipe = etudiantService.retrieveEtudiant(etudiantDTO.getIdEtudiant());
 
-        if (equipe != null) {
-            equipe.setNomE(etudiantDTO.getNomE());
-            return etudiantService.updateEtudiant(equipe);
-        } else {
-            return null;
-        }
+
+        equipe.setNomE(etudiantDTO.getNomE());
+        return etudiantService.updateEtudiant(equipe);
+
     }
 
     // http://localhost:8089/Kaddem/etudiant/removeEtudiant

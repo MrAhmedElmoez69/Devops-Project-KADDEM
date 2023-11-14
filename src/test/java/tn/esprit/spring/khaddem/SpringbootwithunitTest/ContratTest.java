@@ -1,6 +1,5 @@
 package tn.esprit.spring.khaddem.SpringbootwithunitTest;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -17,7 +16,6 @@ import tn.esprit.spring.khaddem.controllers.ContratRestController;
 import tn.esprit.spring.khaddem.dto.ContratDTO;
 import tn.esprit.spring.khaddem.entities.Contrat;
 import tn.esprit.spring.khaddem.entities.Etudiant;
-import tn.esprit.spring.khaddem.entities.Option;
 import tn.esprit.spring.khaddem.entities.Specialite;
 import tn.esprit.spring.khaddem.repositories.ContratRepository;
 import tn.esprit.spring.khaddem.repositories.EtudiantRepository;
@@ -28,7 +26,6 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
-import static org.assertj.core.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.*;
 
 
@@ -78,7 +75,7 @@ class ContratTest {
     }
 
     @Test
-     void testGetters() {
+    void testGetters() {
         assertEquals(1, contrat1.getIdContrat());
         assertEquals(true, contrat1.getArchived());
         assertEquals(1000, contrat1.getMontantContrat());
@@ -86,7 +83,7 @@ class ContratTest {
     }
 
     @Test
-     void testSetters() {
+    void testSetters() {
         contrat1.setIdContrat(2);
         contrat1.setArchived(false);
         contrat1.setMontantContrat(2000);
@@ -97,6 +94,24 @@ class ContratTest {
         assertEquals(2000, contrat1.getMontantContrat());
     }
 
+    @Test
+    void testContratConstructor() {
+        // Create an Etudiant for the Contrat
+        Etudiant etudiant = new Etudiant();
+        etudiant.setIdEtudiant(1);
+        etudiant.setPrenomE("John");
+        etudiant.setNomE("Doe");
+
+        // Create a Contrat using the constructor
+        Contrat contrat = new Contrat(1, new Date(), new Date(), Specialite.IA, true, 1000, etudiant);
+
+        // Validate the values
+        assertEquals(1, contrat.getIdContrat());
+        assertEquals(Specialite.IA, contrat.getSpecialite());
+        assertTrue(contrat.getArchived());
+        assertEquals(1000, contrat.getMontantContrat());
+        assertEquals(etudiant, contrat.getEtudiant());
+    }
 
     @Test
     void testContratEntity() {
