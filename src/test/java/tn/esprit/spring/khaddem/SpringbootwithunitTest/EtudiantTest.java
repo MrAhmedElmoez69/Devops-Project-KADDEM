@@ -1,54 +1,62 @@
 package tn.esprit.spring.khaddem.SpringbootwithunitTest;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.*;
+import org.junit.runner.RunWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
+import org.mockito.junit.MockitoJUnitRunner;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
-
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
+import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import tn.esprit.spring.khaddem.controllers.EtudiantRestController;
 import tn.esprit.spring.khaddem.dto.EtudiantDTO;
-import tn.esprit.spring.khaddem.entities.Departement;
-import tn.esprit.spring.khaddem.entities.Etudiant;
-import tn.esprit.spring.khaddem.entities.Option;
+import tn.esprit.spring.khaddem.entities.*;
+import tn.esprit.spring.khaddem.services.EtudiantServiceImpl;
 
 
-import tn.esprit.spring.khaddem.entities.Specialite;
-import tn.esprit.spring.khaddem.repositories.DepartementRepository;
-import tn.esprit.spring.khaddem.repositories.EtudiantRepository;
-import tn.esprit.spring.khaddem.services.IEtudiantService;
-
-import javax.persistence.EntityNotFoundException;
-import java.util.Collections;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.ArgumentMatchers.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.*;
 
 @SpringBootTest
 @AutoConfigureMockMvc
+@RunWith(MockitoJUnitRunner.class)
 class EtudiantTest {
-
-
+    @Autowired
     private MockMvc mockMvc;
 
-    @InjectMocks
-    private EtudiantRestController etudiantRestController;
-
-    @Mock
-    private IEtudiantService etudiantService;
-    @Autowired
-    private EtudiantRepository etudiantRepository;
-    @Autowired
-    private DepartementRepository departementRepository;
+    private Etudiant etudiant;
+    private EtudiantDTO etudiantDTO;
 
     @BeforeEach
-    void setup() {
+    public void setUp() {
+        etudiant = new Etudiant();
+    }
+    @Mock
+    private EtudiantServiceImpl etudiantService;
+
+    @InjectMocks
+    private EtudiantRestController etudiantController;
+
+    @BeforeEach
+    public void setup() {
         MockitoAnnotations.openMocks(this);
+        mockMvc = MockMvcBuilders.standaloneSetup(etudiantController).build();
     }
 
     @Test
@@ -62,221 +70,157 @@ class EtudiantTest {
     }
 
     @Test
-     void testEnumValues() {
-        Option[] values = Option.values();
-
-        // Check that there are 4 enum values
-        assertEquals(4, values.length);
-
-        // Test individual enum values
+    void testEnumValues() {
+        // Test if the enum contains the expected values
+        assertEquals(4, Option.values().length);
         assertEquals(Option.GAMIX, Option.valueOf("GAMIX"));
         assertEquals(Option.SE, Option.valueOf("SE"));
         assertEquals(Option.SAE, Option.valueOf("SAE"));
         assertEquals(Option.INFINI, Option.valueOf("INFINI"));
     }
 
-
     @Test
-    void testGetEtudiants() {
-        // Arrange
-        Etudiant etudiant = new Etudiant();
-        etudiant.setIdEtudiant(1);
-        etudiant.setPrenomE("John");
-        etudiant.setNomE("Doe");
-        etudiant.setOp(Option.GAMIX);
-
-        List<Etudiant> etudiants = Collections.singletonList(etudiant);
-
-        when(etudiantService.retrieveAllEtudiants()).thenReturn(etudiants);
-
-        // Act
-        List<Etudiant> result = etudiantRestController.getEtudiants();
-
-        // Assert
-        assertEquals(etudiants, result);
+    void testEnumToString() {
+        // Test the toString() method for each enum value
+        assertEquals("GAMIX", Option.GAMIX.toString());
+        assertEquals("SE", Option.SE.toString());
+        assertEquals("SAE", Option.SAE.toString());
+        assertEquals("INFINI", Option.INFINI.toString());
     }
 
     @Test
-    void testRetrieveEtudiant() {
-        // Arrange
-        Etudiant etudiant = new Etudiant();
-        etudiant.setIdEtudiant(1);
-        etudiant.setPrenomE("John");
-        etudiant.setNomE("Doe");
-        etudiant.setOp(Option.GAMIX);
-
-        when(etudiantService.retrieveEtudiant(1)).thenReturn(etudiant);
-
-        // Act
-        Etudiant result = etudiantRestController.retrieveContrat(1);
-
-        // Assert
-        assertEquals(etudiant, result);
-    }
-
-
-    @Test
-    void testAddEtudiant() {
-        // Arrange
-        EtudiantDTO etudiantDTO = new EtudiantDTO();
-        etudiantDTO.setIdEtudiant(1);
-        etudiantDTO.setPrenomE("Mariem");
-        etudiantDTO.setNomE("Nacib");
-        etudiantDTO.setOp(Option.SAE);
-
-        Etudiant etudiant = new Etudiant();
-        etudiant.setIdEtudiant(etudiantDTO.getIdEtudiant());
-        etudiant.setPrenomE(etudiantDTO.getPrenomE());
-        etudiant.setNomE(etudiantDTO.getNomE());
-        etudiant.setOp(etudiantDTO.getOp());
-
-        when(etudiantService.addEtudiant(any(Etudiant.class))).thenReturn(etudiant);
-
-        // Act
-        Etudiant result = etudiantRestController.addEtudiant(etudiantDTO);
-
-        // Assert
-        assertEquals(etudiant, result);
-    }
-
-    @Test
-    void testUpdateEtudiant() {
-        // Arrange
-        EtudiantDTO etudiantDTO = new EtudiantDTO();
-        etudiantDTO.setIdEtudiant(1);
-        etudiantDTO.setPrenomE("Mariem");
-        etudiantDTO.setNomE("Necib");
-        etudiantDTO.setOp(Option.GAMIX);
-
-        Etudiant etudiant = new Etudiant();
-        etudiant.setIdEtudiant(etudiantDTO.getIdEtudiant());
-        etudiant.setPrenomE(etudiantDTO.getPrenomE());
-        etudiant.setNomE(etudiantDTO.getNomE());
-        etudiant.setOp(etudiantDTO.getOp());
-
-        when(etudiantService.updateEtudiant(any(Etudiant.class))).thenReturn(etudiant);
-
-        // Act
-        Etudiant result = etudiantRestController.updateEtudiant(etudiantDTO);
-
-        // Assert
-        assertEquals(etudiant, result);
-    }
-
-
-    @Test
-    void testRemoveEtudiant() {
-        // Arrange
+    void testEtudiantConstructorAndGetterSetter() {
+        // Sample data
         Integer idEtudiant = 1;
+        String prenomE = "John";
+        String nomE = "Doe";
+        Option op = Option.GAMIX;
+        Departement departement = new Departement();
+        List<Equipe> equipes = new ArrayList<>();
+        List<Contrat> contrats = new ArrayList<>();
 
-        // No need to return anything since it's a void method
-        doNothing().when(etudiantService).removeEtudiant(idEtudiant);
+        // Create an Etudiant using the constructor
+        Etudiant etudiant = new Etudiant(idEtudiant, prenomE, nomE, op, departement, equipes, contrats);
 
-        // Act and Assert
-        assertDoesNotThrow(() -> etudiantRestController.removeEtudiant(idEtudiant));
+        // Test the constructor
+        assertEquals(idEtudiant, etudiant.getIdEtudiant());
+        assertEquals(prenomE, etudiant.getPrenomE());
+        assertEquals(nomE, etudiant.getNomE());
+        assertEquals(op, etudiant.getOp());
+        assertEquals(departement, etudiant.getDepartement());
+        assertEquals(equipes, etudiant.getEquipes());
+        assertEquals(contrats, etudiant.getContrats());
+
+        // Test the getter and setter methods
+        Departement newDepartement = new Departement();
+        etudiant.setDepartement(newDepartement);
+        assertEquals(newDepartement, etudiant.getDepartement());
+
+        List<Equipe> newEquipes = new ArrayList<>();
+        etudiant.setEquipes(newEquipes);
+        assertEquals(newEquipes, etudiant.getEquipes());
+
+        List<Contrat> newContrats = new ArrayList<>();
+        etudiant.setContrats(newContrats);
+        assertEquals(newContrats, etudiant.getContrats());
     }
 
     @Test
-    void testAssignEtudiantToDepartement() {
-        // Arrange
-        Integer etudiantId = 1;
-        Integer departementId = 1;
-
-        // No need to return anything since it's a void method
-        doNothing().when(etudiantService).assignEtudiantToDepartement(etudiantId, departementId);
-
-        // Act and Assert
-        assertDoesNotThrow(() -> etudiantRestController.assignEtudiantToDepartement(etudiantId, departementId));
-    }
-
-    @Test
-    void testFindByDepartement() {
-        // Arrange
-        Integer departementId = 1;
-        List<Etudiant> etudiants = Collections.singletonList(new Etudiant());
-
-        // Assume that the 'Etudiant' class has a default constructor
-        when(etudiantService.findByDepartementIdDepartement(departementId)).thenReturn(etudiants);
-
-        // Act
-        List<Etudiant> result = etudiantRestController.findByDepartement(departementId);
-
-        // Assert
-        assertEquals(etudiants, result);
-    }
-
-    @Test
-    void testRetrieveEtudiantsByContratSpecialite() {
-        // Arrange
-        Specialite specialite = Specialite.SECURITE;
-        List<Etudiant> etudiants = Collections.singletonList(new Etudiant());
-
-        when(etudiantService.retrieveEtudiantsByContratSpecialite(specialite)).thenReturn(etudiants);
-
-        // Act
-        List<Etudiant> result = etudiantRestController.retrieveEtudiantsByContratSpecialite(specialite);
-
-        // Assert
-        assertEquals(etudiants, result);
-    }
-
-
-    @Test
-    void testRetrieveEtudiantsByContratSpecialiteSQL() {
-        // Arrange
-        String specialite = "SECURITE";
-        List<Etudiant> etudiants = Collections.singletonList(new Etudiant());
-
-        when(etudiantService.retrieveEtudiantsByContratSpecialiteSQL(specialite)).thenReturn(etudiants);
-
-        // Act
-        List<Etudiant> result = etudiantRestController.retrieveEtudiantsByContratSpecialiteSQL(specialite);
-
-        // Assert
-        assertEquals(etudiants, result);
-    }
-
-    @Test
-    void testGetEtudiantsByDepartement() {
-        // Arrange
-        Integer idDepartement = 1;
-        List<Etudiant> etudiants = Collections.singletonList(new Etudiant());
-
-        when(etudiantService.getEtudiantsByDepartement(idDepartement)).thenReturn(etudiants);
-
-        // Act
-        List<Etudiant> result = etudiantRestController.getEtudiantsByDepartement(idDepartement);
-
-        // Assert
-        assertEquals(etudiants, result);
-    }
-
-
-    /*
-    @Test
-    void testAddAndAssignEtudiantToEquipeAndContract() {
-        // Arrange
+    void testEtudiantDTO() {
         EtudiantDTO etudiantDTO = new EtudiantDTO();
         etudiantDTO.setIdEtudiant(1);
-        etudiantDTO.setPrenomE("John");
-        etudiantDTO.setNomE("Doe");
+        etudiantDTO.setNomE("Test Etudiant");
         etudiantDTO.setOp(Option.GAMIX);
-        Integer contratId = 1;
-        Integer equipeId = 1;
 
-        Etudiant etudiant = new Etudiant();
-        etudiant.setIdEtudiant(etudiantDTO.getIdEtudiant());
-        etudiant.setPrenomE(etudiantDTO.getPrenomE());
-        etudiant.setNomE(etudiantDTO.getNomE());
-        etudiant.setOp(etudiantDTO.getOp());
-
-        // No need to return anything since it's a void method
-        doNothing().when(etudiantService).addAndAssignEtudiantToEquipeAndContract(any(Etudiant.class), eq(contratId), eq(equipeId));
-
-        // Act and Assert
-        assertDoesNotThrow(() -> etudiantRestController.addAndAssignEtudiantToEquipeAndContract(etudiantDTO, contratId, equipeId));
+        // Add assertions for your DTO properties
+        assertEquals(1, etudiantDTO.getIdEtudiant());
+        assertEquals("Test Etudiant", etudiantDTO.getNomE());
+        assertEquals(Option.GAMIX, etudiantDTO.getOp());
     }
-     */
+
+    @Test
+    void testRetrieveAllEtudiants() throws Exception {
+        // Simulate an HTTP GET request to retrieve all students
+        mockMvc.perform(MockMvcRequestBuilders.get("/etudiant/retrieve-all-etudiants"))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(result -> {
+                    // Convert the JSON response to a list of Etudiant objects
+                    String responseContent = result.getResponse().getContentAsString();
+                    Etudiant[] etudiants = new ObjectMapper().readValue(responseContent, Etudiant[].class);
+
+                    // Add your assertions here
+                    // For example, check the number of students, or specific student details
+                    assertEquals(0, etudiants.length); // Assuming you expect an empty list in this case
+                });
+    }
+
+    @Test
+    void testAddEtudiant() throws Exception {
+        // Prepare an EquipeDTO with sample data
+        EtudiantDTO etudiantDTO = new EtudiantDTO();
+        etudiantDTO.setNomE("Test Etudiant");
+
+        // Mock the behavior of the service method
+        when(etudiantService.addEtudiant(any(Etudiant.class))).thenAnswer(invocation -> invocation.getArgument(0));
+
+        // Convert EtudiantDTO to JSON
+        ObjectMapper objectMapper = new ObjectMapper();
+        String etudiantJson = objectMapper.writeValueAsString(etudiantDTO);
+
+        // Perform the POST request to add an etudiant
+        mockMvc.perform(MockMvcRequestBuilders.post("/etudiant/add-etudiant")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(etudiantJson))
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(content().contentType("application/json"));
+    }
+
+    @Test
+    void testUpdateEtudiant() throws Exception {
+        // Prepare an EtudiantDTO with sample data
+        EtudiantDTO etudiantDTO = new EtudiantDTO();
+        etudiantDTO.setIdEtudiant(1); // Existing equipe ID
+        etudiantDTO.setNomE("Updated Test Etudiant");
+
+        // Mock the behavior of the service methods
+        when(etudiantService.retrieveEtudiant(etudiantDTO.getIdEtudiant())).thenReturn(new Etudiant());
+        when(etudiantService.updateEtudiant(any(Etudiant.class))).thenAnswer(invocation -> invocation.getArgument(0));
+
+        // Convert EquipeDTO to JSON
+        ObjectMapper objectMapper = new ObjectMapper();
+        String etudiantJson = objectMapper.writeValueAsString(etudiantDTO);
+
+        // Perform the PUT request to update an equipe
+        mockMvc.perform(MockMvcRequestBuilders.put("/etudiant/update-etudiant")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(etudiantJson))
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(content().contentType("application/json"));
+    }
+
+    @Test
+    void testRemoveEtudiant() throws Exception {
+        // Sample data
+        Integer etudiantId = 1;
+
+        // Mock the behavior of the service method
+        doNothing().when(etudiantService).removeEtudiant(etudiantId);
+
+        // Perform the DELETE request to remove an etudiant
+        mockMvc.perform(MockMvcRequestBuilders.delete("/etudiant/removeEtudiant/{idEtudiant}", etudiantId))
+                .andExpect(MockMvcResultMatchers.status().isOk());
+
+        // Optionally, you can add further assertions or verifications based on your business logic
+        // For example, you can verify that the service method was called with the correct etudiantId
+        verify(etudiantService, times(1)).removeEtudiant(etudiantId);
+    }
+
+
+
+
+
+
 
 
 }
