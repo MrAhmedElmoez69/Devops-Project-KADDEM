@@ -3,7 +3,7 @@ package tn.esprit.spring.khaddem.SpringbootwithunitTest;
 import org.junit.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
-import org.mockito.Mockito;
+import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import tn.esprit.spring.khaddem.controllers.EquipeRestController;
 import tn.esprit.spring.khaddem.dto.EquipeDTO;
@@ -21,21 +21,22 @@ import static org.mockito.Mockito.when;
 class EquipeServiceTest {
 
     @InjectMocks
-    public EquipeServiceImpl equipeService;
+    private EquipeServiceImpl equipeService;
 
-    EquipeRepository equipeRepository = Mockito.mock(EquipeRepository.class);
+    @Mock
+    private EquipeRepository equipeRepository;
 
     @Test
-    public void testRetrieveAllEquipes(){
+    void testRetrieveAllEquipes(){
         List<Equipe> expectedEquipes = new ArrayList<>();
         when(equipeRepository.findAll()).thenReturn(expectedEquipes);
-        List<Equipe> actyalEquipes = equipeService.retrieveAllEquipes();
-        assertEquals(expectedEquipes, actyalEquipes);
+        List<Equipe> actualEquipes = equipeService.retrieveAllEquipes();
+        assertEquals(expectedEquipes, actualEquipes);
     }
 
 
     @Test
-    public void testRertrieveEquipe(){
+    void testRertrieveEquipe(){
         int equipeId = 1;
         Equipe expectedEquipe = new Equipe();
         when(equipeRepository.findById(equipeId)).thenReturn(java.util.Optional.of(expectedEquipe));
@@ -44,7 +45,7 @@ class EquipeServiceTest {
     }
 
     @Test
-    public void testAddEqiupe(){
+     void testAddEqiupe(){
         Equipe equipe = new Equipe();
         equipe.setNomEquipe("New Equipe");
         when(equipeRepository.save(equipe)).thenReturn(equipe);
@@ -53,7 +54,7 @@ class EquipeServiceTest {
     }
 
     @Test
-    public void testUpdateEquipe() {
+     void testUpdateEquipe() {
         int equipeId = 2;
         String updatedName = "Updated Equipe";
         EquipeDTO equipeDTO = new EquipeDTO();

@@ -86,12 +86,134 @@ class EquipeTest {
     }
 
     @Test
+    void testEquipeConstructorAndGetterSetter() {
+        // Sample data
+        Integer idEquipe = 1;
+        String nomEquipe = "Team A";
+        Niveau niveau = Niveau.JUNIOR;
+        List<Etudiant> etudiants = new ArrayList<>(); // You may initialize this with some sample data
+        DetailEquipe detailEquipe = new DetailEquipe();
+
+        // Create an Etudiant using the constructor
+        Equipe equipe = new Equipe(idEquipe, nomEquipe, niveau, etudiants, detailEquipe);
+
+        // Test the constructor
+        assertEquals(idEquipe, equipe.getIdEquipe());
+        assertEquals(nomEquipe, equipe.getNomEquipe());
+        assertEquals(niveau, equipe.getNiveau());
+        assertEquals(etudiants, equipe.getEtudiants());
+        assertEquals(detailEquipe, equipe.getDetailEquipe());
+
+        // Test the getter and setter methods
+        // Setter sample values
+        Integer newIdEquipe = 2;
+        String newNomEquipe = "Team B";
+        Niveau newNiveau = Niveau.SENIOR;
+        List<Etudiant> newEtudiants = new ArrayList<>(); // You may initialize this with some sample data
+        DetailEquipe newDetailEquipe = new DetailEquipe();
+
+        // Use setter methods
+        equipe.setIdEquipe(newIdEquipe);
+        equipe.setNomEquipe(newNomEquipe);
+        equipe.setNiveau(newNiveau);
+        equipe.setEtudiants(newEtudiants);
+        equipe.setDetailEquipe(newDetailEquipe);
+
+        // Test getter methods after using setter
+        assertEquals(newIdEquipe, equipe.getIdEquipe());
+        assertEquals(newNomEquipe, equipe.getNomEquipe());
+        assertEquals(newNiveau, equipe.getNiveau());
+        assertEquals(newEtudiants, equipe.getEtudiants());
+        assertEquals(newDetailEquipe, equipe.getDetailEquipe());
+
+    }
+
+
+    @Test
+    void testConstructorAndGetter() {
+        // Create an instance of the Equipe class using the constructor and Builder
+        Integer idEquipe = 1;
+        String nomEquipe = "Team A";
+        Niveau niveau = Niveau.JUNIOR;
+        List<Etudiant> etudiants = new ArrayList<>(); // You may initialize this with some sample data
+        DetailEquipe detailEquipe = new DetailEquipe(); // You may initialize this with some sample data
+
+        Equipe equipe = Equipe.builder()
+                .idEquipe(idEquipe)
+                .nomEquipe(nomEquipe)
+                .niveau(niveau)
+                .etudiants(etudiants)
+                .detailEquipe(detailEquipe)
+                .build();
+
+        // Test getter methods
+        assertEquals(idEquipe, equipe.getIdEquipe());
+        assertEquals(nomEquipe, equipe.getNomEquipe());
+        assertEquals(niveau, equipe.getNiveau());
+        assertEquals(etudiants, equipe.getEtudiants());
+        assertEquals(detailEquipe, equipe.getDetailEquipe());
+    }
+
+    @Test
+    void testSetter() {
+        // Create an instance of the Equipe class
+        Equipe equipe = new Equipe();
+
+        // Set some sample values to the instance
+        Integer idEquipe = 1;
+        String nomEquipe = "Team A";
+        Niveau niveau = Niveau.JUNIOR;
+        List<Etudiant> etudiants = new ArrayList<>(); // You may initialize this with some sample data
+        DetailEquipe detailEquipe = new DetailEquipe(); // You may initialize this with some sample data
+
+        equipe.setIdEquipe(idEquipe);
+        equipe.setNomEquipe(nomEquipe);
+        equipe.setNiveau(niveau);
+        equipe.setEtudiants(etudiants);
+        equipe.setDetailEquipe(detailEquipe);
+
+        // Test getter methods
+        assertEquals(idEquipe, equipe.getIdEquipe());
+        assertEquals(nomEquipe, equipe.getNomEquipe());
+        assertEquals(niveau, equipe.getNiveau());
+        assertEquals(etudiants, equipe.getEtudiants());
+        assertEquals(detailEquipe, equipe.getDetailEquipe());
+    }
+
+    @Test
+    void testGetters() {
+        // Create an instance of the Equipe class
+        Equipe equipe = new Equipe();
+
+        // Set some sample values to the instance
+        Integer idEquipe = 1;
+        String nomEquipe = "Team A";
+        Niveau niveau = Niveau.JUNIOR;
+        List<Etudiant> etudiants = new ArrayList<>(); // You may initialize this with some sample data
+        DetailEquipe detailEquipe = new DetailEquipe(); // You may initialize this with some sample data
+
+        equipe.setIdEquipe(idEquipe);
+        equipe.setNomEquipe(nomEquipe);
+        equipe.setNiveau(niveau);
+        equipe.setEtudiants(etudiants);
+        equipe.setDetailEquipe(detailEquipe);
+
+        // Test getter methods
+        assertEquals(idEquipe, equipe.getIdEquipe());
+        assertEquals(nomEquipe, equipe.getNomEquipe());
+        assertEquals(niveau, equipe.getNiveau());
+        assertEquals(etudiants, equipe.getEtudiants());
+        assertEquals(detailEquipe, equipe.getDetailEquipe());
+    }
+
+    @Test
     void testGettersAndSetters() {
+        // Test the getter and setter methods
         Integer idEquipe = 1;
         String nomEquipe = "Test Equipe";
         Niveau niveau = Niveau.JUNIOR;
-        List<Etudiant> etudiantList = new ArrayList<>();
-        DetailEquipe detailEquipe = new DetailEquipe();
+        List<Etudiant> etudiantList = new ArrayList<>(); // Create a List of Etudiant
+        DetailEquipe detailEquipe = new DetailEquipe(); // Create a DetailEquipe instance
 
         equipe.setIdEquipe(idEquipe);
         equipe.setNomEquipe(nomEquipe);
@@ -173,22 +295,26 @@ class EquipeTest {
                 .andExpect(MockMvcResultMatchers.content().contentType("application/json"));
     }
 
-//    @Test
-//    void testUpdateEquipe_Rest() {
-//        EquipeDTO equipeDTO = new EquipeDTO();
-//        equipeDTO.setIdEquipe(1);
-//        equipeDTO.setNomEquipe("Updated Test Equipe");
-//        equipeDTO.setNiveau(Niveau.JUNIOR);
-//
-//        Equipe equipe = new Equipe();
-//        equipe.setIdEquipe(equipeDTO.getIdEquipe());
-//        equipe.setNomEquipe(equipeDTO.getNomEquipe());
-//        equipe.setNiveau(equipeDTO.getNiveau());
-//        when(equipeService.updateEquipe(any(Equipe.class))).thenReturn(new Equipe());
-//
-//        Equipe result = equipeController.updateEquipe(equipeDTO);
-//
-//        // Assert
-//        assertEquals(equipe, result);
-//    }
+    @Test
+    void testUpdateEquipe_Rest() throws Exception {
+        // Prepare an EquipeDTO with sample data
+        EquipeDTO equipeDTO = new EquipeDTO();
+        equipeDTO.setIdEquipe(1); // Existing equipe ID
+        equipeDTO.setNomEquipe("Updated Test Equipe");
+
+        // Mock the behavior of the service methods
+        when(equipeService.retrieveEquipe(equipeDTO.getIdEquipe())).thenReturn(new Equipe());
+        when(equipeService.updateEquipe(any(Equipe.class))).thenAnswer(invocation -> invocation.getArgument(0));
+
+        // Convert EquipeDTO to JSON
+        ObjectMapper objectMapper = new ObjectMapper();
+        String equipeJson = objectMapper.writeValueAsString(equipeDTO);
+
+        // Perform the PUT request to update an equipe
+        mockMvc.perform(MockMvcRequestBuilders.put("/equipe/update-equipe")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(equipeJson))
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.content().contentType("application/json"));
+    }
 }
