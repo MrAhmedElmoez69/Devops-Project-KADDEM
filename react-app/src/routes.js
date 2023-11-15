@@ -20,6 +20,7 @@
 import UniversiteList from "views/UniversiteList.js";
 
 import AddUniversity from "views/AddUniversity.js";
+import EtudiantList from "views/Etudiant.js";
 var routes = [
   //Users
 
@@ -36,6 +37,13 @@ var routes = [
     name: "Universites List",
     icon: "nc-icon nc-shop",
     component: <AddUniversity />,
+    layout: "/admin",
+  },
+  {
+    path: "/etudiants",
+    name: "Student Management",
+    icon: "nc-icon nc-shop",
+    component: <EtudiantList />,
     layout: "/admin",
   },
 ];
