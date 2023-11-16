@@ -11,7 +11,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/departement")
-
+@CrossOrigin(origins = {"http://172.18.0.2:3000", "http://localhost:3000"})
 public class DepartementRestController {
     @Autowired
     IDepartementService departementService;
