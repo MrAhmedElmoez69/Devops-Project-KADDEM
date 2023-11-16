@@ -11,7 +11,6 @@ import java.util.List;
 @RestController
 @AllArgsConstructor
 @RequestMapping("/detailequipe")
-@CrossOrigin(origins = {"http://172.18.0.3:3000","http://172.18.0.2:3000", "http://localhost:3000"})
 public class DetailEquipeRestController {
     IDetailEquipeService detailEquipeService;
 

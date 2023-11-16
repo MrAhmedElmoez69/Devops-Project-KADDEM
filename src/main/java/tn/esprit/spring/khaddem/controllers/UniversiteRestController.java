@@ -8,7 +8,6 @@ import tn.esprit.spring.khaddem.entities.Universite;
 import tn.esprit.spring.khaddem.services.IUniversiteService;
 
 import java.util.List;
-@CrossOrigin(origins = {"http://172.18.0.3:3000","http://172.18.0.2:3000", "http://localhost:3000"})
 @RestController
 @RequestMapping("/universite")
 public class UniversiteRestController {
