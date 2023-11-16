@@ -144,18 +144,19 @@ class ContratServiceTest {
 
         // Utilisez Mockito pour simuler le comportement de la méthode findByNomEAndPrenomE dans le repository
         when(etudiantRepository.findByNomEAndPrenomE(nomE, prenomE)).thenReturn(etudiant);
+
         // Act
         Contrat result = contratService.addAndAffectContratToEtudiant(ce, nomE, prenomE);
+
         // Assert
         assertEquals(6, etudiant.getContrats().size(), "Le contrat n'a pas été correctement ajouté à la liste des contrats de l'étudiant");
 
         // Vérifiez que la méthode save n'a pas été appelée lorsque le nombre de contrats actifs est supérieur à 5
         verify(contratRepository, times(0)).save(ce);
-
-        if (etudiant.getContrats().size() <= 5) {
-            verify(contratRepository, times(1)).save(ce);
-        }
+        // Ajoutez d'autres assertions au besoin
     }
+
+
 
 
     @Test
@@ -172,6 +173,7 @@ class ContratServiceTest {
         // Verify the result
         assertEquals(expectedCount, actualCount);
     }
+
     @Test
     void testRetrieveAndUpdateStatusContrat() {
         // Préparez les données de test
@@ -199,22 +201,10 @@ class ContratServiceTest {
 
         // Vérifiez que la méthode save a été appelée
         verify(contratRepository, times(1)).save(contrat);
-
-        // Ajoutez des assertions spécifiques pour les lignes de la méthode retrieveAndUpdateStatusContrat
-        // Assurez-vous que les logs ont été appelés avec les bonnes valeurs
-
-        // Ajoutez des assertions pour les conditions non couvertes
-        if (contrat.getArchived() == null || !contrat.getArchived()) {
-            // Assurez-vous que le bloc conditionnel a été exécuté comme prévu
-            if (daysDifference == 15) {
-                // Assurez-vous que le bloc conditionnel a été exécuté comme prévu
-            }
-            if (daysDifference == 0) {
-                // Assurez-vous que le bloc conditionnel a été exécuté comme prévu
-            }
-        }
     }
 
 
-}
 
+
+
+}
