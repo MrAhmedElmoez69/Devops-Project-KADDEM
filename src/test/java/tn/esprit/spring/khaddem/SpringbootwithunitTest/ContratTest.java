@@ -199,6 +199,23 @@ class ContratTest {
         assertEquals(Specialite.CLOUD, Specialite.valueOf("CLOUD"));
         assertEquals(Specialite.SECURITE, Specialite.valueOf("SECURITE"));
     }
+    @Test
+    void testContratConstructor() {
+        // Créez un objet Etudiant à utiliser dans le constructeur
+        Etudiant etudiant = new Etudiant(); // Assurez-vous de définir les propriétés nécessaires
+
+        // Créez un objet Contrat en utilisant le constructeur
+        Contrat contrat = new Contrat(1, new Date(), new Date(), Specialite.IA, true, 1000, etudiant);
+
+        // Vérifiez que les propriétés de l'objet sont correctement définies
+        assertEquals(1, contrat.getIdContrat());
+        assertEquals(Specialite.IA, contrat.getSpecialite());
+        assertEquals(true, contrat.getArchived());
+        assertEquals(1000, contrat.getMontantContrat());
+        assertEquals(etudiant, contrat.getEtudiant());
+        // Ajoutez d'autres vérifications si nécessaire
+    }
+
 
     @Test
     void testContratDTO() {
