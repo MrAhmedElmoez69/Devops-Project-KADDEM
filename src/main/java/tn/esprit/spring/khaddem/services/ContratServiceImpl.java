@@ -78,14 +78,12 @@ public class ContratServiceImpl implements  IContratService{
         log.info("nb Contrats en cours: "+nbContratsActifs);
         contratRepository.save(ce);
         ce.setEtudiant(etudiant);
-        etudiant.getContrats().add(ce);
         log.info("fin methode addAndAffectContratToEtudiant");
         Long endDate = new Date().getTime();
         Long executionTime = endDate-startDate;
 
-        log.info("endDate: "+endDate);
+        log.info("endDate: "+startDate);
         log.info("executionTime: "+executionTime+ " ms");
-
 
         return ce;
     }
@@ -162,7 +160,6 @@ public class ContratServiceImpl implements  IContratService{
         log.info("chiffreAffaireEntreDeuxDatesCloud "+chiffreAffaireEntreDeuxDatesCloud);
         log.info("chiffreAffaireEntreDeuxDatesReseau "+chiffreAffaireEntreDeuxDatesReseau);
         log.info("chiffreAffaireEntreDeuxDatesSecurite "+chiffreAffaireEntreDeuxDatesSecurite);
-
         return chiffreAffaireEntreDeuxDates;
 
 
