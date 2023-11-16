@@ -126,14 +126,6 @@ public class ContratRestController {
         contratService.retrieveAndUpdateStatusContrat();
     }
 
-    //public float getChiffreAffaireEntreDeuxDate(Date startDate, Date endDate)
 
-    @GetMapping("/calculChiffreAffaireEntreDeuxDate/{startDate}/{endDate}")
-    @ResponseBody
-    public float calculChiffreAffaireEntreDeuxDates(@PathVariable(name = "startDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date startDate,
-                                                    @PathVariable(name = "endDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date endDate) {
-
-        return contratService.getChiffreAffaireEntreDeuxDates(startDate, endDate);
-    }
 
 }
