@@ -21,7 +21,7 @@ class EtudiantList extends Component {
 
   fetchStudents = () => {
     axios
-      .get("http://localhost:8089/Kaddem/etudiant/retrieve-all-etudiants")
+      .get("http://localhost:8090/Kaddem/etudiant/retrieve-all-etudiants")
       .then((response) => {
         this.setState({ students: response.data });
         toast.info("Welcome to the student list");
@@ -59,7 +59,7 @@ class EtudiantList extends Component {
       const newStudent = { ...formData };
 
       axios
-        .post("http://localhost:8089/Kaddem/etudiant/add-etudiant", newStudent)
+        .post("http://localhost:8090/Kaddem/etudiant/add-etudiant", newStudent)
         .then((response) => {
           const updatedStudents = [...this.state.students, response.data];
           this.setState({
