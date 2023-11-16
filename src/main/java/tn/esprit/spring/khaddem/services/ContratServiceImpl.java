@@ -123,46 +123,6 @@ public class ContratServiceImpl implements  IContratService{
             log.info("debut methode retrieveAndUpdateStatusContrat");
         }
     }
-    public float getChiffreAffaireEntreDeuxDates(Date startDate, Date endDate){
-        long timeDifference = endDate.getTime() - startDate.getTime();
-        float daysDifference= (timeDifference / (1000 * 60 * 60 * 24)) % 365;
-        float monthsDifference=daysDifference/30;
-        List<Contrat> contrats=contratRepository.findAll();
-        float chiffreAffaireEntreDeuxDates=0;
-        float chiffreAffaireEntreDeuxDatesIA=0;
-        float chiffreAffaireEntreDeuxDatesCloud=0;
-        float chiffreAffaireEntreDeuxDatesReseau=0;
-        float chiffreAffaireEntreDeuxDatesSecurite=0;
 
-        for (Contrat contrat : contrats) {
-            if (contrat.getSpecialite()== Specialite.IA){
-                chiffreAffaireEntreDeuxDates+=(monthsDifference*contrat.getMontantContrat());
-                chiffreAffaireEntreDeuxDatesIA+=(monthsDifference*contrat.getMontantContrat());
-
-            } else if (contrat.getSpecialite()== Specialite.CLOUD) {
-                chiffreAffaireEntreDeuxDates+=(monthsDifference*contrat.getMontantContrat());
-                chiffreAffaireEntreDeuxDatesCloud+=(monthsDifference*contrat.getMontantContrat());
-            }
-            else if (contrat.getSpecialite()== Specialite.RESEAU) {
-                chiffreAffaireEntreDeuxDates+=(monthsDifference*contrat.getMontantContrat());
-                chiffreAffaireEntreDeuxDatesReseau+=(monthsDifference*contrat.getMontantContrat());
-
-            }
-            else if (contrat.getSpecialite()== Specialite.SECURITE)
-            {
-                chiffreAffaireEntreDeuxDates+=(monthsDifference*contrat.getMontantContrat());
-                chiffreAffaireEntreDeuxDatesSecurite+=(monthsDifference*contrat.getMontantContrat());
-
-            }
-        }
-        log.info("chiffreAffaireEntreDeuxDates: "+chiffreAffaireEntreDeuxDates);
-        log.info("chiffreAffaireEntreDeuxDatesIA:" +chiffreAffaireEntreDeuxDatesIA);
-        log.info("chiffreAffaireEntreDeuxDatesCloud "+chiffreAffaireEntreDeuxDatesCloud);
-        log.info("chiffreAffaireEntreDeuxDatesReseau "+chiffreAffaireEntreDeuxDatesReseau);
-        log.info("chiffreAffaireEntreDeuxDatesSecurite "+chiffreAffaireEntreDeuxDatesSecurite);
-        return chiffreAffaireEntreDeuxDates;
-
-
-    }
 
 }

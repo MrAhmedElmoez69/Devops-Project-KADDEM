@@ -3,8 +3,10 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.mockito.junit.MockitoJUnitRunner;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -14,6 +16,7 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import tn.esprit.spring.khaddem.dto.DetailEquipeDTO;
 import tn.esprit.spring.khaddem.entities.DetailEquipe;
+import tn.esprit.spring.khaddem.entities.Equipe;
 import tn.esprit.spring.khaddem.repositories.DetailEquipeRepository;
 import tn.esprit.spring.khaddem.services.IDetailEquipeService;
 
@@ -21,10 +24,12 @@ import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.mock;
 
 @SpringBootTest
 @AutoConfigureMockMvc
- class DetailEquipeTest {
+@RunWith(MockitoJUnitRunner.class)
+class DetailEquipeTest {
 
     @Autowired
     private MockMvc mockMvc;
@@ -36,6 +41,86 @@ import static org.junit.jupiter.api.Assertions.*;
     @BeforeEach
     public void setUp() {
         MockitoAnnotations.openMocks(this);
+    }
+
+    @Test
+    void testCreateDetailEquipe() {
+        // Sample data
+        Integer idDetailEquipe = 1;
+        Integer salle = 101;
+        String thematique = "Test Thematique";
+        Equipe equipe = new Equipe();
+
+        // Create a DetailEquipe using the constructor
+        DetailEquipe detailEquipe = new DetailEquipe(idDetailEquipe, salle, thematique, equipe);
+
+        // Test that fields are set correctly
+        assertEquals(idDetailEquipe, detailEquipe.getIdDetailEquipe());
+        assertEquals(salle, detailEquipe.getSalle());
+        assertEquals(thematique, detailEquipe.getThematique());
+        assertEquals(equipe, detailEquipe.getEquipe());
+    }
+
+    @Test
+    void testDefaultConstructor() {
+        // Create a DetailEquipe using the default constructor
+        DetailEquipe detailEquipe = new DetailEquipe();
+
+        // Test that the object is not null
+        assertNotNull(detailEquipe);
+    }
+
+    @Test
+    void testEqualsAndHashCode() {
+        // Create two DetailEquipe objects with the same values
+        DetailEquipe detailEquipe1 = new DetailEquipe(1, 101, "Thematique 1", new Equipe());
+        DetailEquipe detailEquipe2 = new DetailEquipe(1, 101, "Thematique 1", new Equipe());
+
+        // Check if equals and hashCode methods work as expected
+        assertEquals(detailEquipe1, detailEquipe2);
+        assertEquals(detailEquipe1.hashCode(), detailEquipe2.hashCode());
+
+        // Change one attribute in detailEquipe2
+        detailEquipe2.setSalle(102);
+
+        // Check if the objects are no longer equal and have different hash codes
+        assertNotEquals(detailEquipe1, detailEquipe2);
+        assertNotEquals(detailEquipe1.hashCode(), detailEquipe2.hashCode());
+    }
+
+    @Test
+    void testNotEquals() {
+        // Create two instances and set their values
+        DetailEquipe detailEquipe1 = new DetailEquipe();
+        detailEquipe1.setIdDetailEquipe(1);
+        detailEquipe1.setSalle(101);
+        detailEquipe1.setThematique("Theme1");
+
+        DetailEquipe detailEquipe2 = new DetailEquipe();
+        detailEquipe2.setIdDetailEquipe(2);
+        detailEquipe2.setSalle(102);
+        detailEquipe2.setThematique("Theme2");
+
+        // Verify that they are not equal
+        assertNotEquals(detailEquipe1, detailEquipe2);
+    }
+
+
+    @Test
+    void testNotHashCode() {
+        // Create two instances and set their values
+        DetailEquipe detailEquipe1 = new DetailEquipe();
+        detailEquipe1.setIdDetailEquipe(1);
+        detailEquipe1.setSalle(101);
+        detailEquipe1.setThematique("Theme1");
+
+        DetailEquipe detailEquipe2 = new DetailEquipe();
+        detailEquipe2.setIdDetailEquipe(2);
+        detailEquipe2.setSalle(102);
+        detailEquipe2.setThematique("Theme2");
+
+        // Verify that their hash codes are not equal
+        assertNotEquals(detailEquipe1.hashCode(), detailEquipe2.hashCode());
     }
 
 
@@ -50,23 +135,18 @@ import static org.junit.jupiter.api.Assertions.*;
     }
     @Test
     void testEquals() {
-        DetailEquipe detailEquipe1 = new DetailEquipe();
-        detailEquipe1.setIdDetailEquipe(1);
-        detailEquipe1.setSalle(123);
-        detailEquipe1.setThematique("Thematique A");
+        // Create two instances of DetailEquipe with the same attributes
+        DetailEquipe detailEquipe1 = new DetailEquipe(1, 101, "Thematique 1", new Equipe());
+        DetailEquipe detailEquipe2 = new DetailEquipe(1, 101, "Thematique 1", new Equipe());
 
-        DetailEquipe detailEquipe2 = new DetailEquipe();
-        detailEquipe2.setIdDetailEquipe(1);
-        detailEquipe2.setSalle(123);
-        detailEquipe2.setThematique("Thematique A");
+        // Check if equals method works as expected
+        assertEquals(detailEquipe1, detailEquipe2);
 
-        DetailEquipe detailEquipe3 = new DetailEquipe();
-        detailEquipe3.setIdDetailEquipe(2);
-        detailEquipe3.setSalle(456);
-        detailEquipe3.setThematique("Thematique B");
+        // Create an instance of another class
+        Object someOtherObject = new Object();
 
-        assertEquals(detailEquipe1, detailEquipe2); // Check that two detailEquipes with the same ID, salle, and thematique are equal
-        assertNotEquals(detailEquipe1, detailEquipe3); // Check that two detailEquipes with different IDs, salle, and thematique are not equal
+        // Check if equals method returns false for different classes
+        assertNotEquals(detailEquipe1, someOtherObject);
     }
     @Test
     void testDetailEquipeInequality() {
@@ -98,9 +178,20 @@ import static org.junit.jupiter.api.Assertions.*;
         assertEquals(detailEquipe1.hashCode(), detailEquipe2.hashCode());
     }
 
+    @Test
+    void testEqualsWithEquipe() {
+        // Create two instances of DetailEquipe with the same attributes and a mock Equipe
+        Equipe equipe = mock(Equipe.class);
+        DetailEquipe detailEquipe1 = new DetailEquipe(1, 10, "Thematique 1", equipe);
+        DetailEquipe detailEquipe2 = new DetailEquipe(1, 10, "Thematique 1", equipe);
+
+        // Assert that the equals method returns true
+        assertEquals(detailEquipe1, detailEquipe2);
+    }
+
 
     @Test
-     void testFindAll() {
+    void testFindAll() {
         // Create and save some DetailEquipe entities
         DetailEquipe detailEquipe1 = new DetailEquipe();
         detailEquipe1.setSalle(123);

@@ -3,6 +3,7 @@ package tn.esprit.spring.khaddem.services;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import tn.esprit.spring.khaddem.dto.UniversiteDTO;
 import tn.esprit.spring.khaddem.entities.Departement;
 import tn.esprit.spring.khaddem.entities.Universite;
 import tn.esprit.spring.khaddem.repositories.DepartementRepository;
@@ -40,20 +41,26 @@ public class UniversiteServiceImpl implements IUniversiteService {
     }
 
     @Override
-    public Universite updateUniversite(Universite updatedUniversite) {
-        String nomUniv = updatedUniversite.getNomUniv();
+    public UniversiteDTO updateUniversite(UniversiteDTO updatedUniversiteDTO) {
+        String nomUniv = updatedUniversiteDTO.getNomUniv();
         Optional<Universite> optionalUniversite = universiteRepository.findByNomUniv(nomUniv);
 
         if (optionalUniversite.isPresent()) {
             Universite existingUniversite = optionalUniversite.get();
-            existingUniversite.setNomUniv(updatedUniversite.getNomUniv());
-            existingUniversite.setAdresse(updatedUniversite.getAdresse());
+            existingUniversite.setNomUniv(updatedUniversiteDTO.getNomUniv());
+            existingUniversite.setAdresse(updatedUniversiteDTO.getAdresse());
             universiteRepository.save(existingUniversite);
-            return existingUniversite;
+
+            UniversiteDTO updatedUniversite = new UniversiteDTO();
+            updatedUniversite.setNomUniv(existingUniversite.getNomUniv());
+            updatedUniversite.setAdresse(existingUniversite.getAdresse());
+
+            return updatedUniversite;
         } else {
             throw new NoSuchElementException("Universite not found with NomUniv: " + nomUniv);
         }
     }
+
 
 
     @Override
