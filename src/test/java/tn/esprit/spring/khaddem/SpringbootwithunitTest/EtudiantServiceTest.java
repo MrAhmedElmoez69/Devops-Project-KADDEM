@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 public class EtudiantServiceTest {
@@ -54,4 +54,8 @@ public class EtudiantServiceTest {
 
         assertEquals(etudiant, addedEtudiant);
     }
+
+
+
+
 }
