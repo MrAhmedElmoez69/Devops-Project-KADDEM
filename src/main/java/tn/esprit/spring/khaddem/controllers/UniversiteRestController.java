@@ -62,10 +62,5 @@ public class UniversiteRestController {
     }
 
     // http://localhost:8089/Kaddem/universite/assignUniversiteToDepartement/1/1
-    @PutMapping("/assignUniversiteToDepartement/{universiteId}/{departementId}")
-    @Operation(description = "assigner une université à un département")
-    @ResponseBody
-    public void assignUniversiteToDepartement(@PathVariable("universiteId") Integer universiteId, @PathVariable("departementId") Integer departementId) {
-        universiteService.assignUniversiteToDepartement(universiteId, departementId);
-    }
+
 }

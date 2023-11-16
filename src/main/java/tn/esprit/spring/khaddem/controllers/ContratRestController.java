@@ -50,34 +50,6 @@ public class ContratRestController {
 
 
 
-    // http://localhost:8089/Kaddem/contrat/update-contrat
-    @PutMapping("/update-contrat")
-    @ResponseBody
-    public ContratDTO updateContrat(@RequestBody ContratDTO contratDTO) {
-        // Transformez le ContratDTO en entité Contrat si nécessaire
-        Contrat contrat = new Contrat();
-        contrat.setIdContrat(contratDTO.getIdContrat());
-        contrat.setDateDebutContrat(contratDTO.getDateDebutContrat());
-        contrat.setDateFinContrat(contratDTO.getDateFinContrat());
-        contrat.setSpecialite(contratDTO.getSpecialite());
-        contrat.setArchived(contratDTO.getArchived());
-        contrat.setMontantContrat(contratDTO.getMontantContrat());
-
-        // Utilisez le service pour mettre à jour le contrat
-        contrat = contratService.updateContrat(contrat);
-
-        // Transformez l'entité Contrat en ContratDTO si nécessaire
-        ContratDTO resultDTO = new ContratDTO();
-        resultDTO.setIdContrat(contrat.getIdContrat());
-        resultDTO.setDateDebutContrat(contrat.getDateDebutContrat());
-        resultDTO.setDateFinContrat(contrat.getDateFinContrat());
-        resultDTO.setSpecialite(contrat.getSpecialite());
-        resultDTO.setArchived(contrat.getArchived());
-        resultDTO.setMontantContrat(contrat.getMontantContrat());
-
-        return resultDTO;
-    }
-
 
 
 

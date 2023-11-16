@@ -21,12 +21,6 @@ public class EquipeRestController {
     }
 
 
-    // http://localhost:8089/Kaddem/equipe/retrieve-equipe/8
-    @GetMapping("/retrieve-equipe/{equipe-id}")
-    @ResponseBody
-    public Equipe retrieveEquipe(@PathVariable("equipe-id") Integer equipeId) {
-        return equipeService.retrieveEquipe(equipeId);
-    }
 
     // http://localhost:8089/Kaddem/equipe/add-equipe
     /* cette méthode permet d'ajouter une équipe avec son détail*/

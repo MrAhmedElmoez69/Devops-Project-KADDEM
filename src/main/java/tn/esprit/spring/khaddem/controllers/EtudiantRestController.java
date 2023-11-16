@@ -44,33 +44,5 @@ public class EtudiantRestController {
     }
 
     // http://localhost:8089/Kaddem/etudiant/update-etudiant
-    @PutMapping("/update-etudiant")
-    @ResponseBody
-    public Etudiant updateEtudiant(@RequestBody EtudiantDTO etudiantDTO) {
-        Etudiant etudiant = new Etudiant();
-        etudiant.setIdEtudiant(etudiantDTO.getIdEtudiant()); // Assuming you have an ID field in the DTO
-        etudiant.setPrenomE(etudiantDTO.getPrenomE());
-        etudiant.setNomE(etudiantDTO.getNomE());
-        etudiant.setOp(etudiantDTO.getOp());
-
-        return etudiantService.updateEtudiant(etudiant);
-    }
-    // http://localhost:8089/Kaddem/etudiant/removeEtudiant
-    @DeleteMapping("/removeEtudiant/{idEtudiant}")
-    @ResponseBody
-    public void removeEtudiant(@PathVariable("idEtudiant") Integer idEtudiant) {
-        etudiantService.removeEtudiant(idEtudiant);
-    }
-
-    // http://localhost:8089/Kaddem/etudiant/assignEtudiantToDepartement/1/1
-    @PutMapping("/assignEtudiantToDepartement/{etudiantId}/{departementId}")
-    @ResponseBody
-    public void assignEtudiantToDepartement(@PathVariable("etudiantId") Integer etudiantId
-            ,@PathVariable("departementId") Integer departementId) {
-        etudiantService.assignEtudiantToDepartement(etudiantId,departementId);
-    }
-
-    // http://localhost:8089/Kaddem/etudiant/findByDepartement/1
-
 
 }
