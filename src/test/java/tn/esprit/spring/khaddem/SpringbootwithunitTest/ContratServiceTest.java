@@ -150,8 +150,12 @@ class ContratServiceTest {
 
         // Assert
         assertEquals(6, etudiant.getContrats().size(), "Le contrat n'a pas été correctement ajouté à la liste des contrats de l'étudiant");
+
+        // Vérifiez que la méthode save n'a pas été appelée lorsque le nombre de contrats actifs est supérieur à 5
+        verify(contratRepository, times(0)).save(ce);
         // Ajoutez d'autres assertions au besoin
     }
+
 
 
     @Test
