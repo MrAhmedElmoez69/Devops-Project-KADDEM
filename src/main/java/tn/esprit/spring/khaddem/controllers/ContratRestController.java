@@ -15,7 +15,7 @@ import tn.esprit.spring.khaddem.dto.ContratDTO;
 @RestController
 @AllArgsConstructor
 @RequestMapping("/contrat")
-@CrossOrigin(origins = {"http://172.18.0.2:3000", "http://localhost:3000"})
+@CrossOrigin(origins = {"http://172.18.0.3:3000","http://172.18.0.2:3000", "http://localhost:3000"})
 public class ContratRestController {
     IContratService contratService;
 
