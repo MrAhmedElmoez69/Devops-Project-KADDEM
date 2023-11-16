@@ -31,17 +31,8 @@ public class EquipeServiceImpl implements IEquipeService{
         return e;
     }
 
-    @Override
-    public Equipe updateEquipe(Equipe eq) {
-        equipeRepository.save(eq);
-        return eq;
-    }
 
-    @Override
-    public Equipe retrieveEquipe(Integer idEquipe) {
 
-        return equipeRepository.findById(idEquipe).orElse(null); // Or throw an exception if needed
-    }
 
 
 

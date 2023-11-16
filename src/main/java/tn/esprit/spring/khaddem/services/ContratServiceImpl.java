@@ -4,12 +4,10 @@ import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import tn.esprit.spring.khaddem.entities.Contrat;
-import tn.esprit.spring.khaddem.entities.Etudiant;
-import tn.esprit.spring.khaddem.entities.Specialite;
+
 import tn.esprit.spring.khaddem.repositories.ContratRepository;
 import tn.esprit.spring.khaddem.repositories.EtudiantRepository;
-import javax.transaction.Transactional;
-import java.util.Date;
+;
 import java.util.List;
 
 
@@ -29,12 +27,6 @@ public class ContratServiceImpl implements  IContratService{
         return contratRepository.findAll();
     }
 
-    @Override
-    public Contrat updateContrat(Contrat ce) {
-        log.info("debut methode updateContrat");
-        contratRepository.save(ce);
-        return ce;
-    }
 
     @Override
     public Contrat retrieveContrat(Integer idContrat) {
@@ -43,11 +35,6 @@ public class ContratServiceImpl implements  IContratService{
     }
 
 
-    @Override
-    public void removeContrat(Integer idContrat) {
-        log.info("debut methode removeContrat");
-        contratRepository.deleteById(idContrat);
-    }
 
     @Override
     public Contrat addContrat(Contrat c) {
