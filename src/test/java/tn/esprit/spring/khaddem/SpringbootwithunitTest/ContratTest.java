@@ -189,6 +189,52 @@ class ContratTest {
                     // Add more validation as needed
                 });
     }
+    @Test
+    void testUpdateContrat() {
+        // Arrange
+        ContratDTO contratDTO = new ContratDTO(); // Initialisez avec des valeurs appropriées
+
+        // Mock the service method
+        Mockito.when(contratService.updateContrat(Mockito.any(Contrat.class))).thenReturn(new Contrat());
+
+        // Act
+        ContratDTO resultDTO = contratRestController.updateContrat(contratDTO);
+
+        // Assert
+        assertNotNull(resultDTO);
+        // Ajoutez d'autres assertions au besoin
+    }
+    @Test
+    void testRetrieveAndUpdateStatusContrat() {
+        // Act
+        contratRestController.majStatusContrat();
+
+        // Assert
+        // Vérifiez que la méthode du service correspondant a été appelée correctement
+        Mockito.verify(contratService, Mockito.times(1)).retrieveAndUpdateStatusContrat();
+        // Ajoutez d'autres assertions au besoin
+    }
+    @Test
+    void testAddAndAffectContratToEtudiant() {
+        // Arrange
+        ContratDTO contratDTO = new ContratDTO(); // Initialisez avec des valeurs appropriées
+        String nomE = "NomEtudiant";
+        String prenomE = "PrenomEtudiant";
+
+        // Mock the service method
+        Mockito.when(contratService.addAndAffectContratToEtudiant(Mockito.any(Contrat.class), Mockito.eq(nomE), Mockito.eq(prenomE)))
+                .thenReturn(new Contrat());
+
+        // Act
+        ContratDTO resultDTO = contratRestController.addAndAffectContratToEtudiant(contratDTO, nomE, prenomE);
+
+        // Assert
+        assertNotNull(resultDTO);
+        // Ajoutez d'autres assertions au besoin
+    }
+
+
+
 
 
     @Test
