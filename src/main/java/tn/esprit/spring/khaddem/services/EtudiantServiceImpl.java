@@ -11,10 +11,7 @@ import tn.esprit.spring.khaddem.repositories.ContratRepository;
 
 
 import javax.persistence.EntityNotFoundException;
-import javax.transaction.Transactional;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.NoSuchElementException;
 import java.util.Optional;
 
 @Service
