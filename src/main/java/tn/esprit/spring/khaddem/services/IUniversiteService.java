@@ -1,5 +1,6 @@
 package tn.esprit.spring.khaddem.services;
 
+import tn.esprit.spring.khaddem.dto.UniversiteDTO;
 import tn.esprit.spring.khaddem.entities.Universite;
 
 import java.util.List;
@@ -10,7 +11,7 @@ public interface IUniversiteService {
 
     Universite addUniversite (Universite u);
 
-    Universite updateUniversite (Universite u);
+    UniversiteDTO updateUniversite (UniversiteDTO updatedUniversiteDTO);
 
     Universite retrieveUniversite (Integer idUniversite);
 

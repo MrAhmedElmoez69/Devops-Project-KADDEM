@@ -42,7 +42,7 @@ public class EquipeRestController {
     // http://localhost:8089/Kaddem/equipe/update-equipe
     @PutMapping("/update-equipe")
     @ResponseBody
-    public Equipe updateEtudiant(@RequestBody EquipeDTO equipeDTO) {
+    public Equipe updateEquipe(@RequestBody EquipeDTO equipeDTO) {
         Equipe equipe = equipeService.retrieveEquipe(equipeDTO.getIdEquipe());
 
         if (equipe != null) {
