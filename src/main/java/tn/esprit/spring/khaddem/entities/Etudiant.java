@@ -9,6 +9,7 @@ import java.util.List;
 
 @Entity
 public class Etudiant  implements Serializable {
+
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -17,15 +18,6 @@ public class Etudiant  implements Serializable {
     private String nomE;
     @Enumerated(EnumType.STRING)
     private  Option op;
-    @ManyToOne
-    @JsonIgnore
-    private Departement departement;
-    @ManyToMany
-    @JsonIgnore
-    private List<Equipe> equipes;
-    @OneToMany(mappedBy = "etudiant")
-    @JsonIgnore
-    private List<Contrat> contrats;
 
 
 
@@ -112,7 +104,15 @@ public class Etudiant  implements Serializable {
         this.contrats = contrats;
     }
 
-
+    @ManyToOne
+    @JsonIgnore
+    private Departement departement;
+    @ManyToMany
+    @JsonIgnore
+    private List<Equipe> equipes;
+    @OneToMany(mappedBy = "etudiant")
+    @JsonIgnore
+    private List<Contrat> contrats;
 
 
 
