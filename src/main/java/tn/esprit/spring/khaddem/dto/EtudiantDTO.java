@@ -4,6 +4,8 @@ import lombok.Getter;
 import lombok.Setter;
 import tn.esprit.spring.khaddem.entities.Option;
 
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 
 @Getter
 @Setter
