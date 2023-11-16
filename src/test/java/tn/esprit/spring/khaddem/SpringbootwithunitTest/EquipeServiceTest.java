@@ -47,5 +47,4 @@ public class EquipeServiceTest {
         Equipe addEquipe = equipeService.addEquipe(equipe);
         assertEquals(equipe, addEquipe);
     }
-
 }

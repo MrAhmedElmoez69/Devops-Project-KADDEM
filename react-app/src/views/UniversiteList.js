@@ -41,6 +41,13 @@ class UniversiteList extends Component {
   handleFormSubmit = (e) => {
     e.preventDefault();
     const { nomUniv, adresse } = this.state.formData;
+
+    // Check if both fields have data
+    if (!nomUniv || !adresse) {
+      toast.error("Please enter both University Name and University Address");
+      return; // Prevent submitting the form if both fields are not filled
+    }
+
     const newUniversity = { nomUniv, adresse };
 
     axios
@@ -64,7 +71,7 @@ class UniversiteList extends Component {
 
   render() {
     const { universities, formData } = this.state;
-    console.log('Received universities:', universities);
+    console.log("Received universities:", universities);
     return (
       <div className="content">
         <ToastContainer />
