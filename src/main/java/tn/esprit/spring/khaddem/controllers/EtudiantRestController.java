@@ -9,7 +9,7 @@ import tn.esprit.spring.khaddem.services.IEtudiantService;
 import java.util.List;
 
 @RestController
-//@CrossOrigin(origins="*")
+@CrossOrigin(origins="http://localhost:3000")
 @RequestMapping("/etudiant")
 
 public class EtudiantRestController {
