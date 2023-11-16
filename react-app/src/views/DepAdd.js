@@ -31,7 +31,7 @@ class AddDepartement extends Component {
     };
 
     axios
-      .post("http://localhost:8089/Kaddem/departement/add-departement", data)
+      .post("http://localhost:8090/Kaddem/departement/add-departement", data)
       .then((response) => {
         toast.success("Department added successfully!");
         console.log("Department added:", response.data);

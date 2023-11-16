@@ -11,7 +11,7 @@ class DepList extends Component {
 
   componentDidMount() {
     axios
-      .get("http://localhost:8089/Kaddem/departement/retrieve-all-departements")
+      .get("http://localhost:8090/Kaddem/departement/retrieve-all-departements")
       .then((response) => {
         const departments = response.data;
         this.setState({ departments });

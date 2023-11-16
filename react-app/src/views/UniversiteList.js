@@ -18,7 +18,7 @@ class UniversiteList extends Component {
 
   fetchUniversities = () => {
     axios
-      .get("http://localhost:8089/Kaddem/universite/retrieve-all-universites")
+      .get("http://localhost:8090/Kaddem/universite/retrieve-all-universites")
       .then((response) => {
         this.setState({ universities: response.data });
         toast.info("Welcome to the university list");
@@ -41,18 +41,11 @@ class UniversiteList extends Component {
   handleFormSubmit = (e) => {
     e.preventDefault();
     const { nomUniv, adresse } = this.state.formData;
-
-    // Check if both fields have data
-    if (!nomUniv || !adresse) {
-      toast.error("Please enter both University Name and University Address");
-      return; // Prevent submitting the form if both fields are not filled
-    }
-
     const newUniversity = { nomUniv, adresse };
 
     axios
       .post(
-        "http://localhost:8089/Kaddem/universite/add-universite",
+        "http://localhost:8090/Kaddem/universite/add-universite",
         newUniversity
       )
       .then((response) => {
@@ -71,7 +64,7 @@ class UniversiteList extends Component {
 
   render() {
     const { universities, formData } = this.state;
-    console.log("Received universities:", universities);
+    console.log('Received universities:', universities);
     return (
       <div className="content">
         <ToastContainer />
