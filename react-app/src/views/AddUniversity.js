@@ -22,7 +22,7 @@ class AddUniversity extends Component {
 
     // Make the API call to add the university
     axios
-      .post('http://localhost:8091/Kaddem/universite/add-universite', {
+      .post('http://192.168.153.129:8090/Kaddem/universite/add-universite', {
         nomUniv,
         adresse,
       })

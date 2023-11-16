@@ -18,7 +18,7 @@ class UniversiteList extends Component {
 
   fetchUniversities = () => {
     axios
-      .get("http://localhost:8091/Kaddem/universite/retrieve-all-universites")
+      .get("http://localhost:8090/Kaddem/universite/retrieve-all-universites")
       .then((response) => {
         this.setState({ universities: response.data });
         toast.info("Welcome to the university list");
@@ -45,7 +45,7 @@ class UniversiteList extends Component {
 
     axios
       .post(
-        "http://localhost:8091/Kaddem/universite/add-universite",
+        "http://localhost:8090/Kaddem/universite/add-universite",
         newUniversity
       )
       .then((response) => {
