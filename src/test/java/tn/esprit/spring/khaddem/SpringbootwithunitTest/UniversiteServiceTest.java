@@ -12,6 +12,7 @@ import tn.esprit.spring.khaddem.services.UniversiteServiceImpl;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import static org.mockito.Mockito.when;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -26,7 +27,7 @@ class UniversiteServiceTest {
     private UniversiteRepository universiteRepository;
 
     @Test
-    void testRetrieveAllUniversites() {
+    void testRetrieveAllUniversites_ShouldReturnEmptyList() {
         List<Universite> expectedUniversites = new ArrayList<>();
         when(universiteRepository.findAll()).thenReturn(expectedUniversites);
 
@@ -36,10 +37,10 @@ class UniversiteServiceTest {
     }
 
     @Test
-    void testRetrieveUniversite() {
+    void testRetrieveUniversite_ShouldReturnUniversiteById() {
         int universiteId = 1;
         Universite expectedUniversite = new Universite();
-        when(universiteRepository.findById(universiteId)).thenReturn(java.util.Optional.of(expectedUniversite));
+        when(universiteRepository.findById(universiteId)).thenReturn(Optional.of(expectedUniversite));
 
         Universite actualUniversite = universiteService.retrieveUniversite(universiteId);
 
@@ -47,14 +48,14 @@ class UniversiteServiceTest {
     }
 
     @Test
-    void testAddUniversite() {
+    void testAddUniversite_ShouldAddUniversite() {
         UniversiteDTO universiteDTO = new UniversiteDTO();
-        universiteDTO.setName("Test University");
-        universiteDTO.setLocation("Test Location");
+        universiteDTO.setNomUniv("Test University");
+        universiteDTO.setAdresse("Test Location");
 
         Universite addedUniversite = new Universite();
-        addedUniversite.setNomUniv(universiteDTO.getName());
-        addedUniversite.setAdresse(universiteDTO.getLocation());
+        addedUniversite.setNomUniv(universiteDTO.getNomUniv());
+        addedUniversite.setAdresse(universiteDTO.getAdresse());
 
         when(universiteRepository.save(addedUniversite)).thenReturn(addedUniversite);
 
@@ -63,3 +64,4 @@ class UniversiteServiceTest {
         assertEquals(addedUniversite, actualUniversite);
     }
 }
+

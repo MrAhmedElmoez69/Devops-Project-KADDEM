@@ -23,6 +23,11 @@ public class UniversiteServiceImpl implements IUniversiteService {
     @Autowired
     DepartementRepository departementRepository;
 
+
+    public void setUniversiteRepository(UniversiteRepository universiteRepository) {
+        this.universiteRepository = universiteRepository;
+    }
+
     @Override
     public List<Universite> retrieveAllUniversites() {
         return universiteRepository.findAll();
@@ -30,7 +35,6 @@ public class UniversiteServiceImpl implements IUniversiteService {
 
     @Override
     public Universite addUniversite(Universite u) {
-
         universiteRepository.save(u);
         return u;
     }
@@ -38,7 +42,7 @@ public class UniversiteServiceImpl implements IUniversiteService {
     @Override
     public Universite updateUniversite(Universite updatedUniversite) {
         String nomUniv = updatedUniversite.getNomUniv();
-        Optional<Universite> optionalUniversite = universiteRepository.findById(nomUniv);
+        Optional<Universite> optionalUniversite = universiteRepository.findByNomUniv(nomUniv);
 
         if (optionalUniversite.isPresent()) {
             Universite existingUniversite = optionalUniversite.get();
@@ -51,17 +55,16 @@ public class UniversiteServiceImpl implements IUniversiteService {
         }
     }
 
+
     @Override
     public Universite retrieveUniversite(Integer idUniversite) {
-        Optional<Universite> optionalUniversite = universiteRepository.findById(idUniversite);
+        return universiteRepository.findById(idUniversite).orElse(null);
 
-        if (optionalUniversite.isPresent()) {
-            return optionalUniversite.get();
-        } else {
-            throw new NoSuchElementException("Universite not found with ID: " + idUniversite);
-        }
     }
-
+    @Override
+    public void removeUniversite(Integer idUniversite) {
+        universiteRepository.deleteById(idUniversite);
+    }
     @Transactional
     public void assignUniversiteToDepartement(Integer universiteId, Integer departementId) {
         Optional<Universite> optionalUniversite = universiteRepository.findById(universiteId);
@@ -77,8 +80,4 @@ public class UniversiteServiceImpl implements IUniversiteService {
         }
     }
 
-    @Override
-    public void removeUniversite(Integer idUniversite) {
-        universiteRepository.deleteById(idUniversite);
-    }
 }

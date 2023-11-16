@@ -1,32 +1,19 @@
 package tn.esprit.spring.khaddem.dto;
 
+import lombok.*;
+import tn.esprit.spring.khaddem.entities.Departement;
+
+import javax.persistence.CascadeType;
+import javax.persistence.OneToMany;
+import java.util.List;
+
+@Getter
+@Setter
 public class UniversiteDTO {
-    private String name;
-    private String location;
+    private String nomUniv;
+    private String adresse;
 
-    // Constructors
-    public UniversiteDTO() {
-    }
-
-    public UniversiteDTO(String name, String location) {
-        this.name = name;
-        this.location = location;
-    }
-
-    // Getters and setters
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getLocation() {
-        return location;
-    }
-
-    public void setLocation(String location) {
-        this.location = location;
-    }
+    private Integer idUniversite;
+    @OneToMany(mappedBy = "universite", cascade = CascadeType.ALL)
+    private List<Departement> departements;
 }

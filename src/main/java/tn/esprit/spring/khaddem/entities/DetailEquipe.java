@@ -1,6 +1,5 @@
 package tn.esprit.spring.khaddem.entities;
 
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -9,6 +8,7 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.Objects;
 
 @Entity
 @Getter
@@ -17,37 +17,37 @@ import java.io.Serializable;
 @AllArgsConstructor
 public class DetailEquipe implements Serializable {
     private static final long serialVersionUID = 1L;
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer idDetailEquipe;
     private Integer salle;
     private String thematique;
+
     @OneToOne(mappedBy = "detailEquipe")
     @JsonIgnore
-    private  Equipe equipe;
-    //aaaaa
+    private Equipe equipe;
 
-    public Integer getIdDetailEquipe() {
-        return idDetailEquipe;
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null || getClass() != obj.getClass()) {
+            return false;
+        }
+        DetailEquipe other = (DetailEquipe) obj;
+        return idDetailEquipe == other.idDetailEquipe
+                && salle == other.salle
+                && Objects.equals(thematique, other.thematique);
     }
 
-    public void setIdDetailEquipe(Integer idDetailEquipe) {
-        this.idDetailEquipe = idDetailEquipe;
+    @Override
+    public int hashCode() {
+        return Objects.hash(idDetailEquipe, salle, thematique);
     }
 
-    public void setSalle(Integer salle) {
-        this.salle = salle;
-    }
 
-    public void setThematique(String thematique) {
-        this.thematique = thematique;
-    }
 
-    public Integer getSalle() {
-        return salle;
-    }
-
-    public String getThematique() {
-        return thematique;
-    }
 }

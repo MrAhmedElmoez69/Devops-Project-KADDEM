@@ -2,7 +2,6 @@ package tn.esprit.spring.khaddem.controllers;
 
 
 import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.web.bind.annotation.*;
@@ -10,6 +9,8 @@ import tn.esprit.spring.khaddem.entities.Contrat;
 import tn.esprit.spring.khaddem.services.IContratService;
 import java.util.Date;
 import java.util.List;
+import tn.esprit.spring.khaddem.dto.ContratDTO;
+
 
 @RestController
 @AllArgsConstructor
@@ -21,9 +22,9 @@ public class ContratRestController {
     @GetMapping("/retrieve-all-contrats")
     @ResponseBody
     public List<Contrat> getContrats() {
-        List<Contrat> listContrats = contratService.retrieveAllContrats();
-        return listContrats;
+        return contratService.retrieveAllContrats();
     }
+
 
     // http://localhost:8089/Kaddem/contrat/retrieve-contrat/8
     @GetMapping("/retrieve-contrat/{contrat-id}")
@@ -35,26 +36,79 @@ public class ContratRestController {
     // http://localhost:8089/Kaddem/contrat/add-contrat
     @PostMapping("/add-contrat")
     @ResponseBody
-    public Contrat addContrat(@RequestBody Contrat c) {
-        Contrat contrat = contratService.addContrat(c);
+    public Contrat addContrat(@RequestBody ContratDTO contratDTO) {
+        Contrat contrat = new Contrat();
+        contrat.setIdContrat(contratDTO.getIdContrat());
+        contrat.setDateDebutContrat(contratDTO.getDateDebutContrat());
+        contrat.setDateFinContrat(contratDTO.getDateFinContrat());
+        contrat.setSpecialite(contratDTO.getSpecialite());
+        contrat.setArchived(contratDTO.getArchived());
+        contrat.setMontantContrat(contratDTO.getMontantContrat());
+
+        contratService.addContrat(contrat);
+
         return contrat;
     }
+
+
 
     // http://localhost:8089/Kaddem/contrat/update-contrat
     @PutMapping("/update-contrat")
     @ResponseBody
-    public Contrat updateEtudiant(@RequestBody Contrat cont) {
-        Contrat c= contratService.updateContrat(cont);
-        return c;
+    public ContratDTO updateContrat(@RequestBody ContratDTO contratDTO) {
+        // Transformez le ContratDTO en entité Contrat si nécessaire
+        Contrat contrat = new Contrat();
+        contrat.setIdContrat(contratDTO.getIdContrat());
+        contrat.setDateDebutContrat(contratDTO.getDateDebutContrat());
+        contrat.setDateFinContrat(contratDTO.getDateFinContrat());
+        contrat.setSpecialite(contratDTO.getSpecialite());
+        contrat.setArchived(contratDTO.getArchived());
+        contrat.setMontantContrat(contratDTO.getMontantContrat());
+
+        // Utilisez le service pour mettre à jour le contrat
+        contrat = contratService.updateContrat(contrat);
+
+        // Transformez l'entité Contrat en ContratDTO si nécessaire
+        ContratDTO resultDTO = new ContratDTO();
+        resultDTO.setIdContrat(contrat.getIdContrat());
+        resultDTO.setDateDebutContrat(contrat.getDateDebutContrat());
+        resultDTO.setDateFinContrat(contrat.getDateFinContrat());
+        resultDTO.setSpecialite(contrat.getSpecialite());
+        resultDTO.setArchived(contrat.getArchived());
+        resultDTO.setMontantContrat(contrat.getMontantContrat());
+
+        return resultDTO;
     }
+
 
     // http://localhost:8089/Kaddem/contrat/addAndAffectContratToEtudiant/salah/ahmed
     @PostMapping("/addAndAffectContratToEtudiant/{nomE}/{prenomE}")
     @ResponseBody
-    public Contrat addAndAffectContratToEtudiant(@RequestBody Contrat contrat,@PathVariable("nomE") String nomE,@PathVariable("prenomE") String prenomE) {
-        Contrat c= contratService.addAndAffectContratToEtudiant(contrat,nomE,prenomE);
-        return c;
+    public ContratDTO addAndAffectContratToEtudiant(@RequestBody ContratDTO contratDTO, @PathVariable("nomE") String nomE, @PathVariable("prenomE") String prenomE) {
+        // Transformez le ContratDTO en entité Contrat si nécessaire
+        Contrat contrat = new Contrat();
+        contrat.setIdContrat(contratDTO.getIdContrat());
+        contrat.setDateDebutContrat(contratDTO.getDateDebutContrat());
+        contrat.setDateFinContrat(contratDTO.getDateFinContrat());
+        contrat.setSpecialite(contratDTO.getSpecialite());
+        contrat.setArchived(contratDTO.getArchived());
+        contrat.setMontantContrat(contratDTO.getMontantContrat());
+
+        // Utilisez le service pour ajouter et affecter le contrat à l'étudiant
+        contrat = contratService.addAndAffectContratToEtudiant(contrat, nomE, prenomE);
+
+        // Transformez l'entité Contrat en ContratDTO si nécessaire
+        ContratDTO resultDTO = new ContratDTO();
+        resultDTO.setIdContrat(contrat.getIdContrat());
+        resultDTO.setDateDebutContrat(contrat.getDateDebutContrat());
+        resultDTO.setDateFinContrat(contrat.getDateFinContrat());
+        resultDTO.setSpecialite(contrat.getSpecialite());
+        resultDTO.setArchived(contrat.getArchived());
+        resultDTO.setMontantContrat(contrat.getMontantContrat());
+
+        return resultDTO;
     }
+
 
     //The most common ISO Date Format yyyy-MM-dd — for example, "2000-10-31".
     @GetMapping(value = "/getnbContratsValides/{startDate}/{endDate}")
