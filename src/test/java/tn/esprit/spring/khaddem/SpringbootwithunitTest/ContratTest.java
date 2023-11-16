@@ -1,9 +1,8 @@
 package tn.esprit.spring.khaddem.SpringbootwithunitTest;
-
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
@@ -18,7 +17,10 @@ import tn.esprit.spring.khaddem.controllers.ContratRestController;
 import tn.esprit.spring.khaddem.dto.ContratDTO;
 import tn.esprit.spring.khaddem.entities.Contrat;
 import tn.esprit.spring.khaddem.entities.Etudiant;
+import tn.esprit.spring.khaddem.entities.Option;
 import tn.esprit.spring.khaddem.entities.Specialite;
+import tn.esprit.spring.khaddem.repositories.ContratRepository;
+import tn.esprit.spring.khaddem.repositories.EtudiantRepository;
 import tn.esprit.spring.khaddem.services.IContratService;
 
 import java.util.ArrayList;
@@ -26,7 +28,9 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
+import static org.assertj.core.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.*;
+
 
 @SpringBootTest
 @AutoConfigureMockMvc
@@ -44,6 +48,12 @@ class ContratTest {
 
     @Autowired
     private MockMvc mockMvc;
+    @Autowired
+    private ContratRepository contratRepository;
+
+    @Mock
+    private EtudiantRepository etudiantRepository;
+
 
     @BeforeEach
     public void setUp() {
@@ -68,7 +78,7 @@ class ContratTest {
     }
 
     @Test
-     void testGetters() {
+    void testGetters() {
         assertEquals(1, contrat1.getIdContrat());
         assertEquals(true, contrat1.getArchived());
         assertEquals(1000, contrat1.getMontantContrat());
@@ -76,7 +86,7 @@ class ContratTest {
     }
 
     @Test
-     void testSetters() {
+    void testSetters() {
         contrat1.setIdContrat(2);
         contrat1.setArchived(false);
         contrat1.setMontantContrat(2000);
@@ -179,6 +189,52 @@ class ContratTest {
                     // Add more validation as needed
                 });
     }
+    @Test
+    void testUpdateContrat() {
+        // Arrange
+        ContratDTO contratDTO = new ContratDTO(); // Initialisez avec des valeurs appropriées
+
+        // Mock the service method
+        Mockito.when(contratService.updateContrat(Mockito.any(Contrat.class))).thenReturn(new Contrat());
+
+        // Act
+        ContratDTO resultDTO = contratRestController.updateContrat(contratDTO);
+
+        // Assert
+        assertNotNull(resultDTO);
+        // Ajoutez d'autres assertions au besoin
+    }
+    @Test
+    void testRetrieveAndUpdateStatusContrat() {
+        // Act
+        contratRestController.majStatusContrat();
+
+        // Assert
+        // Vérifiez que la méthode du service correspondant a été appelée correctement
+        Mockito.verify(contratService, Mockito.times(1)).retrieveAndUpdateStatusContrat();
+        // Ajoutez d'autres assertions au besoin
+    }
+    @Test
+    void testAddAndAffectContratToEtudiant() {
+        // Arrange
+        ContratDTO contratDTO = new ContratDTO(); // Initialisez avec des valeurs appropriées
+        String nomE = "NomEtudiant";
+        String prenomE = "PrenomEtudiant";
+
+        // Mock the service method
+        Mockito.when(contratService.addAndAffectContratToEtudiant(Mockito.any(Contrat.class), Mockito.eq(nomE), Mockito.eq(prenomE)))
+                .thenReturn(new Contrat());
+
+        // Act
+        ContratDTO resultDTO = contratRestController.addAndAffectContratToEtudiant(contratDTO, nomE, prenomE);
+
+        // Assert
+        assertNotNull(resultDTO);
+        // Ajoutez d'autres assertions au besoin
+    }
+
+
+
 
 
     @Test
@@ -189,6 +245,23 @@ class ContratTest {
         assertEquals(Specialite.CLOUD, Specialite.valueOf("CLOUD"));
         assertEquals(Specialite.SECURITE, Specialite.valueOf("SECURITE"));
     }
+    @Test
+    void testContratConstructor() {
+        // Créez un objet Etudiant à utiliser dans le constructeur
+        Etudiant etudiant = new Etudiant(); // Assurez-vous de définir les propriétés nécessaires
+
+        // Créez un objet Contrat en utilisant le constructeur
+        Contrat contrat = new Contrat(1, new Date(), new Date(), Specialite.IA, true, 1000, etudiant);
+
+        // Vérifiez que les propriétés de l'objet sont correctement définies
+        assertEquals(1, contrat.getIdContrat());
+        assertEquals(Specialite.IA, contrat.getSpecialite());
+        assertEquals(true, contrat.getArchived());
+        assertEquals(1000, contrat.getMontantContrat());
+        assertEquals(etudiant, contrat.getEtudiant());
+        // Ajoutez d'autres vérifications si nécessaire
+    }
+
 
     @Test
     void testContratDTO() {
@@ -206,6 +279,39 @@ class ContratTest {
         assertEquals(1000, contratDTO.getMontantContrat());
 
     }
+/*
+    @Test
+    public void testRemoveContrat() {
+        // Arrange
+        Integer idContrat = 1;
+
+        // Act
+        contratService.removeContrat(idContrat);
+
+        // Assert
+        // Verify that the deleteById method was called with the specified ID
+        Mockito.verify(contratRepository, Mockito.times(1)).deleteById(idContrat);
+    }
+
+    @Test
+    public void testRemoveContratWhenErrorOccurs() {
+        // Arrange
+        Integer idContrat = 1;
+
+        // Mock the repository to throw an exception when deleteById is called
+        Mockito.doThrow(new RuntimeException("An error occurred")).when(contratRepository).deleteById(idContrat);
+
+        // Act and Assert
+        try {
+            contratService.removeContrat(idContrat);
+        } catch (RuntimeException e) {
+            // Handle the exception or rethrow it as needed
+            // Ensure it's the expected exception
+            assert e.getMessage().equals("An error occurred");
+        }
+    }
+
+ */
+
 
 }
-
