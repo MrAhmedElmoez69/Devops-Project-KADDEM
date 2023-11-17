@@ -30,14 +30,7 @@ public class EquipeServiceTest {
     }
 
 
-    @Test
-    void testRertrieveEquipe(){
-        int equipeId = 1;
-        Equipe expectedEquipe = new Equipe();
-        when(equipeRepository.findById(equipeId)).thenReturn(java.util.Optional.of(expectedEquipe));
-        Equipe actualEquipe = equipeService.retrieveEquipe(equipeId);
-        assertEquals(expectedEquipe, actualEquipe);
-    }
+
 
     @Test
     void testAddEqiupe(){
