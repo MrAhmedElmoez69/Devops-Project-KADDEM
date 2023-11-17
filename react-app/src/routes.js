@@ -18,6 +18,8 @@
 */
 
 import UniversiteList from "views/UniversiteList.js";
+import AddContrat from "views/AddContrat";
+import ContratList from "views/ContratList";
 
 import AddUniversity from "views/AddUniversity.js";
 var routes = [
@@ -38,5 +40,20 @@ var routes = [
     component: <AddUniversity />,
     layout: "/admin",
   },
+    //Article
+    {
+      path: "/contrat",
+      name: "Contrat List",
+      icon: "fas fa-book",
+      component: <ContratList />,
+      layout: "/admin",
+    },
+    {
+      path: "/article/add",
+      name: "Create Article",
+      icon: "fas fa-pencil-alt",
+      component: <AddContrat/>,
+      layout: "/admin",
+    },
 ];
 export default routes;
