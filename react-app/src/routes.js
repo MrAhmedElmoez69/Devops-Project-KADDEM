@@ -38,5 +38,19 @@ var routes = [
     component: <AddUniversity />,
     layout: "/admin",
   },
+  {
+    path: "/equipe",
+    name: "Equipe List",
+    icon: "nc-icon nc-shop",
+    component: <EquipeList />,
+    layout: "/admin",
+  },
+  {
+    path: "/addequipe",
+    name: "Add Equipe",
+    icon: "nc-icon nc-shop",
+    component: <AddEquipe />,
+    layout: "/admin",
+  },
 ];
 export default routes;
