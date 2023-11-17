@@ -2,7 +2,6 @@ package tn.esprit.spring.khaddem.entities;
 
 import java.io.Serializable;
 import java.util.Date;
-import java.util.Objects;
 import javax.persistence.*;
 
 
