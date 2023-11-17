@@ -36,16 +36,13 @@ class DepartementTest {
 
     @Test
     void testDepartementDTO() {
-        // Create a DepartementDTO with sample data
         DepartementDTO departementDTO = new DepartementDTO();
         departementDTO.setIdDepartement(1);
         departementDTO.setNomDepart("Test Department");
 
-        // Check if the getter methods return the expected values
         assertEquals(1, departementDTO.getIdDepartement());
         assertEquals("Test Department", departementDTO.getNomDepart());
 
-        // You can add more checks for other fields as needed
     }
 
     @Test
@@ -75,8 +72,8 @@ class DepartementTest {
         departement3.setIdDepartement(2);
         departement3.setNomDepart("Department B");
 
-        assertEquals(departement1, departement2); // Check that two departements with the same ID and name are equal
-        assertNotEquals(departement1, departement3); // Check that two departements with different IDs and names are not equal
+        assertEquals(departement1, departement2);
+        assertNotEquals(departement1, departement3);
     }
 
     @Test
@@ -113,11 +110,9 @@ class DepartementTest {
 
     @Test
     void testAddDepartement() throws Exception {
-        // Prepare a DepartementDTO with data
         DepartementDTO departementDTO = new DepartementDTO();
         departementDTO.setNomDepart("Test Department");
 
-        // Convert DepartementDTO to JSON
         ObjectMapper objectMapper = new ObjectMapper();
         String departementJson = objectMapper.writeValueAsString(departementDTO);
 
@@ -137,12 +132,10 @@ class DepartementTest {
 
     @Test
     void testUpdateDepartement() throws Exception {
-        // Prepare a DepartementDTO with data
         DepartementDTO departementDTO = new DepartementDTO();
         departementDTO.setIdDepartement(1); // Existing departement ID
         departementDTO.setNomDepart("Updated Department");
 
-        // Convert DepartementDTO to JSON
         ObjectMapper objectMapper = new ObjectMapper();
         String departementJson = objectMapper.writeValueAsString(departementDTO);
 
@@ -155,26 +148,21 @@ class DepartementTest {
                     String responseContent = result.getResponse().getContentAsString();
                     Departement updatedDepartement = objectMapper.readValue(responseContent, Departement.class);
 
-                    // Validate the response data if needed
                     assertEquals("Updated Department", updatedDepartement.getNomDepart());
                 });
     }
 
     @Test
     void testRetrieveDepartement() throws Exception {
-        // Perform a GET request to retrieve a specific departement by ID (e.g., ID 8)
         mockMvc.perform(MockMvcRequestBuilders.get("/departement/retrieve-departement/1"))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.content().contentType("application/json"))
                 .andExpect(result -> {
-                    // Convert the response JSON to a Departement object
                     String responseContent = result.getResponse().getContentAsString();
                     ObjectMapper objectMapper = new ObjectMapper();
                     Departement retrievedDepartement = objectMapper.readValue(responseContent, Departement.class);
 
-                    // Validate the retrieved departement
                     assertEquals(1, retrievedDepartement.getIdDepartement());
-                    // Add more validation as needed
                 });
     }
 

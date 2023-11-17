@@ -21,11 +21,7 @@ public class DetailEquipeRestController {
     }
 
 
-    @GetMapping("/retrieve-detail-equipe/{detail-equipe-id}")
-    @ResponseBody
-    public DetailEquipe retrieveDetailEquipe(@PathVariable("detail-equipe-id") Integer detailEquipeId) {
-        return detailEquipeService.retrieveDetailEquipe(detailEquipeId);
-    }
+
 
     @PostMapping("/add-detail-equipe")
     @ResponseBody

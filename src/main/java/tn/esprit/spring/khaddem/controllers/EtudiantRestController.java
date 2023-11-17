@@ -4,8 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import tn.esprit.spring.khaddem.dto.EtudiantDTO;
 import tn.esprit.spring.khaddem.entities.Etudiant;
-import tn.esprit.spring.khaddem.entities.Niveau;
-import tn.esprit.spring.khaddem.entities.Specialite;
+
 import tn.esprit.spring.khaddem.services.IEtudiantService;
 
 import java.util.List;

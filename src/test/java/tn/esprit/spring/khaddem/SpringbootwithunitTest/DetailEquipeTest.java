@@ -196,22 +196,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 
 
-    @Test
-    void testRetrieveDetailEquipe() throws Exception {
-        mockMvc.perform(MockMvcRequestBuilders.get("/detailequipe/retrieve-detail-equipe/1"))
-                .andExpect(MockMvcResultMatchers.status().isOk())
-                .andExpect(MockMvcResultMatchers.content().contentType("application/json"))
-                .andExpect(result -> {
-                    // Convert the response JSON to a DetailEquipe object
-                    String responseContent = result.getResponse().getContentAsString();
-                    ObjectMapper objectMapper = new ObjectMapper();
-                    DetailEquipe retrievedDetailEquipe = objectMapper.readValue(responseContent, DetailEquipe.class);
 
-                    // Validate the retrieved DetailEquipe
-                    assertEquals(1, retrievedDetailEquipe.getIdDetailEquipe());
-                    // Add more validation as needed
-                });
-    }
 
 
 
