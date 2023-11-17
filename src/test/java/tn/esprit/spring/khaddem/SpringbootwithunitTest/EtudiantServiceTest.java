@@ -1,5 +1,5 @@
 package tn.esprit.spring.khaddem.SpringbootwithunitTest;
-/*
+
 import org.junit.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -55,6 +55,3 @@ public class EtudiantServiceTest {
         assertEquals(etudiant, addedEtudiant);
     }
 }
-
-
- */

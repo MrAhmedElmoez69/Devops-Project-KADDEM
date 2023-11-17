@@ -1,5 +1,5 @@
 package tn.esprit.spring.khaddem.SpringbootwithunitTest;
-/*
+
 import org.junit.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -30,7 +30,14 @@ public class EquipeServiceTest {
     }
 
 
-
+    @Test
+    void testRertrieveEquipe(){
+        int equipeId = 1;
+        Equipe expectedEquipe = new Equipe();
+        when(equipeRepository.findById(equipeId)).thenReturn(java.util.Optional.of(expectedEquipe));
+        Equipe actualEquipe = equipeService.retrieveEquipe(equipeId);
+        assertEquals(expectedEquipe, actualEquipe);
+    }
 
     @Test
     void testAddEqiupe(){
@@ -41,6 +48,3 @@ public class EquipeServiceTest {
         assertEquals(equipe, addEquipe);
     }
 }
-
-
- */

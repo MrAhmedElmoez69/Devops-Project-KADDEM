@@ -1,5 +1,5 @@
 package tn.esprit.spring.khaddem.SpringbootwithunitTest;
-/*
+
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -38,8 +38,17 @@ class UniversiteRestControllerTest {
         verify(universiteService, times(1)).retrieveUniversite(universiteId);
     }
 
+    @Test
+    void testAssignUniversiteToDepartement() throws Exception {
+        int universiteId = 1;
+        int departementId = 1;
 
+        // Mock the behavior of assignUniversiteToDepartement method
+        doNothing().when(universiteService).assignUniversiteToDepartement(universiteId, departementId);
+
+        universiteController.assignUniversiteToDepartement(universiteId, departementId);
+
+        // Verify that the service method was called with the correct arguments
+        verify(universiteService, times(1)).assignUniversiteToDepartement(universiteId, departementId);
+    }
 }
-
-
- */
