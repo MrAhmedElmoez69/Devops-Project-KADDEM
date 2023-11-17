@@ -44,12 +44,9 @@ class CreateEquipe extends Component {
 
       axios.post('http://localhost:8090/Kaddem/equipe/add-equipe', newEquipe)
         .then(response => {
-          console.log('Equipe created:', response.data);
-          this.setState({ showNotification: true }, () => {
-            setTimeout(() => {
-              this.setState({ showNotification: false });
-            }, 60000);
-          });
+          console.log('Equipe added successfully:', response.data);
+          toast.success('Equipe added successfully');
+          // Optionally, you can redirect to the university list page or perform other actions
         })
         .catch(error => {
           console.error('Error creating Equipe:', error);

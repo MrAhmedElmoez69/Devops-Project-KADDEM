@@ -13,7 +13,7 @@ class EquipeList extends Component {
 
   componentDidMount() {
     axios
-      .get("http://localhost:8090/equipes")
+      .get("http://localhost:8090/equipes/retrieve-all-equipes")
       .then((response) => {
         const equipes = response.data;
         this.setState({ equipes });
