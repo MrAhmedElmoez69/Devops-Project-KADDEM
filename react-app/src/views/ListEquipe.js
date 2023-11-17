@@ -13,7 +13,7 @@ class EquipeList extends Component {
 
   componentDidMount() {
     axios
-      .get("http://localhost:8090/equipes/retrieve-all-equipes")
+      .get("http://localhost:8090/equipe/retrieve-all-equipes")
       .then((response) => {
         const equipes = response.data;
         this.setState({ equipes });
@@ -26,7 +26,7 @@ class EquipeList extends Component {
 
   handleDelete = (equipeId) => {
     axios
-      .delete(`http://localhost:8090/equipes/${equipeId}`)
+      .delete(`http://localhost:8090/equipe/${equipeId}`)
       .then((response) => {
         this.setState((prevState) => ({
           equipes: prevState.equipes.filter(
