@@ -15,7 +15,6 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import tn.esprit.spring.khaddem.dto.DetailEquipeDTO;
 import tn.esprit.spring.khaddem.entities.DetailEquipe;
 import tn.esprit.spring.khaddem.repositories.DetailEquipeRepository;
-import tn.esprit.spring.khaddem.services.IDetailEquipeService;
 
 import java.util.List;
 import java.util.Optional;
