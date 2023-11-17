@@ -1,5 +1,5 @@
 package tn.esprit.spring.khaddem.SpringbootwithunitTest;
-/*
+
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -14,7 +14,6 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import tn.esprit.spring.khaddem.dto.DepartementDTO;
 import tn.esprit.spring.khaddem.entities.Departement;
-import tn.esprit.spring.khaddem.services.IDepartementService;
 
 @SpringBootTest
 @AutoConfigureMockMvc
@@ -22,8 +21,7 @@ class DepartementTest {
 
     @Autowired
     private MockMvc mockMvc;
-    @Autowired
-    private IDepartementService departementService;
+
     @Test
     void testDepartementEntity() {
         Departement departement = new Departement();
@@ -196,4 +194,3 @@ class DepartementTest {
 }
 
 
- */
