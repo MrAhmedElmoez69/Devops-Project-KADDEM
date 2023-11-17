@@ -43,11 +43,6 @@ public class ContratServiceImpl implements  IContratService{
     }
 
 
-    @Override
-    public void removeContrat(Integer idContrat) {
-        log.info("debut methode removeContrat");
-        contratRepository.deleteById(idContrat);
-    }
 
     @Override
     public Contrat addContrat(Contrat c) {

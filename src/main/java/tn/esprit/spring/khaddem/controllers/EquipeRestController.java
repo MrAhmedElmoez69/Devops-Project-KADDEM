@@ -21,12 +21,7 @@ public class EquipeRestController {
     }
 
 
-    // http://localhost:8089/Kaddem/equipe/retrieve-equipe/8
-    @GetMapping("/retrieve-equipe/{equipe-id}")
-    @ResponseBody
-    public Equipe retrieveEquipe(@PathVariable("equipe-id") Integer equipeId) {
-        return equipeService.retrieveEquipe(equipeId);
-    }
+
 
     // http://localhost:8089/Kaddem/equipe/add-equipe
     /* cette méthode permet d'ajouter une équipe avec son détail*/
@@ -39,18 +34,5 @@ public class EquipeRestController {
         return equipe;
     }
 
-    // http://localhost:8089/Kaddem/equipe/update-equipe
-    @PutMapping("/update-equipe")
-    @ResponseBody
-    public Equipe updateEtudiant(@RequestBody EquipeDTO equipeDTO) {
-        Equipe equipe = equipeService.retrieveEquipe(equipeDTO.getIdEquipe());
-
-        if (equipe != null) {
-            equipe.setNomEquipe(equipeDTO.getNomEquipe());
-            return equipeService.updateEquipe(equipe);
-        } else {
-            return null;
-        }
-    }
 
 }
