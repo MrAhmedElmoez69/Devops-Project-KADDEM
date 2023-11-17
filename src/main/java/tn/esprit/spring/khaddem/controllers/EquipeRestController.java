@@ -6,7 +6,6 @@ import tn.esprit.spring.khaddem.dto.EquipeDTO;
 import tn.esprit.spring.khaddem.entities.Equipe;
 import tn.esprit.spring.khaddem.services.IEquipeService;
 import java.util.List;
-
 @RestController
 @AllArgsConstructor
 @RequestMapping("/equipe")
@@ -35,6 +34,7 @@ public class EquipeRestController {
     public Equipe addEquipe(@RequestBody EquipeDTO equipeDTO) {
         Equipe equipe = new Equipe();
         equipe.setNomEquipe(equipeDTO.getNomEquipe());
+        equipe.setNiveau(equipeDTO.getNiveau());
         equipeService.addEquipe(equipe);
         return equipe;
     }

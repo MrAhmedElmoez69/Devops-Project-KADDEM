@@ -23,7 +23,6 @@ class CreateEquipe extends Component {
   handleSubmit = (e) => {
     e.preventDefault();
 
-    if (this.validateForm()) {
       const newEquipe = {
         nomEquipe: this.state.nomEquipe,
         niveau: this.state.niveau,
@@ -42,7 +41,7 @@ class CreateEquipe extends Component {
           // Display an error notification
           toast.error('An error occurred while creating the equipe');
         });
-    }
+    
   }
 
   render() {
