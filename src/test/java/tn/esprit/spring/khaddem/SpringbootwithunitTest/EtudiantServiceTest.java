@@ -108,7 +108,7 @@ public class EtudiantServiceTest {
     @Test
     public void testUpdateEtudiant() {
         Etudiant etudiant = new Etudiant();
-        etudiant.setIdEtudiant(1); // Replace with an existing Etudiant ID
+        etudiant.setIdEtudiant(1);
         etudiant.setNomE("Updated Etudiant");
 
         when(etudiantRepository.existsById(etudiant.getIdEtudiant())).thenReturn(true);
@@ -121,7 +121,7 @@ public class EtudiantServiceTest {
 
     @Test
     public void testRemoveEtudiant() {
-        int etudiantId = 1; // Replace with an existing Etudiant ID
+        int etudiantId = 1;
         doNothing().when(etudiantRepository).deleteById(etudiantId);
 
         etudiantService.removeEtudiant(etudiantId);
@@ -131,8 +131,8 @@ public class EtudiantServiceTest {
 
     @Test
     public void testAssignEtudiantToDepartement() {
-        int etudiantId = 1; // Replace with an existing Etudiant ID
-        int departementId = 1; // Replace with an existing Departement ID
+        int etudiantId = 1;
+        int departementId = 1;
 
         Etudiant etudiant = new Etudiant();
         etudiant.setIdEtudiant(etudiantId);
@@ -141,8 +141,6 @@ public class EtudiantServiceTest {
         when(departementRepository.findById(departementId)).thenReturn(java.util.Optional.of(new Departement()));
 
         etudiantService.assignEtudiantToDepartement(etudiantId, departementId);
-
-        // Add assertions or verifications based on your business logic
     }
 
 
