@@ -30,9 +30,6 @@ public class EtudiantServiceTest {
     @Mock
     private EtudiantRepository etudiantRepository;
 
-    @Mock
-    private DepartementRepository departementRepository;
-
     @Test
     public void testRetrieveAllEtudiants() {
         List<Etudiant> expectedEtudiants = new ArrayList<>();
