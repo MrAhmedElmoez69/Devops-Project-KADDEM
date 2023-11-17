@@ -11,6 +11,8 @@ import java.util.List;
 @RestController
 @AllArgsConstructor
 @RequestMapping("/detailequipe")
+@CrossOrigin(origins = "http://localhost:3000")
+
 public class DetailEquipeRestController {
     IDetailEquipeService detailEquipeService;
 

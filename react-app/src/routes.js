@@ -20,6 +20,8 @@
 import UniversiteList from "views/UniversiteList.js";
 
 import AddUniversity from "views/AddUniversity.js";
+import AddDetailEquipe from "views/createDetailEquipe";
+import DetailEquipeList from "views/ListDetailEquipe";
 var routes = [
   //Users
 
@@ -36,6 +38,20 @@ var routes = [
     name: "Universites List",
     icon: "nc-icon nc-shop",
     component: <AddUniversity />,
+    layout: "/admin",
+  },
+  {
+    path: "/detailequipe",
+    name: "DetailEquipe List",
+    icon: "nc-icon nc-shop",
+    component: <DetailEquipeList />,
+    layout: "/admin",
+  },
+  {
+    path: "/adddetailequipe",
+    name: "Add DetailEquipe",
+    icon: "nc-icon nc-shop",
+    component: <AddDetailEquipe />,
     layout: "/admin",
   },
 ];
