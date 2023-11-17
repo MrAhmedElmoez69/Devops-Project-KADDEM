@@ -18,7 +18,8 @@
 */
 
 import UniversiteList from "views/UniversiteList.js";
-
+import CreateEquipe from "views/AddEquipe.js"
+import EquipeList from "views/ListEquipe"
 import AddUniversity from "views/AddUniversity.js";
 var routes = [
   //Users
@@ -49,7 +50,7 @@ var routes = [
     path: "/addequipe",
     name: "Add Equipe",
     icon: "nc-icon nc-shop",
-    component: <AddEquipe />,
+    component: <CreateEquipe />,
     layout: "/admin",
   },
 ];
