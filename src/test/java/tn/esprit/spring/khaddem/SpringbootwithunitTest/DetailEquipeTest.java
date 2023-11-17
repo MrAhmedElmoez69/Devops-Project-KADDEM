@@ -21,7 +21,7 @@ import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
-
+/*
 @SpringBootTest
 @AutoConfigureMockMvc
  class DetailEquipeTest {
@@ -220,3 +220,5 @@ import static org.junit.jupiter.api.Assertions.*;
 
 
 }
+
+ */

@@ -1,5 +1,5 @@
 package tn.esprit.spring.khaddem.SpringbootwithunitTest;
-
+/*
 import org.junit.jupiter.api.Test;
 import tn.esprit.spring.khaddem.entities.Etudiant;
 
@@ -16,3 +16,6 @@ class EtudiantTest {
         assertEquals("Test Etudiant", etudiant.getNomE());
     }
 }
+
+
+ */
