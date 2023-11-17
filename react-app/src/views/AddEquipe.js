@@ -42,7 +42,7 @@ class CreateEquipe extends Component {
         etudiants: [], // Ajoutez les étudiants si nécessaire
       };
 
-      axios.post('http://localhost:8089/Kaddem/equipe/add-equipe', newEquipe)
+      axios.post('http://localhost:8090/Kaddem/equipe/add-equipe', newEquipe)
         .then(response => {
           console.log('Equipe created:', response.data);
           this.setState({ showNotification: true }, () => {
