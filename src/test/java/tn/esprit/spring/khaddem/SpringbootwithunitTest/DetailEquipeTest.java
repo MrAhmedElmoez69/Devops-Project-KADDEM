@@ -45,16 +45,14 @@ class DetailEquipeTest {
 
     @Test
     void testCreateDetailEquipe() {
-        // Sample data
         Integer idDetailEquipe = 1;
         Integer salle = 101;
         String thematique = "Test Thematique";
         Equipe equipe = new Equipe();
 
-        // Create a DetailEquipe using the constructor
         DetailEquipe detailEquipe = new DetailEquipe(idDetailEquipe, salle, thematique, equipe);
 
-        // Test that fields are set correctly
+
         assertEquals(idDetailEquipe, detailEquipe.getIdDetailEquipe());
         assertEquals(salle, detailEquipe.getSalle());
         assertEquals(thematique, detailEquipe.getThematique());
@@ -63,34 +61,34 @@ class DetailEquipeTest {
 
     @Test
     void testDefaultConstructor() {
-        // Create a DetailEquipe using the default constructor
+
         DetailEquipe detailEquipe = new DetailEquipe();
 
-        // Test that the object is not null
+
         assertNotNull(detailEquipe);
     }
 
     @Test
     void testEqualsAndHashCode() {
-        // Create two DetailEquipe objects with the same values
+
         DetailEquipe detailEquipe1 = new DetailEquipe(1, 101, "Thematique 1", new Equipe());
         DetailEquipe detailEquipe2 = new DetailEquipe(1, 101, "Thematique 1", new Equipe());
 
-        // Check if equals and hashCode methods work as expected
+
         assertEquals(detailEquipe1, detailEquipe2);
         assertEquals(detailEquipe1.hashCode(), detailEquipe2.hashCode());
 
-        // Change one attribute in detailEquipe2
+
         detailEquipe2.setSalle(102);
 
-        // Check if the objects are no longer equal and have different hash codes
+
         assertNotEquals(detailEquipe1, detailEquipe2);
         assertNotEquals(detailEquipe1.hashCode(), detailEquipe2.hashCode());
     }
 
     @Test
     void testNotEquals() {
-        // Create two instances and set their values
+
         DetailEquipe detailEquipe1 = new DetailEquipe();
         detailEquipe1.setIdDetailEquipe(1);
         detailEquipe1.setSalle(101);
@@ -101,14 +99,14 @@ class DetailEquipeTest {
         detailEquipe2.setSalle(102);
         detailEquipe2.setThematique("Theme2");
 
-        // Verify that they are not equal
+
         assertNotEquals(detailEquipe1, detailEquipe2);
     }
 
 
     @Test
     void testNotHashCode() {
-        // Create two instances and set their values
+
         DetailEquipe detailEquipe1 = new DetailEquipe();
         detailEquipe1.setIdDetailEquipe(1);
         detailEquipe1.setSalle(101);
@@ -119,7 +117,7 @@ class DetailEquipeTest {
         detailEquipe2.setSalle(102);
         detailEquipe2.setThematique("Theme2");
 
-        // Verify that their hash codes are not equal
+
         assertNotEquals(detailEquipe1.hashCode(), detailEquipe2.hashCode());
     }
 
@@ -135,17 +133,14 @@ class DetailEquipeTest {
     }
     @Test
     void testEquals() {
-        // Create two instances of DetailEquipe with the same attributes
+
         DetailEquipe detailEquipe1 = new DetailEquipe(1, 101, "Thematique 1", new Equipe());
         DetailEquipe detailEquipe2 = new DetailEquipe(1, 101, "Thematique 1", new Equipe());
 
-        // Check if equals method works as expected
         assertEquals(detailEquipe1, detailEquipe2);
 
-        // Create an instance of another class
         Object someOtherObject = new Object();
 
-        // Check if equals method returns false for different classes
         assertNotEquals(detailEquipe1, someOtherObject);
     }
     @Test
@@ -180,19 +175,19 @@ class DetailEquipeTest {
 
     @Test
     void testEqualsWithEquipe() {
-        // Create two instances of DetailEquipe with the same attributes and a mock Equipe
+
         Equipe equipe = mock(Equipe.class);
         DetailEquipe detailEquipe1 = new DetailEquipe(1, 10, "Thematique 1", equipe);
         DetailEquipe detailEquipe2 = new DetailEquipe(1, 10, "Thematique 1", equipe);
 
-        // Assert that the equals method returns true
+
         assertEquals(detailEquipe1, detailEquipe2);
     }
 
 
     @Test
     void testFindAll() {
-        // Create and save some DetailEquipe entities
+
         DetailEquipe detailEquipe1 = new DetailEquipe();
         detailEquipe1.setSalle(123);
         detailEquipe1.setThematique("Thematique 1");
@@ -203,7 +198,7 @@ class DetailEquipeTest {
         detailEquipe2.setThematique("Thematique 2");
         detailEquipeRepository.save(detailEquipe2);
 
-        // Find all DetailEquipe entities
+
         List<DetailEquipe> allDetailEquipes = detailEquipeRepository.findAll();
 
         assertEquals(2, allDetailEquipes.size());
@@ -211,15 +206,15 @@ class DetailEquipeTest {
 
     @Test
     void testSaveAndFindById() {
-        // Create a DetailEquipe entity
+
         DetailEquipe detailEquipe = new DetailEquipe();
         detailEquipe.setSalle(123);
         detailEquipe.setThematique("Test Thematique");
 
-        // Save the entity to the repository
+
         DetailEquipe savedDetailEquipe = detailEquipeRepository.save(detailEquipe);
 
-        // Find the entity by ID
+
         Optional<DetailEquipe> foundDetailEquipe = detailEquipeRepository.findById(savedDetailEquipe.getIdDetailEquipe());
 
         assertTrue(foundDetailEquipe.isPresent());
@@ -233,12 +228,12 @@ class DetailEquipeTest {
     }
     @Test
     void testAddDetailEquipe() throws Exception {
-        // Prepare a DetailEquipeDTO with data
+
         DetailEquipeDTO detailEquipeDTO = new DetailEquipeDTO();
         detailEquipeDTO.setSalle(123);
         detailEquipeDTO.setThematique("Test Thematique");
 
-        // Convert DetailEquipeDTO to JSON
+
         ObjectMapper objectMapper = new ObjectMapper();
         String detailEquipeJson = objectMapper.writeValueAsString(detailEquipeDTO);
 
@@ -251,7 +246,7 @@ class DetailEquipeTest {
                     String responseContent = result.getResponse().getContentAsString();
                     DetailEquipe addedDetailEquipe = objectMapper.readValue(responseContent, DetailEquipe.class);
 
-                    // Validate the response data if needed
+
                     assertEquals(123, addedDetailEquipe.getSalle());
                     assertEquals("Test Thematique", addedDetailEquipe.getThematique());
                 });
@@ -260,13 +255,13 @@ class DetailEquipeTest {
 
     @Test
     void testUpdateDetailEquipe() throws Exception {
-        // Prepare a DetailEquipeDTO with data
+
         DetailEquipeDTO detailEquipeDTO = new DetailEquipeDTO();
         detailEquipeDTO.setIdDetailEquipe(1); // Existing DetailEquipe ID
         detailEquipeDTO.setSalle(123);
         detailEquipeDTO.setThematique("Updated Thematique");
 
-        // Convert DetailEquipeDTO to JSON
+
         ObjectMapper objectMapper = new ObjectMapper();
         String detailEquipeJson = objectMapper.writeValueAsString(detailEquipeDTO);
 
@@ -293,14 +288,14 @@ class DetailEquipeTest {
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.content().contentType("application/json"))
                 .andExpect(result -> {
-                    // Convert the response JSON to a DetailEquipe object
+
                     String responseContent = result.getResponse().getContentAsString();
                     ObjectMapper objectMapper = new ObjectMapper();
                     DetailEquipe retrievedDetailEquipe = objectMapper.readValue(responseContent, DetailEquipe.class);
 
-                    // Validate the retrieved DetailEquipe
+
                     assertEquals(1, retrievedDetailEquipe.getIdDetailEquipe());
-                    // Add more validation as needed
+
                 });
     }
 
