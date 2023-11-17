@@ -4,12 +4,10 @@ import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import tn.esprit.spring.khaddem.entities.Contrat;
-import tn.esprit.spring.khaddem.entities.Etudiant;
-import tn.esprit.spring.khaddem.entities.Specialite;
+
 import tn.esprit.spring.khaddem.repositories.ContratRepository;
 import tn.esprit.spring.khaddem.repositories.EtudiantRepository;
-import javax.transaction.Transactional;
-import java.util.Date;
+
 import java.util.List;
 
 
