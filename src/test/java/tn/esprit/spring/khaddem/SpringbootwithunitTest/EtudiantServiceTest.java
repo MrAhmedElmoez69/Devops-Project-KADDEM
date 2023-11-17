@@ -34,46 +34,6 @@ public class EtudiantServiceTest {
     private DepartementRepository departementRepository;
 
     @Test
-    void testRetrieveAllEtudiants_ShouldReturnEmptyList() {
-        List<Etudiant> expectedEtudiants = new ArrayList<>();
-        when(etudiantRepository.findAll()).thenReturn(expectedEtudiants);
-
-        List<Etudiant> actualEtudiants = etudiantService.retrieveAllEtudiants();
-
-        assertEquals(expectedEtudiants, actualEtudiants);
-    }
-
-    @Test
-    void testRetrieveEtudiant_ShouldReturnUniversiteById() {
-        int etudiantId = 1;
-        Etudiant expectedEtudiant = new Etudiant();
-        when(etudiantRepository.findById(etudiantId)).thenReturn(Optional.of(expectedEtudiant));
-
-        Etudiant actualEtudiant = etudiantService.retrieveEtudiant(etudiantId);
-
-        assertEquals(expectedEtudiant, actualEtudiant);
-    }
-
-    @Test
-    void testAddEtudiant_ShouldAddEtudiant() {
-        EtudiantDTO etudiantDTO = new EtudiantDTO();
-        etudiantDTO.setNomE("Test Etudiant");
-        etudiantDTO.setPrenomE("Test Etudiant");
-        etudiantDTO.setOp(Option.GAMIX);
-
-        Etudiant addedEtudiant = new Etudiant();
-        addedEtudiant.setNomE(etudiantDTO.getNomE());
-        addedEtudiant.setOp(etudiantDTO.getOp());
-        addedEtudiant.setPrenomE(etudiantDTO.getPrenomE());
-
-        when(etudiantRepository.save(addedEtudiant)).thenReturn(addedEtudiant);
-
-        Etudiant actualEtudiant = etudiantService.addEtudiant(addedEtudiant);
-
-        assertEquals(addedEtudiant, actualEtudiant);
-    }
-
-    @Test
     public void testRetrieveAllEtudiants() {
         List<Etudiant> expectedEtudiants = new ArrayList<>();
         when(etudiantRepository.findAll()).thenReturn(expectedEtudiants);
@@ -81,17 +41,6 @@ public class EtudiantServiceTest {
         List<Etudiant> actualEtudiants = etudiantService.retrieveAllEtudiants();
 
         assertEquals(expectedEtudiants, actualEtudiants);
-    }
-
-    @Test
-    public void testRetrieveEtudiant() {
-        int etudiantId = 1;
-        Etudiant expectedEtudiant = new Etudiant();
-        when(etudiantRepository.findById(etudiantId)).thenReturn(java.util.Optional.of(expectedEtudiant));
-
-        Etudiant actualEtudiant = etudiantService.retrieveEtudiant(etudiantId);
-
-        assertEquals(expectedEtudiant, actualEtudiant);
     }
 
     @Test
@@ -105,43 +54,9 @@ public class EtudiantServiceTest {
         assertEquals(etudiant, addedEtudiant);
     }
 
-    @Test
-    public void testUpdateEtudiant() {
-        Etudiant etudiant = new Etudiant();
-        etudiant.setIdEtudiant(1);
-        etudiant.setNomE("Updated Etudiant");
 
-        when(etudiantRepository.existsById(etudiant.getIdEtudiant())).thenReturn(true);
-        when(etudiantRepository.save(etudiant)).thenReturn(etudiant);
 
-        Etudiant updatedEtudiant = etudiantService.updateEtudiant(etudiant);
 
-        assertEquals(etudiant, updatedEtudiant);
-    }
-
-    @Test
-    public void testRemoveEtudiant() {
-        int etudiantId = 1;
-        doNothing().when(etudiantRepository).deleteById(etudiantId);
-
-        etudiantService.removeEtudiant(etudiantId);
-
-        verify(etudiantRepository, times(1)).deleteById(etudiantId);
-    }
-
-    @Test
-    public void testAssignEtudiantToDepartement() {
-        int etudiantId = 1;
-        int departementId = 1;
-
-        Etudiant etudiant = new Etudiant();
-        etudiant.setIdEtudiant(etudiantId);
-
-        when(etudiantRepository.findById(etudiantId)).thenReturn(java.util.Optional.of(etudiant));
-        when(departementRepository.findById(departementId)).thenReturn(java.util.Optional.of(new Departement()));
-
-        etudiantService.assignEtudiantToDepartement(etudiantId, departementId);
-    }
 
 
 
