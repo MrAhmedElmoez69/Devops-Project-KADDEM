@@ -1,5 +1,5 @@
 package tn.esprit.spring.khaddem.controllers;
-
+/*
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import tn.esprit.spring.khaddem.dto.EquipeDTO;
@@ -23,7 +23,7 @@ public class EquipeRestController {
 
 
     // http://localhost:8089/Kaddem/equipe/add-equipe
-    /* cette méthode permet d'ajouter une équipe avec son détail*/
+
     @PostMapping("/add-equipe")
     @ResponseBody
     public Equipe addEquipe(@RequestBody EquipeDTO equipeDTO) {
@@ -35,3 +35,4 @@ public class EquipeRestController {
 
 
 }
+ */

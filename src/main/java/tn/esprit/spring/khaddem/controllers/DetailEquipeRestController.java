@@ -1,5 +1,5 @@
 package tn.esprit.spring.khaddem.controllers;
-
+/*
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import tn.esprit.spring.khaddem.entities.DetailEquipe;
@@ -67,3 +67,6 @@ public class DetailEquipeRestController {
 
 
 }
+
+
+ */

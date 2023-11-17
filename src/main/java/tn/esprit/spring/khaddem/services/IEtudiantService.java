@@ -1,5 +1,5 @@
 package tn.esprit.spring.khaddem.services;
-
+/*
 import tn.esprit.spring.khaddem.entities.Etudiant;
 
 
@@ -12,3 +12,6 @@ public interface IEtudiantService {
     Etudiant retrieveEtudiant(Integer idEtudiant);
 
 }
+
+
+ */
