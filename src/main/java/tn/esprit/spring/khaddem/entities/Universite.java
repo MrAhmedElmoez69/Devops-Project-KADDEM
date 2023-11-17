@@ -4,7 +4,6 @@ import lombok.*;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -22,8 +21,7 @@ public class Universite implements Serializable {
     private String adresse;
 
     @OneToMany(mappedBy = "universite", cascade = CascadeType.ALL)
-    private List<Departement> departements = new ArrayList<>();
-
+    private List<Departement> departements;
     @Override
     public String toString() {
         return "Universite{" +

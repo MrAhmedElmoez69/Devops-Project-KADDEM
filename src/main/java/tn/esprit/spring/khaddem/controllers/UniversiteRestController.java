@@ -13,10 +13,7 @@ import java.util.List;
 public class UniversiteRestController {
     @Autowired
     IUniversiteService universiteService;
-    @Autowired
-    public UniversiteRestController(IUniversiteService universiteService) {
-        this.universiteService = universiteService;
-    }
+
     // http://localhost:8089/Kaddem/universite/retrieve-all-universites
     @GetMapping("/retrieve-all-universites")
     @ResponseBody
@@ -50,12 +47,10 @@ public class UniversiteRestController {
     @ResponseBody
     public UniversiteDTO updateUniversite(@RequestBody UniversiteDTO universiteDTO) {
         Universite universite = new Universite();
-        universite.setIdUniversite(universiteDTO.getIdUniversite());
         universite.setNomUniv(universiteDTO.getNomUniv());
         universite.setAdresse(universiteDTO.getAdresse());
-        UniversiteDTO updatedUniversite = universiteService.updateUniversite(universiteDTO);
+        Universite updatedUniversite = universiteService.updateUniversite(universite);
         UniversiteDTO updatedUniversiteDTO = new UniversiteDTO();
-        updatedUniversiteDTO.setIdUniversite(updatedUniversite.getIdUniversite());
         updatedUniversiteDTO.setNomUniv(updatedUniversite.getNomUniv());
         updatedUniversiteDTO.setAdresse(updatedUniversite.getAdresse());
         return updatedUniversiteDTO;
