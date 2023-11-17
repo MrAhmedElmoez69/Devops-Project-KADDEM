@@ -6,6 +6,7 @@ import lombok.Setter;
 @Getter
 @Setter
 public class DepartementDTO {
-    private String nomDepart;
     private Integer idDepartement;
+    private String nomDepart;
+    private UniversiteDTO universite;
 }

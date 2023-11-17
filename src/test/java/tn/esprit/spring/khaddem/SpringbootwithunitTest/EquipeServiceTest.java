@@ -3,30 +3,35 @@ package tn.esprit.spring.khaddem.SpringbootwithunitTest;
 import org.junit.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
-import org.mockito.Mockito;
+import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import tn.esprit.spring.khaddem.controllers.EquipeRestController;
+import tn.esprit.spring.khaddem.dto.EquipeDTO;
 import tn.esprit.spring.khaddem.entities.Equipe;
 import tn.esprit.spring.khaddem.repositories.EquipeRepository;
 import tn.esprit.spring.khaddem.services.EquipeServiceImpl;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
-public class EquipeServiceTest {
+class EquipeServiceTest {
 
     @InjectMocks
     private EquipeServiceImpl equipeService;
 
-    EquipeRepository equipeRepository = Mockito.mock(EquipeRepository.class);
+    @Mock
+    private EquipeRepository equipeRepository;
 
     @Test
     void testRetrieveAllEquipes(){
         List<Equipe> expectedEquipes = new ArrayList<>();
         when(equipeRepository.findAll()).thenReturn(expectedEquipes);
-        List<Equipe> actyalEquipes = equipeService.retrieveAllEquipes();
-        assertEquals(expectedEquipes, actyalEquipes);
+        List<Equipe> actualEquipes = equipeService.retrieveAllEquipes();
+        assertEquals(expectedEquipes, actualEquipes);
     }
 
 
@@ -46,5 +51,23 @@ public class EquipeServiceTest {
         when(equipeRepository.save(equipe)).thenReturn(equipe);
         Equipe addEquipe = equipeService.addEquipe(equipe);
         assertEquals(equipe, addEquipe);
+    }
+
+    @Test
+    void testUpdateEquipe() {
+        int equipeId = 2;
+        String updatedName = "Updated Equipe";
+        EquipeDTO equipeDTO = new EquipeDTO();
+        equipeDTO.setIdEquipe(equipeId);
+        equipeDTO.setNomEquipe(updatedName);
+
+        Equipe existingEquipe = new Equipe();
+        existingEquipe .setIdEquipe(equipeId);
+        existingEquipe .setNomEquipe("Old Department");
+
+        when(equipeRepository.findById(equipeId)).thenReturn(Optional.of(existingEquipe));
+        EquipeRestController equipeController = new EquipeRestController(equipeService);
+        Equipe updateEquipe= equipeController.updateEquipe(equipeDTO);
+        assertEquals(updatedName, updateEquipe.getNomEquipe());
     }
 }
