@@ -13,7 +13,7 @@ class DetailEquipeList extends Component {
 
   componentDidMount() {
     axios
-      .get("http://localhost:8090/Kaddem/detailequipe/retrieve-all-detail-equipes")
+      .get("http://localhost:8089/Kaddem/equipe/retrieve-all-equipes")
       .then((response) => {
         const detailsEquipe = response.data;
         this.setState({ detailsEquipe });

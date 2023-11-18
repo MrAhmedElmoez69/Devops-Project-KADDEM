@@ -42,7 +42,7 @@ class CreateDetailEquipe extends Component {
         thematique: this.state.thematique,
       };
 
-      axios.post('http://localhost:8090/Kaddem/detailequipe/add-detail-equipe', newDetailEquipe)
+      axios.post('http://localhost:8089/Kaddem/detailequipe/add-detail-equipe', newDetailEquipe)
         .then(response => {
           console.log('DetailEquipe created:', response.data);
           this.setState({ showNotification: true }, () => {
